@@ -280,6 +280,13 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .input,.select,.textarea{
   width:100%;padding:13px 15px;border-radius:var(--radius-md);border:1.5px solid var(--border);background:#fff;color:var(--text);outline:none
 }
+.input-wrap{position:relative;display:flex;align-items:stretch}
+.input-wrap .input{padding-right:44px;flex:1;min-width:0}
+.input-icon-right{
+  position:absolute;right:0;top:0;bottom:0;width:44px;border:none;background:transparent;color:var(--text-lt);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:0 var(--radius-md) var(--radius-md) 0
+}
+.input-icon-right:hover{color:var(--navy)}
 .textarea{min-height:96px;resize:vertical}
 .input:focus,.select:focus,.textarea:focus{border-color:var(--aqua);box-shadow:0 0 0 3px rgba(0,205,229,.12)}
 .hint{font-size:12px;color:var(--text-lt)}
@@ -338,6 +345,42 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .auth-copy{font-size:14px;color:var(--text-sec);margin-bottom:24px}
 .auth-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 .auth-divider{height:1px;background:var(--border);margin:22px 0}
+.auth-status{
+  display:none;margin:18px 0 0;padding:12px 14px;border-radius:14px;border:1px solid transparent;font-size:13px;line-height:1.45
+}
+.auth-status.show{display:block}
+.auth-status.error{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.2);color:#991b1b}
+.auth-status.success{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.2);color:#166534}
+.auth-status.info{background:rgba(59,130,246,.08);border-color:rgba(59,130,246,.18);color:#1d4ed8}
+.auth-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.checkline{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-sec)}
+.checkline input{accent-color:var(--navy)}
+.auth-mini-note{font-size:12px;color:var(--text-lt)}
+.auth-demo{
+  display:grid;gap:10px;padding:14px 16px;border:1px solid var(--border);border-radius:16px;background:#f8fbff;margin-top:18px
+}
+.auth-demo-row{display:grid;gap:4px;font-size:12px;color:var(--text-sec)}
+.auth-demo-row strong{color:var(--navy);font-size:13px}
+.otp-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:22px 0}
+.otp-slot{
+  width:100%;padding:14px 0;border-radius:16px;border:1.5px solid var(--border);background:#fff;text-align:center;
+  font-size:24px;font-weight:800;color:var(--navy);outline:none
+}
+.otp-slot:focus{border-color:var(--aqua);box-shadow:0 0 0 3px rgba(0,205,229,.12)}
+.auth-qr{
+  display:grid;grid-template-columns:132px 1fr;gap:16px;padding:16px;border-radius:18px;border:1px solid var(--border);background:#fbfcff;margin:18px 0
+}
+.auth-qr-box{
+  aspect-ratio:1;border-radius:16px;border:1px dashed #b8c4d8;background:
+    linear-gradient(90deg,#1b214c 12%,transparent 12% 18%,#1b214c 18% 24%,transparent 24% 30%,#1b214c 30% 36%,transparent 36% 42%,#1b214c 42% 48%,transparent 48% 54%,#1b214c 54% 60%,transparent 60% 66%,#1b214c 66% 72%,transparent 72% 78%,#1b214c 78% 84%,transparent 84%),
+    linear-gradient(#1b214c 12%,transparent 12% 18%,#1b214c 18% 24%,transparent 24% 30%,#1b214c 30% 36%,transparent 36% 42%,#1b214c 42% 48%,transparent 48% 54%,#1b214c 54% 60%,transparent 60% 66%,#1b214c 66% 72%,transparent 72% 78%,#1b214c 78% 84%,transparent 84%);
+  background-size:100% 100%;background-color:#fff
+}
+.auth-qr-copy{display:grid;gap:8px}
+.auth-qr-copy strong{font-size:14px;color:var(--navy)}
+.auth-qr-copy code{font-size:12px;background:#eef3fb;padding:4px 8px;border-radius:999px;width:max-content}
+.auth-flow-list{display:grid;gap:8px;margin:18px 0 0;padding-left:18px;color:var(--text-sec);font-size:13px}
+.auth-hidden{display:none}
 .auth-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 
 body.auth-mode #sidebar,
@@ -421,7 +464,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   </div>
 
   <div class="sb-bottom">
-    <a class="sb-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg></span>Cerrar Sesión</a>
+    <a class="sb-item" id="logout-link"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg></span>Cerrar Sesión</a>
   </div>
 </aside>
 
@@ -500,22 +543,39 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             <h1>Ingresa a tu portafolio.</h1>
             <p>Acceso para clientes con expediente validado, autenticación en dos pasos y productos FEIS habilitados.</p>
           </div>
+          <div class="auth-demo">
+            <div class="auth-demo-row"><strong>Demo 1 · Acceso normal</strong><span>`alfredo.garcia@gmail.com` · `Pdei2026` · código `481729`</span></div>
+            <div class="auth-demo-row"><strong>Demo 2 · Contraseña vencida</strong><span>`laura.morales@gmail.com` · `Temporal2026` · luego cambia contraseña y usa código `135790`</span></div>
+            <div class="auth-demo-row"><strong>Demo 3 · 2FA por activar</strong><span>`mariana.demo@gmail.com` · `Portafolio2026` · configura 2FA y usa código `246810`</span></div>
+          </div>
         </div>
       </div>
       <div class="auth-panel">
-        <div class="auth-card">
+        <form class="auth-card" id="login-form">
           <div class="auth-kicker">Login</div>
           <div class="auth-title">Iniciar sesión</div>
           <div class="auth-copy">Usa tu correo registrado y contraseña temporal o definitiva para continuar al segundo factor.</div>
           <div class="stack" style="gap:16px">
-            <div class="field"><label class="label">Correo electrónico</label><input class="input" value="alfredo.garcia@gmail.com"></div>
-            <div class="field"><label class="label">Contraseña</label><input class="input" type="password" value="123456789"></div>
+            <div class="field"><label class="label" for="login-email">Correo electrónico</label><input class="input" id="login-email" type="email" value="alfredo.garcia@gmail.com"></div>
+            <div class="field">
+              <label class="label" for="login-password">Contraseña</label>
+              <div class="input-wrap">
+                <input class="input" id="login-password" type="password" value="Pdei2026">
+                <button class="input-icon-right" type="button" data-password-toggle="login-password" aria-label="Mostrar contraseña">
+                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+                </button>
+              </div>
+            </div>
           </div>
+          <div class="auth-meta">
+            <label class="checkline"><input id="login-remember" type="checkbox" checked>Recordar correo electrónico</label>
+          </div>
+          <div class="auth-status" id="login-status"></div>
           <div class="auth-actions">
-            <button class="btn btn-primary" data-view-target="twofa">Continuar</button>
-            <button class="btn btn-outline" data-view-target="recovery">Olvidé mi contraseña</button>
+            <button class="btn btn-primary" type="submit">Continuar</button>
+            <button class="btn btn-outline" type="button" data-view-target="recovery">Olvidé mi contraseña</button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </section>
@@ -529,23 +589,34 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         </div>
       </div>
       <div class="auth-panel">
-        <div class="auth-card">
+        <form class="auth-card" id="twofa-form">
           <div class="auth-kicker">2FA</div>
-          <div class="auth-title">Código de verificación</div>
-          <div class="auth-copy">Ingresa el código de 6 dígitos enviado al dispositivo asociado. El código se renueva cada 30 segundos.</div>
-          <div class="grid grid-4" style="grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:22px 0">
-            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">4</div>
-            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">8</div>
-            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">1</div>
-            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">7</div>
-            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">2</div>
-            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">9</div>
+          <div class="auth-title" id="twofa-title">Código de verificación</div>
+          <div class="auth-copy" id="twofa-copy">Ingresa el código de 6 dígitos enviado al dispositivo asociado. El código se renueva cada 30 segundos.</div>
+          <div class="auth-qr auth-hidden" id="twofa-setup">
+            <div class="auth-qr-box"></div>
+            <div class="auth-qr-copy">
+              <strong>Configura tu autenticador</strong>
+              <div>Escanea el QR con Google Authenticator o Microsoft Authenticator y luego valida un código activo.</div>
+              <code id="twofa-secret">PDEI-DEMO-2026</code>
+              <div class="auth-mini-note">En este mock puedes continuar usando el código demo asignado a la cuenta.</div>
+            </div>
           </div>
+          <div class="otp-grid">
+            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
+          </div>
+          <div class="auth-status" id="twofa-status"></div>
           <div class="auth-actions">
-            <button class="btn btn-primary" data-view-target="dashboard">Validar e ingresar</button>
-            <button class="btn btn-outline">Reenviar código</button>
+            <button class="btn btn-primary" type="submit">Validar e ingresar</button>
+            <button class="btn btn-outline" type="button" id="twofa-resend">Reenviar código</button>
+            <button class="btn btn-outline" type="button" data-view-target="login">Volver al login</button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </section>
@@ -559,16 +630,66 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         </div>
       </div>
       <div class="auth-panel">
-        <div class="auth-card">
+        <form class="auth-card" id="recovery-form">
           <div class="auth-kicker">Recuperación</div>
           <div class="auth-title">Solicitar restablecimiento</div>
-          <div class="auth-copy">Se enviará un enlace temporal al correo registrado del cliente para iniciar la recuperación.</div>
-          <div class="field"><label class="label">Correo electrónico</label><input class="input" value="alfredo.garcia@gmail.com"></div>
+          <div class="auth-copy">Se generará un acceso temporal para simular el correo de recuperación y forzar el cambio de contraseña en el siguiente ingreso.</div>
+          <div class="field"><label class="label" for="recovery-email">Correo electrónico</label><input class="input" id="recovery-email" type="email" value="alfredo.garcia@gmail.com"></div>
+          <div class="auth-status" id="recovery-status"></div>
           <div class="auth-actions">
-            <button class="btn btn-primary">Enviar enlace</button>
-            <button class="btn btn-outline" data-view-target="login">Volver al login</button>
+            <button class="btn btn-primary" type="submit">Generar acceso temporal</button>
+            <button class="btn btn-outline" type="button" id="recovery-use-temp">Usar acceso temporal</button>
+            <button class="btn btn-outline" type="button" data-view-target="login">Volver al login</button>
           </div>
+          <ol class="auth-flow-list">
+            <li>Se valida que el correo exista en el portal.</li>
+            <li>Se genera una clave temporal de un solo uso para este mock.</li>
+            <li>El siguiente ingreso obliga a cambiar la contraseña antes del 2FA.</li>
+          </ol>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="view view-auth" id="view-password-update" data-title="Cambio de contraseña">
+    <div class="auth-shell">
+      <div class="auth-brand">
+        <div class="auth-hero">
+          <h1>Actualiza tu contraseña.</h1>
+          <p>La contraseña temporal o vencida debe cambiarse antes de permitir la autenticación en dos pasos.</p>
         </div>
+      </div>
+      <div class="auth-panel">
+        <form class="auth-card" id="password-update-form">
+          <div class="auth-kicker">Credenciales</div>
+          <div class="auth-title">Nueva contraseña</div>
+          <div class="auth-copy">Debe incluir al menos 8 caracteres, letras y números. Al confirmar, continuarás al segundo factor.</div>
+          <div class="stack" style="gap:16px">
+            <div class="field">
+              <label class="label" for="password-update-new">Nueva contraseña</label>
+              <div class="input-wrap">
+                <input class="input" id="password-update-new" type="password">
+                <button class="input-icon-right" type="button" data-password-toggle="password-update-new" aria-label="Mostrar contraseña">
+                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+                </button>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="password-update-confirm">Confirmar contraseña</label>
+              <div class="input-wrap">
+                <input class="input" id="password-update-confirm" type="password">
+                <button class="input-icon-right" type="button" data-password-toggle="password-update-confirm" aria-label="Mostrar contraseña">
+                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="auth-status" id="password-update-status"></div>
+          <div class="auth-actions">
+            <button class="btn btn-primary" type="submit">Actualizar y continuar</button>
+            <button class="btn btn-outline" type="button" data-view-target="login">Cancelar</button>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -1160,12 +1281,15 @@ const views = document.querySelectorAll(".view");
 const title = document.getElementById("header-title");
 const groups = document.querySelectorAll(".sb-group");
 const moreMenus = document.querySelectorAll(".more-menu");
-const authViews = new Set(["landing","login","twofa","recovery","register"]);
+const authViews = new Set(["landing","login","twofa","recovery","password-update","register"]);
+const eyeOpenIcon = '<span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>';
+const eyeOffIcon = '<span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 3 18 18"></path><path d="M10.58 10.58a2 2 0 1 0 2.83 2.83"></path><path d="M9.36 5.37A9.9 9.9 0 0 1 12 5c6.5 0 10 7 10 7a18.2 18.2 0 0 1-2.53 3.36"></path><path d="M6.23 6.23A18.7 18.7 0 0 0 2 12s3.5 7 10 7a9.9 9.9 0 0 0 5.27-1.47"></path></svg></span>';
 const viewGroupMap = {
   landing:"access",
   login:"access",
   twofa:"access",
   recovery:"access",
+  "password-update":"access",
   register:"access",
   dashboard:"main",
   portfolio:"main",
@@ -1181,6 +1305,85 @@ const viewGroupMap = {
   "new-account":"settings",
   profile:"settings"
 };
+const authDb = {
+  "alfredo.garcia@gmail.com": {
+    name:"Alfredo Garcia",
+    password:"Pdei2026",
+    passwordExpired:false,
+    requires2faSetup:false,
+    otp:"481729"
+  },
+  "laura.morales@gmail.com": {
+    name:"Laura Morales",
+    password:"Temporal2026",
+    passwordExpired:true,
+    requires2faSetup:false,
+    otp:"135790"
+  },
+  "mariana.demo@gmail.com": {
+    name:"Mariana Demo",
+    password:"Portafolio2026",
+    passwordExpired:false,
+    requires2faSetup:true,
+    otp:"246810"
+  }
+};
+const authState = {
+  pendingEmail:"",
+  recoveryEmail:"",
+  generatedTempPassword:""
+};
+const rememberedEmailKey = "pdei-web-mock-remembered-email";
+
+function byId(id) {
+  return document.getElementById(id);
+}
+
+function getUser(email) {
+  return authDb[(email || "").trim().toLowerCase()];
+}
+
+function setStatus(id, kind, message) {
+  const node = byId(id);
+  if (!node) return;
+  node.className = `auth-status${message ? " show" : ""}${kind ? " " + kind : ""}`;
+  node.textContent = message || "";
+}
+
+function clearOtpInputs() {
+  document.querySelectorAll("[data-otp]").forEach(input => {
+    input.value = "";
+  });
+}
+
+function getOtpValue() {
+  return Array.from(document.querySelectorAll("[data-otp]")).map(input => input.value).join("");
+}
+
+function prepareTwofaView() {
+  const user = getUser(authState.pendingEmail);
+  if (!user) return;
+  byId("twofa-title").textContent = user.requires2faSetup ? "Activa tu 2FA" : "Código de verificación";
+  byId("twofa-copy").textContent = user.requires2faSetup
+    ? "Primero registra tu autenticador. Luego ingresa un código de 6 dígitos para completar el acceso."
+    : "Ingresa el código de 6 dígitos enviado al dispositivo o generado por tu autenticador. El código se renueva cada 30 segundos.";
+  byId("twofa-secret").textContent = `PDEI-${authState.pendingEmail.toUpperCase()}`;
+  byId("twofa-setup").classList.toggle("auth-hidden", !user.requires2faSetup);
+  clearOtpInputs();
+  setStatus("twofa-status", "", "");
+}
+
+function resetAuthFlow() {
+  authState.pendingEmail = "";
+  authState.recoveryEmail = "";
+  authState.generatedTempPassword = "";
+  setStatus("login-status", "", "");
+  setStatus("twofa-status", "", "");
+  setStatus("recovery-status", "", "");
+  setStatus("password-update-status", "", "");
+  clearOtpInputs();
+  byId("password-update-form")?.reset();
+}
 
 function showView(name) {
   items.forEach(item => item.classList.toggle("active", item.dataset.view === name));
@@ -1194,6 +1397,7 @@ function showView(name) {
     group.classList.toggle("active-parent", isActiveParent);
     group.classList.toggle("open", isActiveParent);
   });
+  if (name === "twofa") prepareTwofaView();
 }
 
 items.forEach(item => {
@@ -1227,6 +1431,164 @@ document.addEventListener("click", () => {
 
 document.querySelectorAll("[data-view-target]").forEach(button => {
   button.addEventListener("click", () => showView(button.getAttribute("data-view-target")));
+});
+
+const loginEmail = byId("login-email");
+const loginPassword = byId("login-password");
+const loginRemember = byId("login-remember");
+const recoveryEmail = byId("recovery-email");
+
+if (localStorage.getItem(rememberedEmailKey)) {
+  loginEmail.value = localStorage.getItem(rememberedEmailKey);
+  recoveryEmail.value = localStorage.getItem(rememberedEmailKey);
+}
+
+document.querySelectorAll("[data-password-toggle]").forEach(button => {
+  button.addEventListener("click", () => {
+    const input = byId(button.getAttribute("data-password-toggle"));
+    if (!input) return;
+    const makeVisible = input.type === "password";
+    input.type = makeVisible ? "text" : "password";
+    button.setAttribute("aria-label", makeVisible ? "Ocultar contraseña" : "Mostrar contraseña");
+    button.innerHTML = makeVisible ? eyeOffIcon : eyeOpenIcon;
+  });
+});
+
+byId("login-form")?.addEventListener("submit", event => {
+  event.preventDefault();
+  const email = loginEmail.value.trim().toLowerCase();
+  const password = loginPassword.value;
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!email || !password) {
+    setStatus("login-status", "error", "Ingresa correo electrónico y contraseña para continuar.");
+    return;
+  }
+  if (!emailOk) {
+    setStatus("login-status", "error", "El formato del correo electrónico no es válido.");
+    return;
+  }
+  const user = getUser(email);
+  if (!user) {
+    setStatus("login-status", "error", "No existe una cuenta demo asociada a ese correo.");
+    return;
+  }
+  if (password !== user.password) {
+    setStatus("login-status", "error", "La contraseña ingresada no corresponde al correo registrado.");
+    return;
+  }
+  if (loginRemember.checked) localStorage.setItem(rememberedEmailKey, email);
+  else localStorage.removeItem(rememberedEmailKey);
+  authState.pendingEmail = email;
+  setStatus("login-status", "", "");
+  if (user.passwordExpired) {
+    showView("password-update");
+    return;
+  }
+  showView("twofa");
+});
+
+byId("password-update-form")?.addEventListener("submit", event => {
+  event.preventDefault();
+  const user = getUser(authState.pendingEmail);
+  const nextPassword = byId("password-update-new").value;
+  const confirmPassword = byId("password-update-confirm").value;
+  if (!user) {
+    setStatus("password-update-status", "error", "No hay una sesión pendiente para actualizar credenciales.");
+    showView("login");
+    return;
+  }
+  if (!/^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(nextPassword)) {
+    setStatus("password-update-status", "error", "La nueva contraseña debe tener al menos 8 caracteres, letras y números.");
+    return;
+  }
+  if (nextPassword !== confirmPassword) {
+    setStatus("password-update-status", "error", "La confirmación no coincide con la nueva contraseña.");
+    return;
+  }
+  user.password = nextPassword;
+  user.passwordExpired = false;
+  loginPassword.value = nextPassword;
+  setStatus("password-update-status", "success", "Contraseña actualizada correctamente. Continúa al segundo factor.");
+  showView("twofa");
+});
+
+document.querySelectorAll("[data-otp]").forEach((input, index, all) => {
+  input.addEventListener("input", () => {
+    input.value = input.value.replace(/\D/g, "").slice(0, 1);
+    if (input.value && all[index + 1]) all[index + 1].focus();
+  });
+  input.addEventListener("keydown", event => {
+    if (event.key === "Backspace" && !input.value && all[index - 1]) all[index - 1].focus();
+  });
+});
+
+byId("twofa-form")?.addEventListener("submit", event => {
+  event.preventDefault();
+  const user = getUser(authState.pendingEmail);
+  if (!user) {
+    setStatus("twofa-status", "error", "Primero debes completar el login antes de validar el segundo factor.");
+    showView("login");
+    return;
+  }
+  const otp = getOtpValue();
+  if (otp.length !== 6) {
+    setStatus("twofa-status", "error", "Ingresa el código completo de 6 dígitos.");
+    return;
+  }
+  if (otp !== user.otp) {
+    setStatus("twofa-status", "error", "El código ingresado no es válido para esta cuenta demo.");
+    return;
+  }
+  user.requires2faSetup = false;
+  setStatus("twofa-status", "success", "Segundo factor validado. Ingresando al portal...");
+  showView("dashboard");
+});
+
+byId("twofa-resend")?.addEventListener("click", () => {
+  const user = getUser(authState.pendingEmail);
+  if (!user) {
+    setStatus("twofa-status", "error", "No hay una autenticación pendiente para reenviar el código.");
+    return;
+  }
+  setStatus("twofa-status", "info", `Código reenviado. Para esta demo puedes usar ${user.otp}.`);
+});
+
+byId("recovery-form")?.addEventListener("submit", event => {
+  event.preventDefault();
+  const email = recoveryEmail.value.trim().toLowerCase();
+  const user = getUser(email);
+  if (!email) {
+    setStatus("recovery-status", "error", "Ingresa el correo electrónico registrado para continuar.");
+    return;
+  }
+  if (!user) {
+    setStatus("recovery-status", "error", "No existe una cuenta demo asociada a ese correo.");
+    return;
+  }
+  authState.recoveryEmail = email;
+  authState.generatedTempPassword = "Temp2026";
+  user.password = authState.generatedTempPassword;
+  user.passwordExpired = true;
+  loginEmail.value = email;
+  loginPassword.value = authState.generatedTempPassword;
+  setStatus("recovery-status", "success", `Acceso temporal generado. Usa la clave ${authState.generatedTempPassword} y luego cambia la contraseña.`);
+});
+
+byId("recovery-use-temp")?.addEventListener("click", () => {
+  if (!authState.recoveryEmail || !authState.generatedTempPassword) {
+    setStatus("recovery-status", "info", "Primero genera un acceso temporal para precargar el login.");
+    return;
+  }
+  loginEmail.value = authState.recoveryEmail;
+  loginPassword.value = authState.generatedTempPassword;
+  setStatus("login-status", "info", "Se precargó una clave temporal. El siguiente paso forzará cambio de contraseña.");
+  showView("login");
+});
+
+byId("logout-link")?.addEventListener("click", event => {
+  event.preventDefault();
+  resetAuthFlow();
+  showView("landing");
 });
 
 showView("landing");
