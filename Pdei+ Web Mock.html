@@ -134,7 +134,7 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .btn-outline-aqua{background:#fff;border-color:var(--aqua);color:var(--dark-aqua)}
 .btn-danger{background:var(--danger);color:#fff}
 .btn-sm{padding:8px 14px;font-size:12px;border-radius:10px}
-.btn-row{display:flex;flex-wrap:wrap;gap:10px}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
 
 .pill{
   display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:4px 10px;border-radius:999px;
@@ -287,6 +287,17 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
   display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:0 var(--radius-md) var(--radius-md) 0
 }
 .input-icon-right:hover{color:var(--navy)}
+.input-prefix{
+  display:flex;align-items:center;border:1.5px solid var(--border);border-radius:var(--radius-md);overflow:hidden;background:#fff
+}
+.input-prefix:focus-within{border-color:var(--aqua);box-shadow:0 0 0 3px rgba(0,205,229,.12)}
+.input-prefix-label{
+  padding:13px 14px;background:var(--gray-lt);border-right:1.5px solid var(--border);font-size:14px;color:var(--text-sec);white-space:nowrap
+}
+.input-prefix .input{
+  border:none;border-radius:0;box-shadow:none;padding-left:14px;padding-right:14px
+}
+.input-prefix .input:focus{border:none;box-shadow:none}
 .textarea{min-height:96px;resize:vertical}
 .input:focus,.select:focus,.textarea:focus{border-color:var(--aqua);box-shadow:0 0 0 3px rgba(0,205,229,.12)}
 .hint{font-size:12px;color:var(--text-lt)}
@@ -343,7 +354,10 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .auth-kicker{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-lt);margin-bottom:10px}
 .auth-title{font-size:30px;font-weight:800;line-height:1.08;margin-bottom:8px}
 .auth-copy{font-size:14px;color:var(--text-sec);margin-bottom:24px}
-.auth-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.auth-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:22px}
+.wizard-actions{width:100%;align-items:center}
+.wizard-actions #register-back{margin-right:auto}
+.wizard-actions #register-go-landing{margin-right:auto}
 .auth-divider{height:1px;background:var(--border);margin:22px 0}
 .auth-status{
   display:none;margin:18px 0 0;padding:12px 14px;border-radius:14px;border:1px solid transparent;font-size:13px;line-height:1.45
@@ -381,6 +395,54 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .auth-qr-copy code{font-size:12px;background:#eef3fb;padding:4px 8px;border-radius:999px;width:max-content}
 .auth-flow-list{display:grid;gap:8px;margin:18px 0 0;padding-left:18px;color:var(--text-sec);font-size:13px}
 .auth-hidden{display:none}
+.wizard-steps{display:flex;align-items:flex-start;gap:0;margin:0 0 24px}
+.wizard-pane{display:none}
+.wizard-pane.active{display:block}
+.wizard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.wizard-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.wizard-grid-3.align-fields{align-items:end}
+.wizard-grid-3.align-fields .field{height:100%}
+.wizard-grid-3.align-fields .label{
+  min-height:18px;display:flex;align-items:flex-end
+}
+.register-personal-pane .wizard-grid,
+.register-personal-pane .wizard-grid-3{align-items:end}
+.register-personal-pane .field{height:100%}
+.register-personal-pane .label{
+  min-height:34px;display:flex;align-items:flex-end
+}
+.field-span-2{grid-column:span 2}
+.field-span-3{grid-column:span 3}
+.wizard-card{
+  display:grid;gap:14px;padding:16px;border:1px solid var(--border);border-radius:16px;background:#fbfcff
+}
+.wizard-card.active{border-color:rgba(0,205,229,.55);background:rgba(0,205,229,.06)}
+.wizard-card-title{font-size:14px;font-weight:700;color:var(--navy)}
+.wizard-card-copy{font-size:13px;color:var(--text-sec);line-height:1.5}
+.wizard-summary{
+  display:grid;gap:14px;padding:18px;border:1px solid var(--border);border-radius:18px;background:#fff
+}
+.wizard-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.wizard-summary-item{display:grid;gap:4px;padding:12px 14px;border-radius:14px;background:#f8fafe}
+.wizard-summary-item span{font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--text-lt)}
+.wizard-summary-item strong{font-size:14px;color:var(--navy)}
+.choice-row{display:flex;gap:10px;flex-wrap:wrap}
+.choice-chip{
+  display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border:1.5px solid var(--border);border-radius:999px;background:#fff;
+  cursor:pointer;font-size:13px;color:var(--text-sec)
+}
+.choice-chip input{accent-color:var(--navy)}
+.register-complete{
+  display:grid;gap:18px;text-align:left
+}
+.register-complete-badge{
+  width:56px;height:56px;border-radius:16px;background:rgba(34,197,94,.12);color:#166534;display:flex;align-items:center;justify-content:center
+}
+.register-complete-badge .icon{width:28px;height:28px}
+.register-result{
+  display:grid;gap:12px;padding:16px;border-radius:18px;border:1px solid rgba(34,197,94,.18);background:rgba(34,197,94,.06)
+}
+.register-result code{width:max-content;background:#fff;padding:6px 10px;border-radius:999px;font-size:12px}
 .auth-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 
 body.auth-mode #sidebar,
@@ -700,36 +762,191 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         <div>
           <div class="auth-hero">
             <h1>Alta de expediente digital.</h1>
-            <p>Mock resumido del registro DERCAS para cliente individual, con progresión visible y reglas clave del flujo real.</p>
+            <p>Flujo RF4 completo para cliente individual FEIS, con términos, acceso, instructivo, datos, bancos, fondo inicial, resumen y cierre sin servicios.</p>
+          </div>
+          <div class="auth-demo">
+            <div class="auth-demo-row"><strong>Reglas simuladas</strong><span>correo único, contraseña mínima, bloqueo por PEP/CPE y residencia fuera de Guatemala.</span></div>
+            <div class="auth-demo-row"><strong>Salida funcional</strong><span>el flujo termina en expediente enviado, pendiente de validación y activación por correo.</span></div>
+            <div class="auth-demo-row"><strong>Objetivo del mock</strong><span>probar navegación adelante/atrás, estados intermedios, resumen y consistencia visual del wizard.</span></div>
           </div>
         </div>
       </div>
       <div class="auth-panel">
-        <div class="auth-card" style="max-width:620px">
+        <form class="auth-card" id="register-form" style="max-width:760px">
           <div class="auth-kicker">Registro</div>
           <div class="auth-title">Solicitud de acceso y habilitación</div>
-          <div class="auth-copy">Versión condensada del flujo de términos, acceso, datos personales, bancos y confirmación de expediente.</div>
-          <div class="step-bar" style="margin-bottom:24px">
-            <div class="step-item done"><div class="step-dot">1</div><div class="step-lbl">T&amp;C</div></div>
-            <div class="step-item done"><div class="step-dot">2</div><div class="step-lbl">Acceso</div></div>
-            <div class="step-item active"><div class="step-dot">3</div><div class="step-lbl">Datos</div></div>
-            <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Bancos</div></div>
-            <div class="step-item"><div class="step-dot">5</div><div class="step-lbl">Confirmación</div></div>
+          <div class="auth-copy" id="register-step-copy">Acepta términos y condiciones para iniciar el expediente digital.</div>
+          <div class="wizard-steps step-bar" id="register-steps">
+            <div class="step-item active"><div class="step-dot">1</div><div class="step-lbl">T&amp;C</div></div>
+            <div class="step-item"><div class="step-dot">2</div><div class="step-lbl">Acceso</div></div>
+            <div class="step-item"><div class="step-dot">3</div><div class="step-lbl">Instructivo</div></div>
+            <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Datos</div></div>
+            <div class="step-item"><div class="step-dot">5</div><div class="step-lbl">Bancos</div></div>
+            <div class="step-item"><div class="step-dot">6</div><div class="step-lbl">Fondo</div></div>
           </div>
-          <div class="field-grid">
-            <div class="field"><label class="label">Primer nombre</label><input class="input" value="Alfredo"></div>
-            <div class="field"><label class="label">Primer apellido</label><input class="input" value="García"></div>
-            <div class="field"><label class="label">Tipo de documento</label><select class="select"><option>DPI</option><option>Pasaporte</option></select></div>
-            <div class="field"><label class="label">Número de documento</label><input class="input" value="2456 78901 0101"></div>
-            <div class="field"><label class="label">Correo electrónico</label><input class="input" value="alfredo.garcia@gmail.com"></div>
-            <div class="field"><label class="label">Teléfono móvil</label><input class="input" value="+502 5555-1234"></div>
+          <div class="wizard-pane active" data-register-pane="0">
+            <div class="wizard-card active">
+              <div class="wizard-card-title">Términos y condiciones</div>
+              <div class="wizard-card-copy">La cuenta FEIS aplica únicamente a personas individuales no PEP, no CPE, con límite de inversión regulado y sujeta a validación posterior del expediente.</div>
+              <ol class="auth-flow-list" style="margin-top:0">
+                <li>El correo debe ser vigente y único por cliente.</li>
+                <li>La cuenta no podrá operar hasta ser validada.</li>
+                <li>Si existe coincidencia en listas restrictivas, el flujo puede bloquearse.</li>
+              </ol>
+              <label class="checkline"><input id="register-accept-terms" type="checkbox">He leído y acepto los términos y condiciones del alta digital.</label>
+            </div>
           </div>
-          <div class="alert alert-warning" style="margin-top:18px"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>Si PEP/CPE es afirmativo o hay inconsistencias de residencia, el expediente debe escalarse o bloquearse según la regla del flujo.</div></div>
-          <div class="auth-actions">
-            <button class="btn btn-outline">Anterior</button>
-            <button class="btn btn-primary" data-view-target="dashboard">Continuar con bancos</button>
+          <div class="wizard-pane" data-register-pane="1">
+            <div class="wizard-grid">
+              <div class="field"><label class="label" for="register-email">Correo electrónico</label><input class="input" id="register-email" type="email" value="cliente.nuevo@gmail.com"></div>
+              <div class="field"><label class="label" for="register-email-confirm">Confirmar correo electrónico</label><input class="input" id="register-email-confirm" type="email" value="cliente.nuevo@gmail.com"></div>
+              <div class="field">
+                <label class="label" for="register-password">Contraseña</label>
+                <div class="input-wrap">
+                  <input class="input" id="register-password" type="password" value="Nuevo2026">
+                  <button class="input-icon-right" type="button" data-password-toggle="register-password" aria-label="Mostrar contraseña"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span></button>
+                </div>
+                <div class="hint">Mínimo 8 caracteres con letras y números.</div>
+              </div>
+              <div class="field">
+                <label class="label" for="register-password-confirm">Confirmar contraseña</label>
+                <div class="input-wrap">
+                  <input class="input" id="register-password-confirm" type="password" value="Nuevo2026">
+                  <button class="input-icon-right" type="button" data-password-toggle="register-password-confirm" aria-label="Mostrar contraseña"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span></button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+          <div class="wizard-pane" data-register-pane="2">
+            <div class="wizard-card">
+              <div class="wizard-card-title">Instructivo previo</div>
+              <div class="wizard-card-copy">Antes de continuar confirma que tienes la información necesaria para terminar el expediente sin interrupciones.</div>
+              <div class="list">
+                <label class="checkline"><input id="register-docs-id" type="checkbox" checked>Tengo mi documento de identificación vigente.</label>
+                <label class="checkline"><input id="register-docs-address" type="checkbox" checked>Tengo datos correctos de residencia y teléfonos de contacto.</label>
+                <label class="checkline"><input id="register-docs-bank" type="checkbox" checked>Tengo a mano al menos una cuenta bancaria válida para rendimientos o recompras.</label>
+                <label class="checkline"><input id="register-docs-fund" type="checkbox">Deseo crear un fondo inicial en este mismo flujo.</label>
+              </div>
+            </div>
+          </div>
+          <div class="wizard-pane register-personal-pane" data-register-pane="3">
+            <div class="wizard-grid-3 align-fields">
+              <div class="field"><label class="label" for="register-doc-type">Tipo de documento</label><select class="select" id="register-doc-type"><option value="dpi">DPI</option><option value="passport">Pasaporte</option></select></div>
+              <div class="field"><label class="label" for="register-doc-number">Número de documento</label><input class="input" id="register-doc-number" value="2456789010101"></div>
+              <div class="field"><label class="label" for="register-doc-expiry">Fecha vencimiento</label><input class="input" id="register-doc-expiry" type="date" value="2031-03-31"></div>
+            </div>
+            <div class="wizard-grid" style="margin-top:16px">
+              <div class="field"><label class="label" for="register-first-name">Primer nombre</label><input class="input" id="register-first-name" value="Andrea"></div>
+              <div class="field"><label class="label" for="register-last-name">Primer apellido</label><input class="input" id="register-last-name" value="Mendoza"></div>
+              <div class="field"><label class="label" for="register-birth-date">Fecha de nacimiento</label><input class="input" id="register-birth-date" type="date" value="1992-04-18"></div>
+              <div class="field"><label class="label" for="register-nationality">Nacionalidad</label><select class="select" id="register-nationality"><option>Guatemalteca</option><option>Salvadoreña</option><option>Hondureña</option></select></div>
+              <div class="field"><label class="label" for="register-birth-country">País de nacimiento</label><select class="select" id="register-birth-country"><option value="gt">Guatemala</option><option value="sv">El Salvador</option><option value="hn">Honduras</option></select></div>
+              <div class="field"><label class="label" for="register-residence-country">País de residencia</label><select class="select" id="register-residence-country"><option value="gt">Guatemala</option><option value="sv">El Salvador</option><option value="hn">Honduras</option></select></div>
+              <div class="field"><label class="label" for="register-birth-department">Departamento de nacimiento</label><select class="select" id="register-birth-department"><option>Guatemala</option><option>Sacatepéquez</option><option>Quetzaltenango</option></select></div>
+              <div class="field"><label class="label" for="register-birth-city">Municipio de nacimiento</label><select class="select" id="register-birth-city"><option>Guatemala</option><option>Mixco</option><option>Villa Nueva</option></select></div>
+              <div class="field field-span-2"><label class="label" for="register-address">Dirección de residencia</label><input class="input" id="register-address" value="15 avenida 12-34, zona 10"></div>
+              <div class="field"><label class="label" for="register-residence-department">Departamento de residencia</label><select class="select" id="register-residence-department"><option>Guatemala</option><option>Sacatepéquez</option><option>Quetzaltenango</option></select></div>
+              <div class="field"><label class="label" for="register-residence-city">Municipio de residencia</label><select class="select" id="register-residence-city"><option>Guatemala</option><option>Mixco</option><option>Villa Nueva</option></select></div>
+              <div class="field"><label class="label" for="register-residence-zone">Zona de residencia</label><select class="select" id="register-residence-zone"><option>Zona 10</option><option>Zona 14</option><option>Zona 15</option></select></div>
+              <div class="field">
+                <label class="label" for="register-mobile">Teléfono móvil</label>
+                <div class="input-prefix">
+                  <span class="input-prefix-label">+502</span>
+                  <input class="input" id="register-mobile" inputmode="numeric" value="5555-7788">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label" for="register-income">Monto de ingresos mensuales</label>
+                <div class="input-prefix">
+                  <span class="input-prefix-label">Q</span>
+                  <input class="input" id="register-income" type="number" step="0.01" min="0" value="18000.00">
+                </div>
+              </div>
+            </div>
+            <div class="field" style="margin-top:18px">
+              <label class="label">Condición PEP</label>
+              <div class="choice-row">
+                <label class="choice-chip"><input type="radio" name="register-pep" value="no" checked>No es PEP</label>
+                <label class="choice-chip"><input type="radio" name="register-pep" value="yes">Sí es PEP</label>
+              </div>
+            </div>
+            <div class="field" style="margin-top:16px">
+              <label class="label">Condición CPE</label>
+              <div class="choice-row">
+                <label class="choice-chip"><input type="radio" name="register-cpe" value="no" checked>No es CPE</label>
+                <label class="choice-chip"><input type="radio" name="register-cpe" value="yes">Sí es CPE</label>
+              </div>
+            </div>
+            <div class="alert alert-warning" style="margin-top:18px"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span><div>Si PEP o CPE es afirmativo, o si nacimiento y residencia son ambos fuera de Guatemala, el mock bloqueará la continuación como lo exige la regla del flujo.</div></div>
+          </div>
+          <div class="wizard-pane" data-register-pane="4">
+            <div class="wizard-grid">
+              <div class="field"><label class="label" for="register-bank-name">Banco</label><select class="select" id="register-bank-name"><option>Banco Industrial</option><option>G&amp;T Continental</option><option>BAC</option></select></div>
+              <div class="field"><label class="label" for="register-account-type">Tipo de cuenta</label><select class="select" id="register-account-type"><option>Monetaria</option><option>Ahorro</option></select></div>
+              <div class="field"><label class="label" for="register-account-currency">Moneda</label><select class="select" id="register-account-currency"><option>GTQ</option><option>USD</option></select></div>
+              <div class="field"><label class="label" for="register-account-number">Número de cuenta</label><input class="input" id="register-account-number" value="0412008517"></div>
+              <div class="field"><label class="label" for="register-account-holder">Nombre de la cuenta</label><input class="input" id="register-account-holder" value="Andrea Mendoza"></div>
+              <div class="field"><label class="label" for="register-secondary-account">Cuenta secundaria opcional</label><input class="input" id="register-secondary-account" placeholder="Opcional"></div>
+            </div>
+            <div class="wizard-card" style="margin-top:18px">
+              <div class="wizard-card-title">Uso de cuentas bancarias</div>
+              <div class="wizard-card-copy">Las cuentas registradas podrán utilizarse para pago de rendimientos o entrega de recompras, siempre que el expediente quede validado.</div>
+            </div>
+          </div>
+          <div class="wizard-pane" data-register-pane="5">
+            <div class="choice-row" style="margin-bottom:18px">
+              <label class="choice-chip"><input type="radio" name="register-create-fund" value="yes" checked>Crear fondo inicial ahora</label>
+              <label class="choice-chip"><input type="radio" name="register-create-fund" value="no">Crear fondo después</label>
+            </div>
+            <div id="register-fund-fields">
+              <div class="wizard-grid">
+                <div class="field"><label class="label" for="register-fund-product">Producto o fondo inicial</label><select class="select" id="register-fund-product"><option>Fondo Bursátil GTQ</option><option>Fondo Bursátil USD</option><option>Fondo a Plazo GTQ</option></select></div>
+                <div class="field">
+                  <label class="label" for="register-fund-amount">Monto inicial proyectado</label>
+                  <div class="input-prefix">
+                    <span class="input-prefix-label" id="register-fund-prefix">Q</span>
+                    <input class="input" id="register-fund-amount" type="number" step="0.01" min="0" value="10000.00">
+                  </div>
+                </div>
+              </div>
+              <div class="wizard-card" style="margin-top:18px">
+                <div class="wizard-card-title">Validación visible RF9</div>
+                <div class="wizard-card-copy">El monto proyectado se toma como referencia del expediente. La activación real del fondo seguirá el flujo posterior de confirmación de depósito y validación documental.</div>
+              </div>
+            </div>
+            <div class="wizard-summary" id="register-summary-card" style="margin-top:18px">
+              <div class="wizard-card-title">Resumen previo de envío</div>
+              <div class="wizard-summary-grid">
+                <div class="wizard-summary-item"><span>Correo</span><strong id="register-summary-email">cliente.nuevo@gmail.com</strong></div>
+                <div class="wizard-summary-item"><span>Documento</span><strong id="register-summary-document">DPI · 2456789010101</strong></div>
+                <div class="wizard-summary-item"><span>Banco principal</span><strong id="register-summary-bank">Banco Industrial · Monetaria</strong></div>
+                <div class="wizard-summary-item"><span>Fondo inicial</span><strong id="register-summary-fund">Fondo Bursátil GTQ · Q 10,000.00</strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="wizard-pane" data-register-pane="6">
+            <div class="register-complete">
+              <div class="register-complete-badge"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+              <div>
+                <div class="auth-title" style="font-size:28px;margin-bottom:6px">Expediente enviado</div>
+                <div class="auth-copy" style="margin-bottom:0">La solicitud fue registrada en el mock y queda pendiente de validación documental, activación por correo y revisión de cumplimiento.</div>
+              </div>
+              <div class="register-result">
+                <strong>Resultado del flujo</strong>
+                <div>Se generó una solicitud FEIS para <span id="register-result-email">cliente.nuevo@gmail.com</span>.</div>
+                <div>Estado inicial: <span class="pill pill-warning">Pendiente validación</span></div>
+                <code id="register-result-id">SOL-FEIS-2026-001</code>
+              </div>
+            </div>
+          </div>
+          <div class="auth-status" id="register-status"></div>
+          <div class="auth-actions wizard-actions">
+            <button class="btn btn-outline" type="button" id="register-back">Anterior</button>
+            <button class="btn btn-primary" type="button" id="register-next">Continuar</button>
+            <button class="btn btn-outline auth-hidden" type="button" id="register-go-login">Ir al login</button>
+            <button class="btn btn-outline auth-hidden" type="button" id="register-go-landing">Volver al inicio</button>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -980,7 +1197,13 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             <div class="field"><label class="label">Tipo de fondo</label><select class="select"><option>Fondo Bursátil GTQ</option><option>Fondo Bursátil USD</option></select></div>
           </div>
           <div class="field-grid">
-            <div class="field"><label class="label">Monto a invertir</label><input class="input" value="Q 25,000.00"></div>
+            <div class="field">
+              <label class="label">Monto a invertir</label>
+              <div class="input-prefix">
+                <span class="input-prefix-label">Q</span>
+                <input class="input" type="number" step="0.01" min="0" value="25000.00">
+              </div>
+            </div>
             <div class="field"><label class="label">Rendimientos</label><select class="select"><option>Capitalizar</option><option>Retirar a cuenta</option></select></div>
           </div>
           <div class="field"><label class="label">Banco origen</label><select class="select"><option>Banco Industrial · Monetaria · 041-200851-7</option><option>BAC · Ahorro · 003-445892-1</option></select><div class="hint">Se usan únicamente cuentas asociadas al titular o cotitular válido.</div></div>
@@ -1055,7 +1278,13 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         <div class="card">
           <div class="field-grid">
             <div class="field"><label class="label">Fondo</label><select class="select"><option>Fondo a Plazo GTQ</option></select></div>
-            <div class="field"><label class="label">Monto a retirar</label><input class="input" value="Q 5,000.00"></div>
+            <div class="field">
+              <label class="label">Monto a retirar</label>
+              <div class="input-prefix">
+                <span class="input-prefix-label">Q</span>
+                <input class="input" type="number" step="0.01" min="0" value="5000.00">
+              </div>
+            </div>
           </div>
           <div class="field-grid">
             <div class="field"><label class="label">Cuenta destino</label><select class="select"><option>Banco Industrial · 041-200851-7</option></select></div>
@@ -1331,7 +1560,8 @@ const authDb = {
 const authState = {
   pendingEmail:"",
   recoveryEmail:"",
-  generatedTempPassword:""
+  generatedTempPassword:"",
+  registerStep:0
 };
 const rememberedEmailKey = "pdei-web-mock-remembered-email";
 
@@ -1385,6 +1615,129 @@ function resetAuthFlow() {
   byId("password-update-form")?.reset();
 }
 
+const registerStepMeta = [
+  "Acepta términos y condiciones para iniciar el expediente digital.",
+  "Define el acceso inicial con correo único y contraseña válida.",
+  "Confirma que tienes la documentación necesaria para terminar el proceso.",
+  "Captura información personal y aplica restricciones visibles del flujo.",
+  "Registra al menos una cuenta bancaria habilitada para rendimientos o recompras.",
+  "Selecciona si crearás un fondo inicial ahora y revisa el resumen previo.",
+  "Solicitud completada y pendiente de validación."
+];
+
+function getPepValue() {
+  return document.querySelector('input[name="register-pep"]:checked')?.value || "no";
+}
+
+function getCpeValue() {
+  return document.querySelector('input[name="register-cpe"]:checked')?.value || "no";
+}
+
+function getCreateFundValue() {
+  return document.querySelector('input[name="register-create-fund"]:checked')?.value || "yes";
+}
+
+function getRegisterFundCurrency() {
+  return byId("register-fund-product")?.value.includes("USD") ? "$" : "Q";
+}
+
+function formatDecimalAmount(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return value || "-";
+  return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function updateRegisterSummary() {
+  const email = byId("register-email")?.value.trim() || "-";
+  const docType = byId("register-doc-type")?.selectedOptions[0]?.textContent || "-";
+  const docNumber = byId("register-doc-number")?.value.trim() || "-";
+  const bank = byId("register-bank-name")?.value || "-";
+  const accountType = byId("register-account-type")?.value || "-";
+  const fundProduct = byId("register-fund-product")?.value || "No definido";
+  const fundAmount = formatDecimalAmount(byId("register-fund-amount")?.value.trim());
+  const fundCurrency = getRegisterFundCurrency();
+  const createFund = getCreateFundValue() === "yes";
+  byId("register-fund-prefix").textContent = fundCurrency;
+  byId("register-summary-email").textContent = email;
+  byId("register-summary-document").textContent = `${docType} · ${docNumber}`;
+  byId("register-summary-bank").textContent = `${bank} · ${accountType}`;
+  byId("register-summary-fund").textContent = createFund ? `${fundProduct} · ${fundCurrency} ${fundAmount}` : "Se creará más adelante";
+  byId("register-result-email").textContent = email;
+}
+
+function renderRegisterStep() {
+  const step = authState.registerStep;
+  byId("register-step-copy").textContent = registerStepMeta[step];
+  document.querySelectorAll("[data-register-pane]").forEach((pane, index) => {
+    pane.classList.toggle("active", index === step);
+  });
+  document.querySelectorAll("#register-steps .step-item").forEach((item, index) => {
+    item.classList.toggle("done", index < step);
+    item.classList.toggle("active", index === step);
+  });
+  byId("register-back").classList.toggle("auth-hidden", step === 0 || step === 6);
+  byId("register-next").classList.toggle("auth-hidden", step === 6);
+  byId("register-go-login").classList.toggle("auth-hidden", step !== 6);
+  byId("register-go-landing").classList.toggle("auth-hidden", step !== 6);
+  byId("register-next").textContent = step === 5 ? "Enviar solicitud" : "Continuar";
+  byId("register-fund-fields").classList.toggle("auth-hidden", getCreateFundValue() !== "yes");
+  updateRegisterSummary();
+}
+
+function validateRegisterStep(step) {
+  setStatus("register-status", "", "");
+  if (step === 0 && !byId("register-accept-terms").checked) {
+    return "Debes aceptar los términos y condiciones para continuar.";
+  }
+  if (step === 1) {
+    const email = byId("register-email").value.trim().toLowerCase();
+    const emailConfirm = byId("register-email-confirm").value.trim().toLowerCase();
+    const password = byId("register-password").value;
+    const passwordConfirm = byId("register-password-confirm").value;
+    if (!email || !emailConfirm || !password || !passwordConfirm) return "Completa correo y contraseña en ambos campos.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "El correo electrónico no tiene un formato válido.";
+    if (email !== emailConfirm) return "La confirmación del correo electrónico no coincide.";
+    if (getUser(email)) return "Ese correo ya existe en el mock y debe ser único por cliente.";
+    if (!/^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(password)) return "La contraseña debe tener al menos 8 caracteres, letras y números.";
+    if (password !== passwordConfirm) return "La confirmación de contraseña no coincide.";
+  }
+  if (step === 2) {
+    const checks = ["register-docs-id","register-docs-address","register-docs-bank"];
+    if (checks.some(id => !byId(id).checked)) return "Debes confirmar la documentación mínima antes de continuar.";
+  }
+  if (step === 3) {
+    const required = [
+      "register-doc-number",
+      "register-doc-expiry",
+      "register-first-name",
+      "register-last-name",
+      "register-birth-date",
+      "register-address",
+      "register-birth-department",
+      "register-birth-city",
+      "register-residence-department",
+      "register-residence-city",
+      "register-residence-zone",
+      "register-mobile",
+      "register-income"
+    ];
+    if (required.some(id => !byId(id).value.trim())) return "Completa todos los datos personales requeridos.";
+    if (getPepValue() === "yes") return "El flujo FEIS no permite continuar si el cliente se identifica como PEP.";
+    if (getCpeValue() === "yes") return "El flujo FEIS no permite continuar si el cliente se identifica como CPE.";
+    if (byId("register-birth-country").value !== "gt" && byId("register-residence-country").value !== "gt") {
+      return "El mock bloquea el flujo si nacimiento y residencia son ambos fuera de Guatemala.";
+    }
+  }
+  if (step === 4) {
+    const required = ["register-account-number","register-account-holder"];
+    if (required.some(id => !byId(id).value.trim())) return "Debes ingresar una cuenta bancaria principal válida.";
+  }
+  if (step === 5 && getCreateFundValue() === "yes") {
+    if (!byId("register-fund-amount").value.trim()) return "Ingresa el monto proyectado del fondo inicial.";
+  }
+  return "";
+}
+
 function showView(name) {
   items.forEach(item => item.classList.toggle("active", item.dataset.view === name));
   views.forEach(view => view.classList.toggle("active", view.id === "view-" + name));
@@ -1398,6 +1751,7 @@ function showView(name) {
     group.classList.toggle("open", isActiveParent);
   });
   if (name === "twofa") prepareTwofaView();
+  if (name === "register") renderRegisterStep();
 }
 
 items.forEach(item => {
@@ -1588,6 +1942,54 @@ byId("recovery-use-temp")?.addEventListener("click", () => {
 byId("logout-link")?.addEventListener("click", event => {
   event.preventDefault();
   resetAuthFlow();
+  showView("landing");
+});
+
+document.querySelectorAll('input[name="register-create-fund"]').forEach(input => {
+  input.addEventListener("change", renderRegisterStep);
+});
+
+byId("register-form")?.addEventListener("submit", event => {
+  event.preventDefault();
+});
+
+["register-email","register-doc-type","register-doc-number","register-bank-name","register-account-type","register-fund-product","register-fund-amount"].forEach(id => {
+  byId(id)?.addEventListener("input", updateRegisterSummary);
+  byId(id)?.addEventListener("change", updateRegisterSummary);
+});
+
+byId("register-back")?.addEventListener("click", () => {
+  if (authState.registerStep > 0) {
+    authState.registerStep -= 1;
+    renderRegisterStep();
+  }
+});
+
+byId("register-next")?.addEventListener("click", () => {
+  const error = validateRegisterStep(authState.registerStep);
+  if (error) {
+    setStatus("register-status", "error", error);
+    return;
+  }
+  if (authState.registerStep < 6) {
+    authState.registerStep += 1;
+    if (authState.registerStep === 6) {
+      byId("register-result-id").textContent = `SOL-FEIS-${new Date().getFullYear()}-001`;
+      setStatus("register-status", "success", "Solicitud generada correctamente en el mock.");
+    } else {
+      setStatus("register-status", "", "");
+    }
+    renderRegisterStep();
+  }
+});
+
+byId("register-go-login")?.addEventListener("click", () => {
+  loginEmail.value = byId("register-email").value.trim();
+  setStatus("login-status", "info", "La solicitud quedó enviada. El acceso real seguirá pendiente de validación y activación.");
+  showView("login");
+});
+
+byId("register-go-landing")?.addEventListener("click", () => {
   showView("landing");
 });
 
