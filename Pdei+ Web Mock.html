@@ -64,23 +64,6 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
   width:40px;height:40px;border-radius:50%;background:var(--aqua);color:var(--navy);
   display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0
 }
-.sb-group{
-  padding:8px 10px 0
-}
-.sb-group-toggle{
-  width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:10px 10px;border:none;background:transparent;color:rgba(255,255,255,.42);
-  font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;cursor:pointer
-}
-.sb-group-toggle:hover{color:rgba(255,255,255,.72)}
-.sb-group-left{display:flex;align-items:center;gap:10px}
-.sb-caret{width:14px;height:14px;display:inline-flex;transition:transform .18s ease}
-.sb-group.open .sb-caret{transform:rotate(90deg)}
-.sb-group-items{display:none;padding-top:2px}
-.sb-group.open .sb-group-items{display:block}
-.sb-group.active-parent .sb-group-toggle{color:#fff}
-.sb-group.active-parent .sb-group-left .icon{color:var(--aqua)}
-.sb-group:first-of-type{padding-top:14px}
 .sb-item.active{
   background:rgba(255,255,255,.12);color:#fff
 }
@@ -90,6 +73,7 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 }
 .sb-item:hover{background:rgba(255,255,255,.08);color:#fff}
 .sb-item.active .icon{color:var(--aqua)}
+.sb-nav{padding:14px 0 0}
 .sb-bottom{margin-top:auto;padding:12px 8px;border-top:1px solid rgba(255,255,255,.08)}
 .icon{width:18px;height:18px;display:inline-flex;flex-shrink:0}
 
@@ -494,6 +478,28 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .wizard-card.active{border-color:rgba(0,205,229,.55);background:rgba(0,205,229,.06)}
 .wizard-card-title{font-size:14px;font-weight:700;color:var(--navy)}
 .wizard-card-copy{font-size:13px;color:var(--text-sec);line-height:1.5}
+.product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.product-option{
+  width:100%;text-align:left;border:1px solid var(--border);border-radius:16px;padding:18px;background:#fff;cursor:pointer;transition:.18s
+}
+.product-option:hover{border-color:#cfd8e8;transform:translateY(-1px)}
+.product-option.active{border-color:rgba(0,205,229,.58);background:rgba(0,205,229,.06)}
+.product-option-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.product-option-title{font-size:16px;font-weight:800;color:var(--navy)}
+.product-option-copy{font-size:13px;color:var(--text-sec);line-height:1.5}
+.product-option-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.summary-kv{display:grid;gap:12px}
+.summary-kv-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)}
+.summary-kv-row:last-child{border-bottom:none}
+.summary-kv-label{font-size:12px;color:var(--text-lt);text-transform:uppercase;letter-spacing:.7px;font-weight:700}
+.summary-kv-value{font-size:14px;font-weight:600;color:var(--text);text-align:right}
+.limit-copy{display:grid;gap:8px}
+.wizard-complete{display:grid;gap:18px}
+.wizard-complete-actions{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.beneficiary-list{display:grid;gap:14px}
+.beneficiary-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(140px,.7fr);gap:14px;align-items:end}
+.beneficiary-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.case-step-index{font-size:20px;font-weight:800;color:var(--navy);line-height:1;min-width:14px;text-align:center}
 .wizard-summary{
   display:grid;gap:14px;padding:18px;border:1px solid var(--border);border-radius:18px;background:#fff
 }
@@ -527,6 +533,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
 @media (max-width:1180px){
   .grid-4,.grid-3,.grid-2,.dual,.field-grid,.field-grid-3,.kv{grid-template-columns:1fr}
   .page-head{flex-direction:column}
+  .product-grid{grid-template-columns:1fr}
   .fund-row{display:flex;align-items:flex-start;flex-wrap:wrap}
   .featured-funds .fund-row{display:flex}
   .featured-funds .fund-actions{display:grid;width:100%;grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -540,6 +547,9 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   .auth-hero h1{font-size:38px}
   .portfolio-toolbar,.portfolio-filters,.portfolio-summary,.movements-toolbar,.movements-filters,.movements-kpis,.movements-period-bar,.movements-range{grid-template-columns:1fr}
   .account-card-head{flex-direction:column;align-items:flex-start}
+  .summary-kv-row,.wizard-complete-actions{flex-direction:column;align-items:flex-start}
+  .summary-kv-value{text-align:left}
+  .beneficiary-row{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -548,59 +558,12 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   <div class="brand">
     <div class="brand-name">Pdei<span>+</span></div>
   </div>
-  <div class="sb-group" data-group="access">
-    <button class="sb-group-toggle" type="button">
-      <span class="sb-group-left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg></span>Acceso</span>
-      <span class="sb-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span>
-    </button>
-    <div class="sb-group-items">
-      <a class="sb-item" data-view="landing"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg></span>Landing</a>
-      <a class="sb-item" data-view="login"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg></span>Login</a>
-      <a class="sb-item" data-view="twofa"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 1 1 8 0v4"></path></svg></span>2FA</a>
-      <a class="sb-item" data-view="recovery"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 1 1 5.82 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg></span>Recuperación</a>
-      <a class="sb-item" data-view="register"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></span>Registro</a>
-    </div>
-  </div>
-
-  <div class="sb-group" data-group="main">
-    <button class="sb-group-toggle" type="button">
-      <span class="sb-group-left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></span>Principal</span>
-      <span class="sb-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span>
-    </button>
-    <div class="sb-group-items">
-      <a class="sb-item" data-view="dashboard"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></span>Dashboard</a>
-      <a class="sb-item" data-view="portfolio"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></span>Mi Portafolio</a>
-      <a class="sb-item" data-view="fund-detail"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.5 8.5-5-5L2 17"></path><path d="M16 7h6v6"></path></svg></span>Detalle de Fondo</a>
-      <a class="sb-item" data-view="new-fund"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></span>Nuevo Fondo</a>
-    </div>
-  </div>
-
-  <div class="sb-group" data-group="operations">
-    <button class="sb-group-toggle" type="button">
-      <span class="sb-group-left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><path d="M17 8H9.5a2.5 2.5 0 0 0 0 5h5a2.5 2.5 0 0 1 0 5H6"></path></svg></span>Operaciones</span>
-      <span class="sb-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span>
-    </button>
-    <div class="sb-group-items">
-      <a class="sb-item" data-view="new-investment"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg></span>Nueva Inversión</a>
-      <a class="sb-item" data-view="confirm-deposit"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M21 21H3"></path></svg></span>Confirmar Depósito</a>
-      <a class="sb-item" data-view="redemption"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v6h6"></path><path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path><path d="M21 22v-6h-6"></path><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path></svg></span>Recompras</a>
-      <a class="sb-item" data-view="movements"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg></span>Movimientos</a>
-    </div>
-  </div>
-
-  <div class="sb-group" data-group="settings">
-    <button class="sb-group-toggle" type="button">
-      <span class="sb-group-left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 8.92 4.6H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.36.41.58.93.6 1.48V11a2 2 0 1 1 0 4h-.09c-.55.02-1.07.24-1.51.6Z"></path></svg></span>Configuración</span>
-      <span class="sb-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span>
-    </button>
-    <div class="sb-group-items">
-      <a class="sb-item" data-view="profile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a6 6 0 0 0-12 0"></path><circle cx="12" cy="11" r="4"></circle><circle cx="12" cy="12" r="10"></circle></svg></span>Mi Perfil</a>
-      <a class="sb-item" data-view="new-account"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"></path><path d="M5 20V8.6a1 1 0 0 1 .55-.9l6-3a1 1 0 0 1 .9 0l6 3a1 1 0 0 1 .55.9V20"></path><path d="M12 10v10"></path></svg></span>Nueva Cuenta</a>
-      <a class="sb-item" data-view="holders"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a6 6 0 0 0-12 0"></path><circle cx="12" cy="11" r="4"></circle><circle cx="12" cy="12" r="10"></circle></svg></span>Titulares</a>
-      <a class="sb-item" data-view="beneficiaries"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>Beneficiarios</a>
-      <a class="sb-item" data-view="signatories"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></span>Otros Firmantes</a>
-    </div>
-  </div>
+  <nav class="sb-nav" aria-label="Navegación principal">
+    <a class="sb-item" data-view="dashboard"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></span>Dashboard</a>
+    <a class="sb-item" data-view="portfolio"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></span>Mi Portafolio</a>
+    <a class="sb-item" data-view="movements"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg></span>Movimientos</a>
+    <a class="sb-item" data-view="profile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a6 6 0 0 0-12 0"></path><circle cx="12" cy="11" r="4"></circle><circle cx="12" cy="12" r="10"></circle></svg></span>Mi Perfil</a>
+  </nav>
 
   <div class="sb-bottom">
     <a class="sb-item" id="logout-link"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg></span>Cerrar Sesión</a>
@@ -1567,31 +1530,40 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="dual">
       <div class="stack">
         <div class="alert alert-warning"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>El fondo no se activará hasta validar el depósito y el comprobante asociado.</div></div>
+        <div class="auth-status" id="confirm-deposit-status"></div>
         <div class="card">
           <div class="section-title">Datos de depósito</div>
           <div class="kv">
-            <div><span>Banco receptor</span>Banco Industrial</div>
-            <div><span>Cuenta</span>040-0012345-6</div>
-            <div><span>Moneda</span>GTQ</div>
+            <div><span>Cuenta origen Pdei+</span><span id="confirm-deposit-source-account">Cuenta 002</span></div>
+            <div><span>Producto</span><span id="confirm-deposit-product">Fondo Crecimiento GTQ</span></div>
+            <div><span>Banco receptor</span><span id="confirm-deposit-bank">Banco Industrial</span></div>
+            <div><span>Cuenta</span><span id="confirm-deposit-bank-account">040-0012345-6</span></div>
+            <div><span>Moneda</span><span id="confirm-deposit-currency">GTQ</span></div>
             <div><span>A nombre de</span>Portafolio de Inversiones, S.A.</div>
-            <div><span>Monto esperado</span>Q 10,000.00</div>
-            <div><span>Referencia</span>FEIS-00123-ANA</div>
+            <div><span>Monto esperado</span><span class="money" id="confirm-deposit-amount">Q 10,000.00</span></div>
+            <div><span>Referencia</span><span id="confirm-deposit-reference">FEIS-002-CRECIMIENTO</span></div>
+            <div><span>Alias</span><span id="confirm-deposit-alias">Sin alias</span></div>
           </div>
         </div>
         <div class="card">
           <div class="section-title">Comprobante</div>
-          <div class="field"><label class="label">Archivo cargado</label><input class="input" value="comprobante_transferencia.pdf" readonly></div>
-          <div class="hint" style="margin-top:8px">Mock sin integración. Se muestra el estado esperado del flujo.</div>
+          <div class="field"><label class="label" for="confirm-deposit-file">Archivo</label><input class="input" id="confirm-deposit-file" type="file" accept=".pdf,.png,.jpg,.jpeg"></div>
+          <div class="field"><label class="label" for="confirm-deposit-date">Fecha del depósito</label><input class="input" id="confirm-deposit-date" type="date" value="2026-05-02"></div>
+          <div class="field"><label class="label">Archivo seleccionado</label><input class="input" id="confirm-deposit-file-name" value="Sin archivo cargado" readonly></div>
+          <div class="hint" style="margin-top:8px">El mock valida que exista un archivo o imagen de soporte antes de confirmar la recepción de fondos.</div>
         </div>
       </div>
       <div class="card">
         <div class="card-title">Estado del caso</div>
         <div class="list">
-          <div class="person"><div class="person-avatar">1</div><div><div class="person-name">Depósito realizado</div><div class="person-meta">Capturado por el cliente</div></div></div>
-          <div class="person"><div class="person-avatar">2</div><div><div class="person-name">Comprobante adjunto</div><div class="person-meta">Pendiente de validación interna</div></div></div>
-          <div class="person"><div class="person-avatar">3</div><div><div class="person-name">Activación del fondo</div><div class="person-meta">Se habilita después de aprobar evidencia</div></div></div>
+          <div class="person"><div class="case-step-index">1</div><div><div class="person-name">Depósito realizado</div><div class="person-meta" id="confirm-deposit-step-one">Monto esperado capturado para el producto seleccionado.</div></div></div>
+          <div class="person"><div class="case-step-index">2</div><div><div class="person-name">Comprobante adjunto</div><div class="person-meta" id="confirm-deposit-step-two">Pendiente de validación interna</div></div></div>
+          <div class="person"><div class="case-step-index">3</div><div><div class="person-name">Activación del fondo</div><div class="person-meta" id="confirm-deposit-step-three">Se habilita después de aprobar evidencia</div></div></div>
         </div>
-        <button class="btn btn-primary" style="margin-top:18px" data-view-target="dashboard">Confirmar depósito</button>
+        <div class="btn-row" style="margin-top:18px">
+          <button class="btn btn-outline" type="button" id="confirm-deposit-back">Volver al portafolio</button>
+          <button class="btn btn-primary" type="button" id="confirm-deposit-submit">Confirmar depósito</button>
+        </div>
       </div>
     </div>
   </section>
@@ -1779,17 +1751,182 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         <div class="page-sub">RF9 · Creación de fondo sobre una cuenta existente, con selección de producto y validaciones del expediente.</div>
       </div>
     </div>
+    <div class="alert alert-warning auth-hidden" id="new-fund-gate"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span><div id="new-fund-gate-copy">Solo un cliente activo puede crear nuevos fondos o productos según RF9.</div></div>
+    <div class="auth-status" id="new-fund-status"></div>
     <div class="card">
-      <div class="step-bar">
-        <div class="step-item active"><div class="step-dot">1</div><div class="step-lbl">Producto</div></div>
+      <div class="step-bar" id="new-fund-steps">
+        <div class="step-item active"><div class="step-dot">1</div><div class="step-lbl">Cuenta y producto</div></div>
         <div class="step-item"><div class="step-dot">2</div><div class="step-lbl">Monto</div></div>
-        <div class="step-item"><div class="step-dot">3</div><div class="step-lbl">Beneficiarios</div></div>
-        <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Depósito</div></div>
+        <div class="step-item"><div class="step-dot">3</div><div class="step-lbl">Participantes</div></div>
+        <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Resumen</div></div>
+        <div class="step-item"><div class="step-dot">5</div><div class="step-lbl">Firma</div></div>
       </div>
-      <div class="grid grid-3">
-        <div class="card"><div class="card-title">Fondo Bursátil GTQ</div><div class="card-sub">5.5% anual estimado · Inversión mínima <span class="money">Q 500.00</span></div><button class="btn btn-primary" data-view-target="confirm-deposit">Seleccionar</button></div>
-        <div class="card"><div class="card-title">Fondo Bursátil USD</div><div class="card-sub">3.8% anual estimado · Inversión mínima <span class="money">$ 100.00</span></div><button class="btn btn-outline" data-view-target="confirm-deposit">Seleccionar</button></div>
-        <div class="card"><div class="card-title">Fondo a Plazo GTQ</div><div class="card-sub">7.2% anual · Permanencia mínima 30 días</div><button class="btn btn-outline" data-view-target="confirm-deposit">Seleccionar</button></div>
+      <div class="wizard-pane active" data-new-fund-pane="0">
+        <div class="grid grid-2">
+          <div class="field">
+            <label class="label" for="new-fund-account">Cuenta existente</label>
+            <select class="select" id="new-fund-account">
+              <option value="001">Cuenta 001</option>
+              <option value="002">Cuenta 002</option>
+            </select>
+          </div>
+          <div class="wizard-card active">
+            <div class="wizard-card-title">Contexto de cuenta</div>
+            <div class="wizard-card-copy" id="new-fund-account-copy">Cuenta 001 · Alfredo García López y Laura Morales de García</div>
+          </div>
+        </div>
+        <div class="wizard-card" style="margin-top:18px">
+          <div class="wizard-card-title">Productos disponibles</div>
+          <div class="wizard-card-copy">RF9 exige mostrar características, restricciones y requisitos antes de seleccionar el fondo o producto que se ajusta a la inversión.</div>
+          <div class="product-grid" style="margin-top:16px">
+            <button class="product-option active" type="button" data-new-fund-product="bursatil-gtq">
+              <div class="product-option-top">
+                <div class="product-option-title">Fondo Bursátil GTQ</div>
+                <span class="pill pill-success">Vigente</span>
+              </div>
+              <div class="product-option-copy">5.5% anual estimado · capitalización o acreditación de rendimientos · inversión mínima visible del mock.</div>
+              <div class="product-option-meta">
+                <span class="pill pill-neutral">Mínimo Q 500.00</span>
+                <span class="pill pill-neutral">Sin permanencia</span>
+              </div>
+            </button>
+            <button class="product-option" type="button" data-new-fund-product="bursatil-usd">
+              <div class="product-option-top">
+                <div class="product-option-title">Fondo Bursátil USD</div>
+                <span class="pill pill-info">USD</span>
+              </div>
+              <div class="product-option-copy">3.8% anual estimado · admite manejo de rendimientos y aplica límite FEIS visible del mock.</div>
+              <div class="product-option-meta">
+                <span class="pill pill-neutral">Mínimo $ 100.00</span>
+                <span class="pill pill-neutral">Sin permanencia</span>
+              </div>
+            </button>
+            <button class="product-option" type="button" data-new-fund-product="plazo-gtq">
+              <div class="product-option-top">
+                <div class="product-option-title">Fondo a Plazo GTQ</div>
+                <span class="pill pill-warning">30 días</span>
+              </div>
+              <div class="product-option-copy">7.2% anual · requiere permanencia mínima y define manejo de rendimientos al vencimiento.</div>
+              <div class="product-option-meta">
+                <span class="pill pill-neutral">Mínimo Q 1,000.00</span>
+                <span class="pill pill-neutral">Recompra parcial</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-pane" data-new-fund-pane="1">
+        <div class="wizard-grid">
+          <div class="field">
+            <label class="label" for="new-fund-amount">Monto a invertir</label>
+            <div class="input-prefix">
+              <span class="input-prefix-label" id="new-fund-amount-prefix">Q</span>
+              <input class="input" id="new-fund-amount" type="number" step="0.01" min="0" value="10000.00">
+            </div>
+          </div>
+          <div class="field" id="new-fund-yield-field">
+            <label class="label" for="new-fund-yield-mode">Manejo de rendimientos</label>
+            <select class="select" id="new-fund-yield-mode">
+              <option value="capitalizar">Capitalizar en el producto</option>
+              <option value="acreditar">Acreditar a cuenta bancaria</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="label" for="new-fund-alias">Alias del producto</label>
+            <input class="input" id="new-fund-alias" maxlength="22" placeholder="Opcional, máximo 22 caracteres">
+          </div>
+        </div>
+        <div class="wizard-card" style="margin-top:18px">
+          <div class="wizard-card-title">Restricción visible RF9</div>
+          <div class="limit-copy" id="new-fund-limit-copy"></div>
+        </div>
+      </div>
+      <div class="wizard-pane" data-new-fund-pane="2">
+        <div class="field">
+          <label class="label">Beneficiarios</label>
+          <div class="choice-row">
+            <label class="choice-chip"><input type="radio" name="new-fund-beneficiaries-mode" value="yes" checked>Gestionar beneficiarios ahora</label>
+            <label class="choice-chip"><input type="radio" name="new-fund-beneficiaries-mode" value="no">Sin beneficiarios en este producto</label>
+          </div>
+        </div>
+        <div id="new-fund-beneficiaries-fields" style="margin-top:18px">
+          <div class="beneficiary-tools">
+            <span class="pill pill-info" id="new-fund-beneficiaries-total">100.00% distribuido</span>
+            <button class="btn btn-outline btn-sm" type="button" id="new-fund-add-beneficiary">Agregar beneficiario</button>
+          </div>
+          <div class="beneficiary-list" style="margin-top:14px">
+            <div class="beneficiary-row">
+              <div class="field"><label class="label" for="new-fund-beneficiary-1">Beneficiario 1</label><input class="input" id="new-fund-beneficiary-1" value="Sofía Mendoza"></div>
+              <div class="field">
+                <label class="label" for="new-fund-beneficiary-1-pct">Porcentaje 1</label>
+                <div class="input-prefix">
+                  <input class="input" id="new-fund-beneficiary-1-pct" type="number" step="0.01" min="0" max="100" value="60.00">
+                  <span class="input-prefix-label">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="beneficiary-row">
+              <div class="field"><label class="label" for="new-fund-beneficiary-2">Beneficiario 2</label><input class="input" id="new-fund-beneficiary-2" value="Diego Mendoza"></div>
+              <div class="field">
+                <label class="label" for="new-fund-beneficiary-2-pct">Porcentaje 2</label>
+                <div class="input-prefix">
+                  <input class="input" id="new-fund-beneficiary-2-pct" type="number" step="0.01" min="0" max="100" value="40.00">
+                  <span class="input-prefix-label">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="beneficiary-row auth-hidden" id="new-fund-beneficiary-3-row">
+              <div class="field"><label class="label" for="new-fund-beneficiary-3">Beneficiario 3</label><input class="input" id="new-fund-beneficiary-3" placeholder="Nombre completo"></div>
+              <div class="field">
+                <label class="label" for="new-fund-beneficiary-3-pct">Porcentaje 3</label>
+                <div class="input-prefix">
+                  <input class="input" id="new-fund-beneficiary-3-pct" type="number" step="0.01" min="0" max="100" value="">
+                  <span class="input-prefix-label">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="alert alert-info" style="margin-top:18px"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span><div>RF9 exige que, si el producto incluye beneficiarios, la distribución sume exactamente 100% antes de continuar.</div></div>
+        </div>
+        <div class="field" style="margin-top:18px">
+          <label class="label">Otros firmantes</label>
+          <div class="choice-row">
+            <label class="choice-chip"><input type="radio" name="new-fund-signatories-mode" value="no" checked>Sin otros firmantes</label>
+            <label class="choice-chip"><input type="radio" name="new-fund-signatories-mode" value="yes">Gestionar otro firmante</label>
+          </div>
+        </div>
+        <div id="new-fund-signatories-fields" class="wizard-grid auth-hidden" style="margin-top:18px">
+          <div class="field"><label class="label" for="new-fund-signatory-name">Nombre del firmante</label><input class="input" id="new-fund-signatory-name" placeholder="Nombre completo"></div>
+          <div class="field"><label class="label" for="new-fund-signatory-document">Documento del firmante</label><input class="input" id="new-fund-signatory-document" placeholder="DPI o pasaporte"></div>
+        </div>
+      </div>
+      <div class="wizard-pane" data-new-fund-pane="3">
+        <div class="card-sub" style="margin-bottom:18px">RF9 permite revisar y modificar la información antes de confirmar la creación del nuevo fondo o producto.</div>
+        <div class="summary-kv" id="new-fund-summary"></div>
+        <label class="checkline" style="margin-top:18px"><input id="new-fund-review-check" type="checkbox">Confirmo que revisé la información y deseo continuar con la generación de documentos para firma.</label>
+      </div>
+      <div class="wizard-pane" data-new-fund-pane="4">
+        <div class="wizard-complete">
+          <div class="register-complete-badge"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+          <div>
+            <div class="auth-title" style="font-size:28px;margin-bottom:6px">Solicitud de fondo generada</div>
+            <div class="auth-copy" style="margin-bottom:0">El mock deja el producto en preparación documental. El siguiente paso real es revisar el correo, firmar los documentos y luego confirmar la recepción de fondos según RF13.</div>
+          </div>
+          <div class="register-result">
+            <strong>Resultado del flujo</strong>
+            <div id="new-fund-result-line">Cuenta 001 · Fondo Bursátil GTQ · Q 10,000.00</div>
+            <div>Estado inicial: <span class="pill pill-warning">Pendiente de firma</span></div>
+            <code id="new-fund-result-id">NF-2026-001</code>
+          </div>
+          <div class="wizard-complete-actions">
+            <button class="btn btn-outline" type="button" id="new-fund-go-portfolio">Volver al portafolio</button>
+            <button class="btn btn-primary" type="button" id="new-fund-go-deposit">Simular documentos firmados</button>
+          </div>
+        </div>
+      </div>
+      <div class="auth-actions wizard-actions">
+        <button class="btn btn-outline" type="button" id="new-fund-back">Anterior</button>
+        <button class="btn btn-primary" type="button" id="new-fund-next">Continuar</button>
       </div>
     </div>
   </section>
@@ -1921,32 +2058,10 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
 const items = document.querySelectorAll(".sb-item[data-view]");
 const views = document.querySelectorAll(".view");
 const title = document.getElementById("header-title");
-const groups = document.querySelectorAll(".sb-group");
 const moreMenus = document.querySelectorAll(".more-menu");
 const authViews = new Set(["landing","login","twofa","recovery","password-update","register"]);
 const eyeOpenIcon = '<span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>';
 const eyeOffIcon = '<span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 3 18 18"></path><path d="M10.58 10.58a2 2 0 1 0 2.83 2.83"></path><path d="M9.36 5.37A9.9 9.9 0 0 1 12 5c6.5 0 10 7 10 7a18.2 18.2 0 0 1-2.53 3.36"></path><path d="M6.23 6.23A18.7 18.7 0 0 0 2 12s3.5 7 10 7a9.9 9.9 0 0 0 5.27-1.47"></path></svg></span>';
-const viewGroupMap = {
-  landing:"access",
-  login:"access",
-  twofa:"access",
-  recovery:"access",
-  "password-update":"access",
-  register:"access",
-  dashboard:"main",
-  portfolio:"main",
-  "fund-detail":"main",
-  "new-fund":"main",
-  "new-investment":"operations",
-  "confirm-deposit":"operations",
-  redemption:"operations",
-  movements:"operations",
-  beneficiaries:"settings",
-  signatories:"settings",
-  holders:"settings",
-  "new-account":"settings",
-  profile:"settings"
-};
 const authDb = {
   "alfredo.garcia@gmail.com": {
     name:"Alfredo Garcia",
@@ -1977,6 +2092,26 @@ const authState = {
   registerStep:0,
   dashboardState:"active",
   selectedFund:"bursatil-gtq",
+  newFundStep:0,
+  newFund:{
+    account:"001",
+    product:"bursatil-gtq",
+    amount:"10000.00",
+    yieldMode:"capitalizar",
+    alias:"",
+    beneficiariesMode:"yes",
+    beneficiary1:"Sofía Mendoza",
+    beneficiary1Pct:"60.00",
+    beneficiary2:"Diego Mendoza",
+    beneficiary2Pct:"40.00",
+    beneficiary3:"",
+    beneficiary3Pct:"",
+    signatoriesMode:"no",
+    signatoryName:"",
+    signatoryDocument:"",
+    receiptFileName:"",
+    receiptDate:"2026-05-02"
+  },
   profileEditMode:false,
   profileFinancialEditMode:false
 };
@@ -2126,6 +2261,64 @@ const movementsData = [
   { date:"2026-04-12", description:"Rendimiento capitalizado", status:"Aplicado", account:"002", fund:"bursatil-usd", debit:"", credit:"$ 56.00", balance:"$ 1,200.00", kind:"credit" },
   { date:"2026-04-08", description:"Depósito informado", status:"Pendiente validación", account:"002", fund:"crecimiento-gtq", debit:"", credit:"Q 10,000.00", balance:"Q 10,000.00", kind:"credit" }
 ];
+const newFundAccounts = {
+  "001": {
+    label:"Cuenta 001",
+    holders:["Alfredo García López","Laura Morales de García"],
+    exposure:{ Q:114320, "$":0 }
+  },
+  "002": {
+    label:"Cuenta 002",
+    holders:["Alfredo García López"],
+    exposure:{ Q:10000, "$":1600 }
+  }
+};
+const newFundProducts = {
+  "bursatil-gtq": {
+    title:"Fondo Bursátil GTQ",
+    currency:"Q",
+    min:500,
+    limit:150000,
+    yieldLabel:"Capitalizar en el producto",
+    allowsYield:true,
+    reserveOnCap:500,
+    bank:"Banco Industrial",
+    bankAccount:"040-0012345-6"
+  },
+  "bursatil-usd": {
+    title:"Fondo Bursátil USD",
+    currency:"$",
+    min:100,
+    limit:25000,
+    yieldLabel:"Capitalizar en el producto",
+    allowsYield:true,
+    reserveOnCap:100,
+    bank:"G&T Continental",
+    bankAccount:"013-889002-1"
+  },
+  "plazo-gtq": {
+    title:"Fondo a Plazo GTQ",
+    currency:"Q",
+    min:1000,
+    limit:150000,
+    yieldLabel:"Capitalizar al vencimiento",
+    allowsYield:true,
+    reserveOnCap:1000,
+    bank:"Banco Industrial",
+    bankAccount:"040-0012345-6"
+  },
+  "crecimiento-gtq": {
+    title:"Fondo Crecimiento GTQ",
+    currency:"Q",
+    min:10000,
+    limit:150000,
+    yieldLabel:"Capitalizar trimestralmente",
+    allowsYield:true,
+    reserveOnCap:1000,
+    bank:"Banco Industrial",
+    bankAccount:"040-0012345-6"
+  }
+};
 
 function byId(id) {
   return document.getElementById(id);
@@ -2167,6 +2360,22 @@ function formatDateDisplay(value) {
 
 function getMoneySymbol(value) {
   return value?.trim().startsWith("$") ? "$" : "Q";
+}
+
+function formatMoney(symbol, amount) {
+  return `${symbol} ${Number(amount || 0).toLocaleString("en-US", { minimumFractionDigits:2, maximumFractionDigits:2 })}`;
+}
+
+function getNewFundProduct() {
+  return newFundProducts[authState.newFund.product] || newFundProducts["bursatil-gtq"];
+}
+
+function getNewFundAccount() {
+  return newFundAccounts[authState.newFund.account] || newFundAccounts["001"];
+}
+
+function getNewFundBeneficiariesTotal() {
+  return Number(authState.newFund.beneficiary1Pct || 0) + Number(authState.newFund.beneficiary2Pct || 0) + Number(authState.newFund.beneficiary3Pct || 0);
 }
 
 function getUser(email) {
@@ -2484,6 +2693,160 @@ function validateRegisterStep(step) {
   return "";
 }
 
+function renderConfirmDeposit() {
+  const product = getNewFundProduct();
+  const account = getNewFundAccount();
+  const amount = Number(authState.newFund.amount || 0);
+  const alias = authState.newFund.alias.trim() || "Sin alias";
+  const reference = `FEIS-${authState.newFund.account}-${product.title.toUpperCase().replaceAll(" ","-").slice(0,18)}`;
+  byId("confirm-deposit-source-account").textContent = account.label;
+  byId("confirm-deposit-product").textContent = product.title;
+  byId("confirm-deposit-bank").textContent = product.bank;
+  byId("confirm-deposit-bank-account").textContent = product.bankAccount;
+  byId("confirm-deposit-currency").textContent = product.currency === "$" ? "USD" : "GTQ";
+  byId("confirm-deposit-amount").textContent = formatMoney(product.currency, amount);
+  byId("confirm-deposit-reference").textContent = reference;
+  byId("confirm-deposit-alias").textContent = alias;
+  byId("confirm-deposit-step-one").textContent = `${formatMoney(product.currency, amount)} esperado para ${product.title}.`;
+  byId("confirm-deposit-step-two").textContent = authState.newFund.receiptFileName
+    ? `${authState.newFund.receiptFileName} pendiente de validación interna.`
+    : "Pendiente adjuntar comprobante de transferencia o depósito.";
+  byId("confirm-deposit-step-three").textContent = "Se habilita después de aprobar evidencia y conciliación de fondos.";
+  byId("confirm-deposit-file-name").value = authState.newFund.receiptFileName || "Sin archivo cargado";
+}
+
+function updateNewFundSummary() {
+  const product = getNewFundProduct();
+  const account = getNewFundAccount();
+  const amount = Number(authState.newFund.amount || 0);
+  const alias = authState.newFund.alias.trim() || "Sin alias";
+  const beneficiaryParts = [
+    authState.newFund.beneficiary1.trim() && authState.newFund.beneficiary1Pct !== "" ? `${authState.newFund.beneficiary1} ${Number(authState.newFund.beneficiary1Pct || 0).toFixed(2)}%` : "",
+    authState.newFund.beneficiary2.trim() && authState.newFund.beneficiary2Pct !== "" ? `${authState.newFund.beneficiary2} ${Number(authState.newFund.beneficiary2Pct || 0).toFixed(2)}%` : "",
+    authState.newFund.beneficiary3.trim() && authState.newFund.beneficiary3Pct !== "" ? `${authState.newFund.beneficiary3} ${Number(authState.newFund.beneficiary3Pct || 0).toFixed(2)}%` : ""
+  ].filter(Boolean);
+  const beneficiariesText = authState.newFund.beneficiariesMode === "yes"
+    ? (beneficiaryParts.join(" · ") || "Pendiente completar beneficiarios")
+    : "Sin beneficiarios en este producto";
+  const signatoriesText = authState.newFund.signatoriesMode === "yes"
+    ? `${authState.newFund.signatoryName || "-"} · ${authState.newFund.signatoryDocument || "-"}`
+    : "Sin otros firmantes";
+  const beneficiariesTotal = getNewFundBeneficiariesTotal();
+  const beneficiariesPill = byId("new-fund-beneficiaries-total");
+  byId("new-fund-account-copy").textContent = `${account.label} · ${account.holders.join(" y ")}`;
+  byId("new-fund-amount-prefix").textContent = product.currency;
+  byId("new-fund-amount").min = product.min;
+  byId("new-fund-amount").placeholder = product.min.toFixed(2);
+  if (beneficiariesPill) {
+    beneficiariesPill.className = `pill ${Math.abs(beneficiariesTotal - 100) < 0.001 ? "pill-success" : "pill-warning"}`;
+    beneficiariesPill.textContent = `${beneficiariesTotal.toFixed(2)}% distribuido`;
+  }
+  byId("new-fund-limit-copy").innerHTML = `
+    <div class="wizard-card-copy">Exposición actual visible del mock: <strong>${formatMoney(product.currency, account.exposure[product.currency] || 0)}</strong>.</div>
+    <div class="wizard-card-copy">Límite FEIS visible del mock para esta moneda: <strong>${formatMoney(product.currency, product.limit)}</strong>.</div>
+    <div class="wizard-card-copy">Si eliges capitalizar rendimientos, el mock agrega una reserva visible de <strong>${formatMoney(product.currency, product.reserveOnCap)}</strong> para reflejar la validación adicional de RF9.</div>
+  `;
+  byId("new-fund-summary").innerHTML = `
+    <div class="summary-kv-row"><div class="summary-kv-label">Cuenta</div><div class="summary-kv-value">${account.label}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Titulares</div><div class="summary-kv-value">${account.holders.join("<br>")}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Producto</div><div class="summary-kv-value">${product.title}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Alias</div><div class="summary-kv-value">${alias}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Monto</div><div class="summary-kv-value money">${formatMoney(product.currency, amount)}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Manejo de rendimientos</div><div class="summary-kv-value">${authState.newFund.yieldMode === "acreditar" ? "Acreditar a cuenta bancaria" : product.yieldLabel}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Beneficiarios</div><div class="summary-kv-value">${beneficiariesText}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Otros firmantes</div><div class="summary-kv-value">${signatoriesText}</div></div>
+  `;
+  byId("new-fund-result-line").textContent = `${account.label} · ${product.title} · ${formatMoney(product.currency, amount)}`;
+}
+
+function renderNewFundStep() {
+  const blocked = authState.dashboardState !== "active";
+  const product = getNewFundProduct();
+  byId("new-fund-account").value = authState.newFund.account;
+  byId("new-fund-amount").value = authState.newFund.amount;
+  byId("new-fund-yield-mode").value = authState.newFund.yieldMode;
+  byId("new-fund-alias").value = authState.newFund.alias;
+  byId("new-fund-beneficiary-1").value = authState.newFund.beneficiary1;
+  byId("new-fund-beneficiary-1-pct").value = authState.newFund.beneficiary1Pct;
+  byId("new-fund-beneficiary-2").value = authState.newFund.beneficiary2;
+  byId("new-fund-beneficiary-2-pct").value = authState.newFund.beneficiary2Pct;
+  byId("new-fund-beneficiary-3").value = authState.newFund.beneficiary3;
+  byId("new-fund-beneficiary-3-pct").value = authState.newFund.beneficiary3Pct;
+  byId("new-fund-signatory-name").value = authState.newFund.signatoryName;
+  byId("new-fund-signatory-document").value = authState.newFund.signatoryDocument;
+  document.querySelectorAll('input[name="new-fund-beneficiaries-mode"]').forEach(input => {
+    input.checked = input.value === authState.newFund.beneficiariesMode;
+  });
+  document.querySelectorAll('input[name="new-fund-signatories-mode"]').forEach(input => {
+    input.checked = input.value === authState.newFund.signatoriesMode;
+  });
+  document.querySelectorAll("[data-new-fund-pane]").forEach((pane, index) => {
+    pane.classList.toggle("active", index === authState.newFundStep);
+  });
+  document.querySelectorAll("#new-fund-steps .step-item").forEach((step, index) => {
+    step.classList.toggle("active", index === authState.newFundStep);
+    step.classList.toggle("done", index < authState.newFundStep);
+  });
+  document.querySelectorAll("[data-new-fund-product]").forEach(button => {
+    button.classList.toggle("active", button.getAttribute("data-new-fund-product") === authState.newFund.product);
+  });
+  byId("new-fund-beneficiaries-fields").classList.toggle("auth-hidden", authState.newFund.beneficiariesMode !== "yes");
+  byId("new-fund-beneficiary-3-row").classList.toggle("auth-hidden", !authState.newFund.beneficiary3.trim() && authState.newFund.beneficiary3Pct === "");
+  byId("new-fund-signatories-fields").classList.toggle("auth-hidden", authState.newFund.signatoriesMode !== "yes");
+  byId("new-fund-yield-field").classList.toggle("auth-hidden", !product.allowsYield);
+  byId("new-fund-gate").classList.toggle("auth-hidden", !blocked);
+  if (blocked) {
+    byId("new-fund-gate-copy").textContent = authState.dashboardState === "pending"
+      ? "La cuenta aún no está activa. Puedes revisar productos, pero RF9 solo permite crear nuevos fondos cuando el cliente ya está validado."
+      : "La información del expediente requiere actualización. Debes regularizar Mi Perfil antes de crear nuevos fondos o productos.";
+  }
+  byId("new-fund-back").classList.toggle("auth-hidden", authState.newFundStep === 0 || authState.newFundStep === 4);
+  byId("new-fund-next").classList.toggle("auth-hidden", authState.newFundStep === 4);
+  byId("new-fund-next").disabled = blocked;
+  updateNewFundSummary();
+}
+
+function validateNewFundStep(step) {
+  setStatus("new-fund-status", "", "");
+  if (authState.dashboardState !== "active") {
+    return "RF9 solo permite crear nuevos fondos cuando el cliente está activo y validado.";
+  }
+  const product = getNewFundProduct();
+  const account = getNewFundAccount();
+  if (step === 1) {
+    const amount = Number(authState.newFund.amount);
+    if (!Number.isFinite(amount) || amount <= 0) return "Ingresa un monto válido para continuar.";
+    if (amount < product.min) return `El monto mínimo para ${product.title} es ${formatMoney(product.currency, product.min)}.`;
+    const reserve = authState.newFund.yieldMode === "capitalizar" ? product.reserveOnCap : 0;
+    const exposure = account.exposure[product.currency] || 0;
+    if (exposure + amount + reserve > product.limit) {
+      return `Imposibilidad para continuar: la exposición actual ${formatMoney(product.currency, exposure)} más la nueva inversión y la reserva visible de rendimientos supera el límite FEIS del mock de ${formatMoney(product.currency, product.limit)}.`;
+    }
+  }
+  if (step === 2) {
+    if (authState.newFund.alias.trim().length > 22) return "El alias del producto no puede exceder 22 caracteres.";
+    if (authState.newFund.beneficiariesMode === "yes") {
+      const beneficiaryPairs = [
+        [authState.newFund.beneficiary1.trim(), authState.newFund.beneficiary1Pct],
+        [authState.newFund.beneficiary2.trim(), authState.newFund.beneficiary2Pct],
+        [authState.newFund.beneficiary3.trim(), authState.newFund.beneficiary3Pct]
+      ];
+      if (!authState.newFund.beneficiary1.trim() || !authState.newFund.beneficiary2.trim()) return "Ingresa al menos dos beneficiarios para el producto en este mock.";
+      if (beneficiaryPairs.some(([name, pct]) => (!!name && pct === "") || (!name && pct !== ""))) {
+        return "Cada beneficiario visible debe tener nombre y porcentaje completos.";
+      }
+      if (Math.abs(getNewFundBeneficiariesTotal() - 100) > 0.001) return "La distribución de beneficiarios debe sumar exactamente 100% para continuar.";
+    }
+    if (authState.newFund.signatoriesMode === "yes" && (!authState.newFund.signatoryName.trim() || !authState.newFund.signatoryDocument.trim())) {
+      return "Completa el nombre y documento del otro firmante antes de continuar.";
+    }
+  }
+  if (step === 3 && !byId("new-fund-review-check").checked) {
+    return "Debes confirmar la revisión del resumen antes de generar la solicitud.";
+  }
+  return "";
+}
+
 function showView(name) {
   items.forEach(item => item.classList.toggle("active", item.dataset.view === name));
   views.forEach(view => view.classList.toggle("active", view.id === "view-" + name));
@@ -2491,16 +2854,13 @@ function showView(name) {
   if (active) title.textContent = active.dataset.title || "Pdei+";
   document.body.classList.toggle("auth-mode", authViews.has(name));
   moreMenus.forEach(menu => menu.classList.remove("open"));
-  groups.forEach(group => {
-    const isActiveParent = group.dataset.group === viewGroupMap[name];
-    group.classList.toggle("active-parent", isActiveParent);
-    group.classList.toggle("open", isActiveParent);
-  });
   if (name === "twofa") prepareTwofaView();
   if (name === "register") renderRegisterStep();
   if (name === "dashboard" || name === "portfolio") renderDashboardState();
   if (name === "portfolio") renderPortfolio();
   if (name === "fund-detail") renderFundDetail();
+  if (name === "new-fund") renderNewFundStep();
+  if (name === "confirm-deposit") renderConfirmDeposit();
   if (name === "movements") renderMovements();
   if (name === "profile") renderProfileState();
   setQueryState();
@@ -2508,16 +2868,6 @@ function showView(name) {
 
 items.forEach(item => {
   item.addEventListener("click", () => showView(item.dataset.view));
-});
-
-groups.forEach(group => {
-  const toggle = group.querySelector(".sb-group-toggle");
-  if (!toggle) return;
-  toggle.addEventListener("click", () => {
-    const isActiveParent = group.classList.contains("active-parent");
-    if (isActiveParent) return;
-    group.classList.toggle("open");
-  });
 });
 
 moreMenus.forEach(menu => {
@@ -2539,6 +2889,14 @@ document.querySelectorAll("[data-view-target]").forEach(button => {
   button.addEventListener("click", () => {
     const sourceRow = button.closest(".portfolio-fund-row");
     if (sourceRow?.dataset.fundId) authState.selectedFund = sourceRow.dataset.fundId;
+    if (button.getAttribute("data-view-target") === "new-fund" && sourceRow?.dataset.account) {
+      authState.newFund.account = sourceRow.dataset.account;
+    }
+    if (button.getAttribute("data-view-target") === "confirm-deposit" && sourceRow?.dataset.account && sourceRow?.dataset.fundId) {
+      authState.newFund.account = sourceRow.dataset.account;
+      authState.newFund.product = newFundProducts[sourceRow.dataset.fundId] ? sourceRow.dataset.fundId : "bursatil-gtq";
+      authState.newFund.amount = String(parseMoney(fundDetailData[sourceRow.dataset.fundId]?.balance || "0"));
+    }
     if (button.getAttribute("data-view-target") === "movements" && sourceRow) {
       byId("movements-account-filter").value = sourceRow.dataset.account || "001";
       byId("movements-fund-filter").value = sourceRow.dataset.fundId || "all";
@@ -2758,6 +3116,128 @@ byId("register-go-login")?.addEventListener("click", () => {
 
 byId("register-go-landing")?.addEventListener("click", () => {
   showView("landing");
+});
+
+document.querySelectorAll("[data-new-fund-product]").forEach(button => {
+  button.addEventListener("click", () => {
+    authState.newFund.product = button.getAttribute("data-new-fund-product");
+    const product = getNewFundProduct();
+    authState.newFund.yieldMode = "capitalizar";
+    if (Number(authState.newFund.amount || 0) < product.min) {
+      authState.newFund.amount = product.min.toFixed(2);
+      byId("new-fund-amount").value = authState.newFund.amount;
+    }
+    renderNewFundStep();
+  });
+});
+
+byId("new-fund-account")?.addEventListener("change", event => {
+  authState.newFund.account = event.target.value;
+  renderNewFundStep();
+});
+
+[
+  ["new-fund-amount","amount"],
+  ["new-fund-yield-mode","yieldMode"],
+  ["new-fund-alias","alias"],
+  ["new-fund-beneficiary-1","beneficiary1"],
+  ["new-fund-beneficiary-1-pct","beneficiary1Pct"],
+  ["new-fund-beneficiary-2","beneficiary2"],
+  ["new-fund-beneficiary-2-pct","beneficiary2Pct"],
+  ["new-fund-beneficiary-3","beneficiary3"],
+  ["new-fund-beneficiary-3-pct","beneficiary3Pct"],
+  ["new-fund-signatory-name","signatoryName"],
+  ["new-fund-signatory-document","signatoryDocument"]
+].forEach(([id, key]) => {
+  byId(id)?.addEventListener("input", event => {
+    authState.newFund[key] = event.target.value;
+    updateNewFundSummary();
+  });
+  byId(id)?.addEventListener("change", event => {
+    authState.newFund[key] = event.target.value;
+    renderNewFundStep();
+  });
+});
+
+document.querySelectorAll('input[name="new-fund-beneficiaries-mode"]').forEach(input => {
+  input.addEventListener("change", () => {
+    authState.newFund.beneficiariesMode = input.value;
+    renderNewFundStep();
+  });
+});
+
+document.querySelectorAll('input[name="new-fund-signatories-mode"]').forEach(input => {
+  input.addEventListener("change", () => {
+    authState.newFund.signatoriesMode = input.value;
+    if (input.value === "no") {
+      authState.newFund.signatoryName = "";
+      authState.newFund.signatoryDocument = "";
+    }
+    renderNewFundStep();
+  });
+});
+
+byId("new-fund-add-beneficiary")?.addEventListener("click", () => {
+  byId("new-fund-beneficiary-3-row").classList.remove("auth-hidden");
+  byId("new-fund-beneficiary-3")?.focus();
+});
+
+byId("new-fund-back")?.addEventListener("click", () => {
+  if (authState.newFundStep > 0) {
+    authState.newFundStep -= 1;
+    renderNewFundStep();
+  }
+});
+
+byId("new-fund-next")?.addEventListener("click", () => {
+  const error = validateNewFundStep(authState.newFundStep);
+  if (error) {
+    setStatus("new-fund-status", "error", error);
+    return;
+  }
+  if (authState.newFundStep < 4) {
+    authState.newFundStep += 1;
+    if (authState.newFundStep === 4) {
+      byId("new-fund-result-id").textContent = `NF-${new Date().getFullYear()}-${String(Date.now()).slice(-3)}`;
+      setStatus("new-fund-status", "success", "Solicitud de fondo generada correctamente en el mock.");
+    } else {
+      setStatus("new-fund-status", "", "");
+    }
+    renderNewFundStep();
+  }
+});
+
+byId("new-fund-go-portfolio")?.addEventListener("click", () => {
+  showView("portfolio");
+});
+
+byId("new-fund-go-deposit")?.addEventListener("click", () => {
+  showView("confirm-deposit");
+});
+
+byId("confirm-deposit-file")?.addEventListener("change", event => {
+  const file = event.target.files?.[0];
+  authState.newFund.receiptFileName = file ? file.name : "";
+  byId("confirm-deposit-file-name").value = authState.newFund.receiptFileName || "Sin archivo cargado";
+  renderConfirmDeposit();
+});
+
+byId("confirm-deposit-date")?.addEventListener("change", event => {
+  authState.newFund.receiptDate = event.target.value;
+});
+
+byId("confirm-deposit-back")?.addEventListener("click", () => {
+  showView("portfolio");
+});
+
+byId("confirm-deposit-submit")?.addEventListener("click", () => {
+  if (!authState.newFund.receiptFileName) {
+    setStatus("confirm-deposit-status", "error", "Adjunta un archivo o imagen de soporte antes de confirmar la recepción de fondos.");
+    return;
+  }
+  setStatus("confirm-deposit-status", "success", "Comprobante cargado correctamente. El fondo queda pendiente de validación interna y conciliación.");
+  byId("confirm-deposit-step-two").textContent = `${authState.newFund.receiptFileName} pendiente de validación interna.`;
+  byId("confirm-deposit-step-three").textContent = "Pendiente activar el producto una vez aprobada la evidencia.";
 });
 
 document.querySelectorAll("[data-dashboard-state]").forEach(button => {
