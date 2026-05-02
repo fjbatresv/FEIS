@@ -146,6 +146,10 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .pill-danger{background:rgba(239,68,68,.14);color:#991b1b}
 .pill-info{background:rgba(59,130,246,.12);color:#1d4ed8}
 .pill-neutral{background:var(--gray-lt);color:var(--text-sec)}
+.inline-link{
+  color:var(--dark-aqua);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(0,121,142,.28);cursor:pointer
+}
+.inline-link:hover{color:var(--navy);border-bottom-color:rgba(43,43,94,.35)}
 
 .alert{
   display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:var(--radius-md);font-size:14px
@@ -168,6 +172,18 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .metric-small-change{font-size:12px;font-weight:600;margin-top:4px}
 .up{color:var(--success)}
 .down{color:var(--danger)}
+.scenario-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 0 20px
+}
+.scenario-label{font-size:12px;letter-spacing:.9px;text-transform:uppercase;color:var(--text-lt);font-weight:700}
+.dashboard-gate{display:grid;gap:12px}
+.dashboard-gate.auth-hidden{display:none}
+.metric-card.is-muted,.fund-row.is-muted{opacity:.68}
+.fund-row.is-muted .fund-name,.fund-row.is-muted .fund-amount{color:var(--text-sec)}
+.fund-row.is-muted .fund-pct{color:var(--warning)}
+.fund-actions .btn:disabled,.qa-btn:disabled,.more-menu-toggle:disabled{
+  opacity:.48;cursor:not-allowed;pointer-events:none
+}
 .money{
   white-space:nowrap;display:inline-block;max-width:100%;min-inline-size:12ch;text-align:right;
   font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1
@@ -180,6 +196,7 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
   transition:all .18s ease;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px
 }
 .qa-btn:hover{background:#eef2f8;border-color:#cfd8e8;transform:translateY(-1px)}
+.qa-btn:disabled:hover{background:#f5f7fb;border-color:#d7deec;transform:none}
 .qa-btn-icon{width:36px;height:36px;color:#3a3a3a;display:flex;align-items:center;justify-content:center}
 .qa-btn-icon .icon{width:32px;height:32px}
 .qa-btn-label{max-width:170px;font-size:17px;font-weight:800;color:#31356c;font-family:var(--font-main);line-height:1.15;text-wrap:balance}
@@ -197,6 +214,8 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .fund-main{min-width:0}
 .fund-name{font-size:15px;font-weight:700}
 .fund-desc{font-size:12px;color:var(--text-lt);margin-top:2px}
+.fund-desc-lines{display:grid;gap:4px}
+.fund-desc-line{font-size:12px;color:var(--text-lt);line-height:1.35}
 .fund-right{margin-left:0;min-width:0;width:100%;text-align:right;justify-self:end}
 .fund-amount{font-size:15px;font-weight:700}
 .fund-pct{font-size:12px;font-weight:600;color:var(--success)}
@@ -221,12 +240,9 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .segmented-copy{display:flex;flex-wrap:wrap;gap:4px 0}
 .segmented-copy .segment{white-space:nowrap}
 .segmented-copy .divider{padding:0 6px;color:var(--text-lt)}
-.featured-funds .fund-row{grid-template-columns:42px minmax(220px,1fr) 112px 212px}
+.featured-funds .fund-row{grid-template-columns:42px minmax(220px,1fr) 112px 44px}
 .featured-funds .fund-main,.featured-funds .fund-right,.featured-funds .fund-actions{min-width:0}
-.featured-funds .fund-actions{
-  margin-left:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px
-}
-.featured-funds .fund-actions .btn{width:100%;justify-content:center}
+.featured-funds .fund-actions{width:44px}
 
 .person{
   display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--border);border-radius:var(--radius-md);background:#fff
@@ -958,6 +974,28 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         <div class="page-sub">RF5 · Resumen consolidado de portafolio, fondos activos, alertas y accesos directos operativos.</div>
       </div>
     </div>
+    <div class="scenario-bar">
+      <div>
+        <div class="scenario-label">Escenario de acceso</div>
+        <div class="chips" id="dashboard-state-switcher">
+          <button class="chip active" type="button" data-dashboard-state="active">Cuenta activa</button>
+          <button class="chip" type="button" data-dashboard-state="pending">Pendiente activación</button>
+          <button class="chip" type="button" data-dashboard-state="update">Actualización requerida</button>
+        </div>
+      </div>
+      <div class="pill pill-neutral" id="dashboard-state-pill">Operación habilitada</div>
+    </div>
+    <div class="dashboard-gate auth-hidden" id="dashboard-gate-pending">
+      <div class="alert alert-warning" style="margin-bottom:20px"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span><div>La cuenta aún no está activa ni validada. Según RF5, las opciones operativas deben permanecer bloqueadas hasta completar activación y validación de expediente.</div></div>
+    </div>
+    <div class="dashboard-gate auth-hidden" id="dashboard-gate-update">
+      <div class="alert alert-info" style="margin-bottom:20px">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span>
+        <div style="display:grid;gap:12px">
+          <div>El cliente debe actualizar o ratificar sus datos. RF5 indica que debe redirigirse a <a class="inline-link" href="#" data-view-target="profile">Mi Perfil</a> antes de habilitar nuevas gestiones.</div>
+        </div>
+      </div>
+    </div>
     <div class="stack" style="gap:16px">
       <div class="card metric-hero">
         <div class="metric-label">Saldo Total</div>
@@ -987,12 +1025,14 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         <div class="card">
           <div class="section-title">Fondos destacados</div>
           <div class="fund-list featured-funds">
-            <div class="fund-row">
+            <div class="fund-row" data-fund-state="active">
               <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span></div>
               <div class="fund-main">
                 <div class="fund-name">Fondo Bursátil GTQ</div>
-                <div class="fund-desc segmented-copy">
-                  <span class="segment">Cuenta 001</span><span class="divider">·</span><span class="segment">Capitalización mensual</span><span class="divider">·</span><span class="segment">Estado vigente</span>
+                <div class="fund-desc fund-desc-lines">
+                  <div class="fund-desc-line">Cuenta 001</div>
+                  <div class="fund-desc-line">Capitalización mensual</div>
+                  <div class="fund-desc-line">Estado vigente</div>
                 </div>
               </div>
               <div class="fund-right">
@@ -1000,25 +1040,71 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <div class="fund-pct">+6.1%</div>
               </div>
               <div class="fund-actions">
-                <button class="btn btn-sm btn-outline" data-view-target="fund-detail">Ver detalle</button>
-                <button class="btn btn-sm btn-primary" data-view-target="new-investment">Invertir</button>
+                <div class="more-menu">
+                  <button class="more-menu-toggle" type="button" aria-label="Más acciones">
+                    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
+                  </button>
+                  <div class="more-menu-panel">
+                    <button class="more-menu-item" type="button" data-view-target="fund-detail" data-action-kind="always">Ver detalle</button>
+                    <button class="more-menu-item" type="button" data-view-target="new-investment" data-action-kind="active-only">Invertir</button>
+                    <button class="more-menu-item" type="button" data-view-target="beneficiaries" data-action-kind="always">Beneficiarios</button>
+                    <button class="more-menu-item" type="button" data-view-target="signatories" data-action-kind="always">Otros firmantes</button>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="fund-row">
+            <div class="fund-row is-muted" data-fund-state="pending-funds">
               <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span></div>
               <div class="fund-main">
                 <div class="fund-name">Fondo Bursátil USD</div>
-                <div class="fund-desc segmented-copy">
-                  <span class="segment">Cuenta 002</span><span class="divider">·</span><span class="segment">Dólares</span><span class="divider">·</span><span class="segment">Estado vigente</span>
+                <div class="fund-desc fund-desc-lines">
+                  <div class="fund-desc-line">Cuenta 002</div>
+                  <div class="fund-desc-line">Pendiente de fondos</div>
+                  <div class="fund-desc-line">Comprobante por validar</div>
                 </div>
               </div>
               <div class="fund-right">
                 <div class="fund-amount money">$ 1,600.00</div>
-                <div class="fund-pct">+3.8%</div>
+                <div class="fund-pct">Pendiente activación</div>
               </div>
               <div class="fund-actions">
-                <button class="btn btn-sm btn-outline" data-view-target="fund-detail">Ver detalle</button>
-                <button class="btn btn-sm btn-primary" data-view-target="new-investment">Invertir</button>
+                <div class="more-menu">
+                  <button class="more-menu-toggle" type="button" aria-label="Más acciones">
+                    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
+                  </button>
+                  <div class="more-menu-panel">
+                    <button class="more-menu-item" type="button" data-view-target="fund-detail" data-action-kind="always">Ver detalle</button>
+                    <button class="more-menu-item" type="button" data-view-target="confirm-deposit" data-action-kind="pending-only">Confirmar depósito</button>
+                    <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="fund-row is-muted" data-fund-state="blocked">
+              <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2v20"></path><path d="M17 7H9.5a2.5 2.5 0 0 0 0 5h5a2.5 2.5 0 0 1 0 5H6"></path></svg></span></div>
+              <div class="fund-main">
+                <div class="fund-name">Fondo a Plazo GTQ</div>
+                <div class="fund-desc fund-desc-lines">
+                  <div class="fund-desc-line">Cuenta 001</div>
+                  <div class="fund-desc-line">En verificación cumplimiento</div>
+                  <div class="fund-desc-line">Acciones restringidas</div>
+                </div>
+              </div>
+              <div class="fund-right">
+                <div class="fund-amount money">Q 30,000.00</div>
+                <div class="fund-pct">Bloqueado temporalmente</div>
+              </div>
+              <div class="fund-actions">
+                <div class="more-menu">
+                  <button class="more-menu-toggle" type="button" aria-label="Más acciones">
+                    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
+                  </button>
+                  <div class="more-menu-panel">
+                    <button class="more-menu-item" type="button" data-view-target="fund-detail" data-action-kind="always">Ver detalle</button>
+                    <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
+                    <button class="more-menu-item" type="button" data-view-target="beneficiaries" data-action-kind="always">Beneficiarios</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1039,26 +1125,27 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         <div class="card">
           <div class="section-title">Alertas operativas</div>
           <div class="list">
-            <div class="alert alert-warning"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>Hay un fondo pendiente de activación por falta de validación del comprobante.</div></div>
-            <div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>La cuenta 002 requiere cargar beneficiarios para completar expediente.</div></div>
+            <div class="alert alert-warning"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>Hay un fondo en estado <strong>Pendiente de Fondos</strong>; la activación depende de validar el comprobante del depósito.</div></div>
+            <div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>La cuenta 002 requiere completar beneficiarios y otros firmantes antes de habilitar todas las gestiones del expediente.</div></div>
+            <div class="alert alert-danger"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span><div>Un producto se encuentra en <strong>Verificación Cumplimiento</strong>; solo se permite consulta y movimientos hasta liberar el caso.</div></div>
           </div>
         </div>
         <div class="quick-actions-card">
           <div class="qa-title">Acciones Rápidas</div>
           <div class="qa-grid">
-            <button class="qa-btn" data-view-target="new-investment">
+            <button class="qa-btn" data-view-target="new-investment" data-action-kind="active-only">
               <div class="qa-btn-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg></span></div>
               <div class="qa-btn-label">Nueva Inversión</div>
             </button>
-            <button class="qa-btn" data-view-target="redemption">
+            <button class="qa-btn" data-view-target="redemption" data-action-kind="active-only">
               <div class="qa-btn-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v6h6"></path><path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path><path d="M21 22v-6h-6"></path><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path></svg></span></div>
               <div class="qa-btn-label">Recompra</div>
             </button>
-            <button class="qa-btn" data-view-target="new-fund">
+            <button class="qa-btn" data-view-target="new-fund" data-action-kind="active-only">
               <div class="qa-btn-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></span></div>
               <div class="qa-btn-label">Nuevo Fondo</div>
             </button>
-            <button class="qa-btn" data-view-target="movements">
+            <button class="qa-btn" data-view-target="movements" data-action-kind="always">
               <div class="qa-btn-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg></span></div>
               <div class="qa-btn-label">Movimientos</div>
             </button>
@@ -1561,7 +1648,8 @@ const authState = {
   pendingEmail:"",
   recoveryEmail:"",
   generatedTempPassword:"",
-  registerStep:0
+  registerStep:0,
+  dashboardState:"active"
 };
 const rememberedEmailKey = "pdei-web-mock-remembered-email";
 
@@ -1684,6 +1772,28 @@ function renderRegisterStep() {
   updateRegisterSummary();
 }
 
+function renderDashboardState() {
+  const state = authState.dashboardState;
+  const pendingGate = byId("dashboard-gate-pending");
+  const updateGate = byId("dashboard-gate-update");
+  const statePill = byId("dashboard-state-pill");
+  const switcher = byId("dashboard-state-switcher");
+  if (!pendingGate || !updateGate || !statePill || !switcher) return;
+  pendingGate.classList.toggle("auth-hidden", state !== "pending");
+  updateGate.classList.toggle("auth-hidden", state !== "update");
+  switcher.querySelectorAll("[data-dashboard-state]").forEach(button => {
+    button.classList.toggle("active", button.getAttribute("data-dashboard-state") === state);
+  });
+  const disableOps = state !== "active";
+  statePill.className = "pill " + (state === "active" ? "pill-success" : state === "pending" ? "pill-warning" : "pill-info");
+  statePill.textContent = state === "active" ? "Operación habilitada" : state === "pending" ? "Cuenta no activa" : "Actualizar datos";
+  document.querySelectorAll("#view-dashboard [data-action-kind]").forEach(node => {
+    const kind = node.getAttribute("data-action-kind");
+    const allow = state === "active" ? true : kind === "always" || (state === "pending" && kind === "pending-only");
+    if ("disabled" in node) node.disabled = !allow;
+  });
+}
+
 function validateRegisterStep(step) {
   setStatus("register-status", "", "");
   if (step === 0 && !byId("register-accept-terms").checked) {
@@ -1752,6 +1862,7 @@ function showView(name) {
   });
   if (name === "twofa") prepareTwofaView();
   if (name === "register") renderRegisterStep();
+  if (name === "dashboard") renderDashboardState();
 }
 
 items.forEach(item => {
@@ -1991,6 +2102,13 @@ byId("register-go-login")?.addEventListener("click", () => {
 
 byId("register-go-landing")?.addEventListener("click", () => {
   showView("landing");
+});
+
+document.querySelectorAll("[data-dashboard-state]").forEach(button => {
+  button.addEventListener("click", () => {
+    authState.dashboardState = button.getAttribute("data-dashboard-state");
+    renderDashboardState();
+  });
 });
 
 showView("landing");
