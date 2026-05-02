@@ -137,7 +137,9 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .btn-row{display:flex;flex-wrap:wrap;gap:10px}
 
 .pill{
-  display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:4px 10px;border-radius:999px;
+  font-size:12px;font-weight:600;line-height:1;white-space:nowrap;width:max-content;max-width:100%;flex:0 0 auto;
+  vertical-align:middle
 }
 .pill-success{background:rgba(34,197,94,.14);color:#166534}
 .pill-warning{background:rgba(245,158,11,.14);color:#92400e}
@@ -160,29 +162,32 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .metric-value{font-size:clamp(32px,2.7vw,42px);font-weight:800;line-height:1;white-space:nowrap}
 .metric-value span{color:var(--aqua)}
 .metric-sub{font-size:13px;color:rgba(255,255,255,.56);margin-top:10px}
-.metric-card{display:flex;flex-direction:column;justify-content:space-between;min-height:132px}
+.metric-card{display:flex;flex-direction:column;justify-content:center;gap:8px;min-height:108px;padding-top:18px;padding-bottom:18px}
 .metric-small-label{font-size:12px;color:var(--text-lt);margin-bottom:5px}
 .metric-small-value{font-size:26px;font-weight:700;line-height:1.15;white-space:nowrap}
 .metric-small-change{font-size:12px;font-weight:600;margin-top:4px}
 .up{color:var(--success)}
 .down{color:var(--danger)}
-.money{white-space:nowrap;display:inline-block;max-width:100%}
-.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.quick-action{
-  background:#f7f8fb;border:2px solid #dfe5f0;border-radius:22px;padding:28px 20px;display:flex;flex-direction:column;gap:16px;
-  align-items:center;text-align:center;cursor:pointer;transition:.15s;min-height:152px;justify-content:center
+.money{
+  white-space:nowrap;display:inline-block;max-width:100%;min-inline-size:12ch;text-align:right;
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1
 }
-.quick-action:hover{border-color:#cfd8e8;transform:translateY(-1px);background:#f4f6fb}
-.quick-action .icon-wrap{
-  width:42px;height:42px;color:#3a3a3a;display:flex;align-items:center;justify-content:center
+.quick-actions-card{background:#fff;border-radius:16px;border:1px solid var(--border);padding:20px}
+.qa-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:16px}
+.qa-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:150px;gap:12px}
+.qa-btn{
+  width:100%;height:100%;background:#f5f7fb;border:1px solid #d7deec;border-radius:14px;padding:20px 16px;text-align:center;cursor:pointer;
+  transition:all .18s ease;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px
 }
-.quick-action .icon-wrap .icon{width:30px;height:30px}
-.quick-action-title{font-size:20px;font-weight:800;color:#31356c;line-height:1.1}
-.quick-action-copy{display:none}
+.qa-btn:hover{background:#eef2f8;border-color:#cfd8e8;transform:translateY(-1px)}
+.qa-btn-icon{width:36px;height:36px;color:#3a3a3a;display:flex;align-items:center;justify-content:center}
+.qa-btn-icon .icon{width:32px;height:32px}
+.qa-btn-label{max-width:170px;font-size:17px;font-weight:800;color:#31356c;font-family:var(--font-main);line-height:1.15;text-wrap:balance}
 
 .fund-list{display:flex;flex-direction:column}
 .fund-row{
-  display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--border)
+  display:grid;grid-template-columns:42px minmax(240px,1fr) 132px 212px;align-items:center;column-gap:14px;
+  padding:16px 0;border-bottom:1px solid var(--border)
 }
 .fund-row:last-child{border-bottom:none}
 .fund-icon{
@@ -192,10 +197,36 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .fund-main{min-width:0}
 .fund-name{font-size:15px;font-weight:700}
 .fund-desc{font-size:12px;color:var(--text-lt);margin-top:2px}
-.fund-right{margin-left:auto;text-align:right}
+.fund-right{margin-left:0;min-width:0;width:100%;text-align:right;justify-self:end}
 .fund-amount{font-size:15px;font-weight:700}
 .fund-pct{font-size:12px;font-weight:600;color:var(--success)}
-.fund-actions{display:flex;gap:8px;margin-left:18px}
+.fund-actions{display:flex;gap:8px;margin-left:0;justify-self:end;justify-content:flex-end;width:100%}
+.fund-actions .btn{justify-content:center}
+.more-menu{position:relative}
+.more-menu-toggle{
+  width:36px;height:36px;padding:0;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--navy);
+  display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s
+}
+.more-menu-toggle:hover{border-color:#cfd8e8;background:#f7f9fc}
+.more-menu-panel{
+  position:absolute;top:calc(100% + 8px);right:0;display:none;min-width:148px;padding:8px;border-radius:14px;
+  border:1px solid var(--border);background:#fff;box-shadow:var(--shadow-card);z-index:12
+}
+.more-menu.open .more-menu-panel{display:grid;gap:6px}
+.more-menu-item{
+  width:100%;padding:10px 12px;border:none;border-radius:10px;background:#fff;color:var(--text);font-size:13px;font-weight:600;
+  text-align:left;cursor:pointer;transition:.15s
+}
+.more-menu-item:hover{background:#f4f7fb}
+.segmented-copy{display:flex;flex-wrap:wrap;gap:4px 0}
+.segmented-copy .segment{white-space:nowrap}
+.segmented-copy .divider{padding:0 6px;color:var(--text-lt)}
+.featured-funds .fund-row{grid-template-columns:42px minmax(220px,1fr) 112px 212px}
+.featured-funds .fund-main,.featured-funds .fund-right,.featured-funds .fund-actions{min-width:0}
+.featured-funds .fund-actions{
+  margin-left:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px
+}
+.featured-funds .fund-actions .btn{width:100%;justify-content:center}
 
 .person{
   display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--border);border-radius:var(--radius-md);background:#fff
@@ -218,6 +249,7 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .table td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
 .table tbody tr:hover td{background:#fafcff}
 .text-right{text-align:right}
+.table .text-right .money{text-align:right}
 
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{
@@ -283,10 +315,7 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .auth-nav{
   display:flex;align-items:center;justify-content:space-between;margin-bottom:56px
 }
-.auth-logo{display:flex;align-items:center;gap:10px}
-.auth-logo-mark{
-  width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center
-}
+.auth-logo{display:flex;align-items:center}
 .auth-logo-name{font-size:28px;font-weight:800;letter-spacing:-.5px}
 .auth-logo-name span{color:var(--aqua)}
 .auth-links{display:flex;gap:20px;font-size:13px;color:rgba(255,255,255,.72)}
@@ -318,8 +347,12 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
 @media (max-width:1180px){
   .grid-4,.grid-3,.grid-2,.dual,.field-grid,.field-grid-3,.kv{grid-template-columns:1fr}
   .page-head{flex-direction:column}
-  .fund-row{align-items:flex-start;flex-wrap:wrap}
-  .fund-right,.fund-actions{margin-left:0}
+  .fund-row{display:flex;align-items:flex-start;flex-wrap:wrap}
+  .featured-funds .fund-row{display:flex}
+  .featured-funds .fund-actions{display:grid;width:100%;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .more-menu{width:100%}
+  .more-menu-toggle{width:100%}
+  .more-menu-panel{left:0;right:auto;min-width:100%}
   .quick-grid,.auth-mini-grid{grid-template-columns:1fr}
   .auth-shell{grid-template-columns:1fr}
   .auth-brand{padding:36px 28px}
@@ -331,44 +364,61 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
 <body>
 <aside id="sidebar">
   <div class="brand">
-    <div class="brand-mark">
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><path d="M8 12h8"></path><path d="M12 8v8"></path></svg>
-    </div>
     <div class="brand-name">Pdei<span>+</span></div>
   </div>
-  <div class="sb-user">
-    <div class="avatar">AG</div>
-    <div>
-      <div class="sb-user-name">Alfredo García</div>
-      <div class="sb-user-meta">Cliente FEIS</div>
+  <div class="sb-group" data-group="access">
+    <button class="sb-group-toggle" type="button">
+      <span class="sb-group-left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg></span>Acceso</span>
+      <span class="sb-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span>
+    </button>
+    <div class="sb-group-items">
+      <a class="sb-item" data-view="landing"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg></span>Landing</a>
+      <a class="sb-item" data-view="login"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg></span>Login</a>
+      <a class="sb-item" data-view="twofa"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 1 1 8 0v4"></path></svg></span>2FA</a>
+      <a class="sb-item" data-view="recovery"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 1 1 5.82 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg></span>Recuperación</a>
+      <a class="sb-item" data-view="register"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></span>Registro</a>
     </div>
   </div>
 
-  <div class="sb-section">Acceso</div>
-  <a class="sb-item" data-view="landing"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg></span>Landing</a>
-  <a class="sb-item" data-view="login"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg></span>Login</a>
-  <a class="sb-item" data-view="twofa"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 1 1 8 0v4"></path></svg></span>2FA</a>
-  <a class="sb-item" data-view="recovery"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 1 1 5.82 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg></span>Recuperación</a>
-  <a class="sb-item" data-view="register"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></span>Registro</a>
+  <div class="sb-group" data-group="main">
+    <button class="sb-group-toggle" type="button">
+      <span class="sb-group-left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></span>Principal</span>
+      <span class="sb-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span>
+    </button>
+    <div class="sb-group-items">
+      <a class="sb-item" data-view="dashboard"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></span>Dashboard</a>
+      <a class="sb-item" data-view="portfolio"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></span>Mi Portafolio</a>
+      <a class="sb-item" data-view="fund-detail"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.5 8.5-5-5L2 17"></path><path d="M16 7h6v6"></path></svg></span>Detalle de Fondo</a>
+      <a class="sb-item" data-view="new-fund"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></span>Nuevo Fondo</a>
+    </div>
+  </div>
 
-  <div class="sb-section">Principal</div>
-  <a class="sb-item" data-view="dashboard"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>Dashboard</a>
-  <a class="sb-item" data-view="portfolio"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span>Mi Portafolio</a>
-  <a class="sb-item" data-view="fund-detail"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span>Detalle de Fondo</a>
-  <a class="sb-item" data-view="new-fund"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>Nuevo Fondo</a>
+  <div class="sb-group" data-group="operations">
+    <button class="sb-group-toggle" type="button">
+      <span class="sb-group-left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><path d="M17 8H9.5a2.5 2.5 0 0 0 0 5h5a2.5 2.5 0 0 1 0 5H6"></path></svg></span>Operaciones</span>
+      <span class="sb-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span>
+    </button>
+    <div class="sb-group-items">
+      <a class="sb-item" data-view="new-investment"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg></span>Nueva Inversión</a>
+      <a class="sb-item" data-view="confirm-deposit"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M21 21H3"></path></svg></span>Confirmar Depósito</a>
+      <a class="sb-item" data-view="redemption"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v6h6"></path><path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path><path d="M21 22v-6h-6"></path><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path></svg></span>Recompras</a>
+      <a class="sb-item" data-view="movements"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg></span>Movimientos</a>
+    </div>
+  </div>
 
-  <div class="sb-section">Operaciones</div>
-  <a class="sb-item" data-view="new-investment"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></span>Nueva Inversión</a>
-  <a class="sb-item" data-view="confirm-deposit"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M21 21H3"/></svg></span>Confirmar Depósito</a>
-  <a class="sb-item" data-view="redemption"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v6h6"/><path d="M21 12A9 9 0 0 0 6 5.3L3 8"/><path d="M21 22v-6h-6"/><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"/></svg></span>Recompras</a>
-  <a class="sb-item" data-view="movements"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg></span>Movimientos</a>
-
-  <div class="sb-section">Configuración</div>
-  <a class="sb-item" data-view="beneficiaries"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Beneficiarios</a>
-  <a class="sb-item" data-view="signatories"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>Otros Firmantes</a>
-  <a class="sb-item" data-view="holders"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a6 6 0 0 0-12 0"/><circle cx="12" cy="11" r="4"/><circle cx="12" cy="12" r="10"/></svg></span>Otros Titulares</a>
-  <a class="sb-item" data-view="new-account"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V8.6a1 1 0 0 1 .55-.9l6-3a1 1 0 0 1 .9 0l6 3a1 1 0 0 1 .55.9V20"/><path d="M12 10v10"/></svg></span>Nueva Cuenta</a>
-  <a class="sb-item" data-view="profile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a6 6 0 0 0-12 0"/><circle cx="12" cy="11" r="4"/><circle cx="12" cy="12" r="10"/></svg></span>Mi Perfil</a>
+  <div class="sb-group" data-group="settings">
+    <button class="sb-group-toggle" type="button">
+      <span class="sb-group-left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 8.92 4.6H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.36.41.58.93.6 1.48V11a2 2 0 1 1 0 4h-.09c-.55.02-1.07.24-1.51.6Z"></path></svg></span>Configuración</span>
+      <span class="sb-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span>
+    </button>
+    <div class="sb-group-items">
+      <a class="sb-item" data-view="beneficiaries"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>Beneficiarios</a>
+      <a class="sb-item" data-view="signatories"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></span>Otros Firmantes</a>
+      <a class="sb-item" data-view="holders"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a6 6 0 0 0-12 0"></path><circle cx="12" cy="11" r="4"></circle><circle cx="12" cy="12" r="10"></circle></svg></span>Otros Titulares</a>
+      <a class="sb-item" data-view="new-account"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"></path><path d="M5 20V8.6a1 1 0 0 1 .55-.9l6-3a1 1 0 0 1 .9 0l6 3a1 1 0 0 1 .55.9V20"></path><path d="M12 10v10"></path></svg></span>Nueva Cuenta</a>
+      <a class="sb-item" data-view="profile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a6 6 0 0 0-12 0"></path><circle cx="12" cy="11" r="4"></circle><circle cx="12" cy="12" r="10"></circle></svg></span>Mi Perfil</a>
+    </div>
+  </div>
 
   <div class="sb-bottom">
     <a class="sb-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg></span>Cerrar Sesión</a>
@@ -391,9 +441,6 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         <div>
           <div class="auth-nav">
             <div class="auth-logo">
-              <div class="auth-logo-mark">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><path d="M8 12h8"></path><path d="M12 8v8"></path></svg>
-              </div>
               <div class="auth-logo-name">Pdei<span>+</span></div>
             </div>
             <div class="auth-links">
@@ -430,11 +477,11 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
           <div class="auth-mini-grid">
             <div class="card" style="padding:18px">
               <div class="metric-small-label">Fondos operables</div>
-              <div class="metric-small-value money">3 productos</div>
+              <div class="metric-small-value">3 productos</div>
             </div>
             <div class="card" style="padding:18px">
               <div class="metric-small-label">Acciones disponibles</div>
-              <div class="metric-small-value money">12 vistas</div>
+              <div class="metric-small-value">12 vistas</div>
             </div>
           </div>
         </div>
@@ -447,7 +494,6 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
       <div class="auth-brand">
         <div>
           <div class="auth-logo">
-            <div class="auth-logo-mark"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"></rect><path d="M8 12h8"></path><path d="M12 8v8"></path></svg></div>
             <div class="auth-logo-name">Pdei<span>+</span></div>
           </div>
           <div class="auth-hero" style="margin-top:54px">
@@ -573,10 +619,6 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         <div class="page-title">Buenos días, Alfredo</div>
         <div class="page-sub">RF5 · Resumen consolidado de portafolio, fondos activos, alertas y accesos directos operativos.</div>
       </div>
-      <div class="btn-row">
-        <button class="btn btn-primary" data-view-target="new-investment">Nueva Inversión</button>
-        <button class="btn btn-outline-aqua" data-view-target="new-fund">Crear Fondo</button>
-      </div>
     </div>
     <div class="stack" style="gap:16px">
       <div class="card metric-hero">
@@ -606,12 +648,14 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
       <div class="stack">
         <div class="card">
           <div class="section-title">Fondos destacados</div>
-          <div class="fund-list">
+          <div class="fund-list featured-funds">
             <div class="fund-row">
               <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span></div>
               <div class="fund-main">
                 <div class="fund-name">Fondo Bursátil GTQ</div>
-                <div class="fund-desc">Cuenta 001 · Capitalización mensual · Estado vigente</div>
+                <div class="fund-desc segmented-copy">
+                  <span class="segment">Cuenta 001</span><span class="divider">·</span><span class="segment">Capitalización mensual</span><span class="divider">·</span><span class="segment">Estado vigente</span>
+                </div>
               </div>
               <div class="fund-right">
                 <div class="fund-amount money">Q 84,320.00</div>
@@ -626,7 +670,9 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span></div>
               <div class="fund-main">
                 <div class="fund-name">Fondo Bursátil USD</div>
-                <div class="fund-desc">Cuenta 002 · Dólares · Estado vigente</div>
+                <div class="fund-desc segmented-copy">
+                  <span class="segment">Cuenta 002</span><span class="divider">·</span><span class="segment">Dólares</span><span class="divider">·</span><span class="segment">Estado vigente</span>
+                </div>
               </div>
               <div class="fund-right">
                 <div class="fund-amount money">$ 1,600.00</div>
@@ -644,9 +690,9 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
           <table class="table">
             <thead><tr><th>Fecha</th><th>Operación</th><th>Fondo</th><th>Estado</th><th class="text-right">Monto</th></tr></thead>
             <tbody>
-              <tr><td>30/04/2026</td><td>Compra</td><td>Fondo Bursátil GTQ</td><td><span class="pill pill-success">Aplicado</span></td><td class="text-right">Q 10,000.00</td></tr>
-              <tr><td>28/04/2026</td><td>Rendimiento</td><td>Fondo Bursátil GTQ</td><td><span class="pill pill-success">Capitalizado</span></td><td class="text-right">Q 480.00</td></tr>
-              <tr><td>26/04/2026</td><td>Depósito</td><td>Nuevo Fondo GTQ</td><td><span class="pill pill-warning">Pendiente validación</span></td><td class="text-right">Q 10,000.00</td></tr>
+              <tr><td>30/04/2026</td><td>Compra</td><td>Fondo Bursátil GTQ</td><td><span class="pill pill-success">Aplicado</span></td><td class="text-right"><span class="money">Q 10,000.00</span></td></tr>
+              <tr><td>28/04/2026</td><td>Rendimiento</td><td>Fondo Bursátil GTQ</td><td><span class="pill pill-success">Capitalizado</span></td><td class="text-right"><span class="money">Q 480.00</span></td></tr>
+              <tr><td>26/04/2026</td><td>Depósito</td><td>Nuevo Fondo GTQ</td><td><span class="pill pill-warning">Pendiente validación</span></td><td class="text-right"><span class="money">Q 10,000.00</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -659,28 +705,24 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             <div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>La cuenta 002 requiere cargar beneficiarios para completar expediente.</div></div>
           </div>
         </div>
-        <div class="card">
-          <div class="section-title">Acciones rápidas</div>
-          <div class="quick-grid">
-            <button class="quick-action" data-view-target="new-account">
-              <div class="icon-wrap"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M2 20h20"></path><path d="M5 20V8.6a1 1 0 0 1 .55-.9l6-3a1 1 0 0 1 .9 0l6 3a1 1 0 0 1 .55.9V20"></path><path d="M12 10v10"></path></svg></span></div>
-              <div class="quick-action-title">Nueva cuenta</div>
-              <div class="quick-action-copy">Habilita una cuenta adicional.</div>
+        <div class="quick-actions-card">
+          <div class="qa-title">Acciones Rápidas</div>
+          <div class="qa-grid">
+            <button class="qa-btn" data-view-target="new-investment">
+              <div class="qa-btn-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg></span></div>
+              <div class="qa-btn-label">Nueva Inversión</div>
             </button>
-            <button class="quick-action" data-view-target="profile">
-              <div class="icon-wrap"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></span></div>
-              <div class="quick-action-title">Actualizar perfil</div>
-              <div class="quick-action-copy">Edita datos del cliente.</div>
+            <button class="qa-btn" data-view-target="redemption">
+              <div class="qa-btn-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v6h6"></path><path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path><path d="M21 22v-6h-6"></path><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path></svg></span></div>
+              <div class="qa-btn-label">Recompra</div>
             </button>
-            <button class="quick-action" data-view-target="signatories">
-              <div class="icon-wrap"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span></div>
-              <div class="quick-action-title">Agregar firmante</div>
-              <div class="quick-action-copy">Autoriza un tercero.</div>
+            <button class="qa-btn" data-view-target="new-fund">
+              <div class="qa-btn-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></span></div>
+              <div class="qa-btn-label">Nuevo Fondo</div>
             </button>
-            <button class="quick-action" data-view-target="movements">
-              <div class="icon-wrap"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M21 21H3"></path></svg></span></div>
-              <div class="quick-action-title">Exportar movimientos</div>
-              <div class="quick-action-copy">Consulta el histórico.</div>
+            <button class="qa-btn" data-view-target="movements">
+              <div class="qa-btn-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg></span></div>
+              <div class="qa-btn-label">Movimientos</div>
             </button>
           </div>
         </div>
@@ -710,7 +752,18 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span></div>
             <div class="fund-main"><div class="fund-name">Fondo Bursátil GTQ</div><div class="fund-desc">Capitalización mensual · Beneficiarios completos</div></div>
             <div class="fund-right"><div class="fund-amount money">Q 84,320.00</div><div class="fund-pct">Vigente</div></div>
-            <div class="fund-actions"><button class="btn btn-sm btn-outline" data-view-target="fund-detail">Detalle</button><button class="btn btn-sm btn-primary" data-view-target="new-investment">Invertir</button><button class="btn btn-sm btn-outline-aqua" data-view-target="redemption">Recompra</button></div>
+            <div class="fund-actions">
+              <div class="more-menu">
+                <button class="more-menu-toggle" type="button" aria-label="Más acciones">
+                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
+                </button>
+                <div class="more-menu-panel">
+                  <button class="more-menu-item" type="button" data-view-target="fund-detail">Detalle</button>
+                  <button class="more-menu-item" type="button" data-view-target="new-investment">Invertir</button>
+                  <button class="more-menu-item" type="button" data-view-target="redemption">Recompra</button>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="fund-row">
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span></div>
@@ -927,9 +980,9 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
       <table class="table">
         <thead><tr><th>Fecha</th><th>Descripción</th><th>Estado</th><th class="text-right">Débito</th><th class="text-right">Crédito</th><th class="text-right">Saldo</th></tr></thead>
         <tbody>
-          <tr><td>15/04/2026</td><td>Compra · Inversión #8</td><td><span class="pill pill-success">Disponible</span></td><td class="text-right"></td><td class="text-right">Q 10,000.00</td><td class="text-right">Q 125,480.00</td></tr>
-          <tr><td>10/04/2026</td><td>Rendimiento capitalizado</td><td><span class="pill pill-success">Aplicado</span></td><td class="text-right"></td><td class="text-right">Q 480.00</td><td class="text-right">Q 115,480.00</td></tr>
-          <tr><td>20/03/2026</td><td>Recompra parcial</td><td><span class="pill pill-warning">Entregado</span></td><td class="text-right">Q 5,000.00</td><td class="text-right"></td><td class="text-right">Q 110,000.00</td></tr>
+          <tr><td>15/04/2026</td><td>Compra · Inversión #8</td><td><span class="pill pill-success">Disponible</span></td><td class="text-right"></td><td class="text-right"><span class="money">Q 10,000.00</span></td><td class="text-right"><span class="money">Q 125,480.00</span></td></tr>
+          <tr><td>10/04/2026</td><td>Rendimiento capitalizado</td><td><span class="pill pill-success">Aplicado</span></td><td class="text-right"></td><td class="text-right"><span class="money">Q 480.00</span></td><td class="text-right"><span class="money">Q 115,480.00</span></td></tr>
+          <tr><td>20/03/2026</td><td>Recompra parcial</td><td><span class="pill pill-warning">Entregado</span></td><td class="text-right"><span class="money">Q 5,000.00</span></td><td class="text-right"></td><td class="text-right"><span class="money">Q 110,000.00</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -1105,7 +1158,29 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
 const items = document.querySelectorAll(".sb-item[data-view]");
 const views = document.querySelectorAll(".view");
 const title = document.getElementById("header-title");
+const groups = document.querySelectorAll(".sb-group");
+const moreMenus = document.querySelectorAll(".more-menu");
 const authViews = new Set(["landing","login","twofa","recovery","register"]);
+const viewGroupMap = {
+  landing:"access",
+  login:"access",
+  twofa:"access",
+  recovery:"access",
+  register:"access",
+  dashboard:"main",
+  portfolio:"main",
+  "fund-detail":"main",
+  "new-fund":"main",
+  "new-investment":"operations",
+  "confirm-deposit":"operations",
+  redemption:"operations",
+  movements:"operations",
+  beneficiaries:"settings",
+  signatories:"settings",
+  holders:"settings",
+  "new-account":"settings",
+  profile:"settings"
+};
 
 function showView(name) {
   items.forEach(item => item.classList.toggle("active", item.dataset.view === name));
@@ -1113,10 +1188,41 @@ function showView(name) {
   const active = document.getElementById("view-" + name);
   if (active) title.textContent = active.dataset.title || "Pdei+";
   document.body.classList.toggle("auth-mode", authViews.has(name));
+  moreMenus.forEach(menu => menu.classList.remove("open"));
+  groups.forEach(group => {
+    const isActiveParent = group.dataset.group === viewGroupMap[name];
+    group.classList.toggle("active-parent", isActiveParent);
+    group.classList.toggle("open", isActiveParent);
+  });
 }
 
 items.forEach(item => {
   item.addEventListener("click", () => showView(item.dataset.view));
+});
+
+groups.forEach(group => {
+  const toggle = group.querySelector(".sb-group-toggle");
+  if (!toggle) return;
+  toggle.addEventListener("click", () => {
+    const isActiveParent = group.classList.contains("active-parent");
+    if (isActiveParent) return;
+    group.classList.toggle("open");
+  });
+});
+
+moreMenus.forEach(menu => {
+  const toggle = menu.querySelector(".more-menu-toggle");
+  if (!toggle) return;
+  toggle.addEventListener("click", event => {
+    event.stopPropagation();
+    const willOpen = !menu.classList.contains("open");
+    moreMenus.forEach(other => other.classList.remove("open"));
+    menu.classList.toggle("open", willOpen);
+  });
+});
+
+document.addEventListener("click", () => {
+  moreMenus.forEach(menu => menu.classList.remove("open"));
 });
 
 document.querySelectorAll("[data-view-target]").forEach(button => {
