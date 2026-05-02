@@ -243,6 +243,39 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .featured-funds .fund-row{grid-template-columns:42px minmax(220px,1fr) 112px 44px}
 .featured-funds .fund-main,.featured-funds .fund-right,.featured-funds .fund-actions{min-width:0}
 .featured-funds .fund-actions{width:44px}
+.portfolio-toolbar{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end;margin:20px 0
+}
+.portfolio-filters{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px
+}
+.portfolio-filters .field{margin:0}
+.portfolio-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.portfolio-summary-item{
+  padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:#f8fafc
+}
+.portfolio-summary-label{font-size:12px;color:var(--text-lt);margin-bottom:6px}
+.portfolio-summary-value{
+  font-size:20px;font-weight:800;color:var(--navy);line-height:1.1;display:block;width:100%;text-align:right
+}
+.account-stack{display:grid;gap:18px}
+.account-card-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px
+}
+.account-card-title{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.account-card-sub{font-size:13px;color:var(--text-sec)}
+.account-card-meta{display:flex;gap:8px;flex-wrap:wrap}
+.portfolio-gate{display:grid;gap:12px;margin-bottom:20px}
+.portfolio-fund-row{grid-template-columns:42px minmax(300px,1fr) 168px 44px;align-items:start}
+.portfolio-fund-row .fund-main{display:grid;gap:10px}
+.portfolio-fund-row .fund-name-row{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap
+}
+.portfolio-fund-row .fund-name{font-size:16px}
+.portfolio-fund-row .fund-right{display:grid;gap:6px;padding-top:2px}
+.portfolio-fund-row .fund-pct{color:var(--text-lt);font-weight:700}
+.portfolio-fund-row .more-menu-toggle{margin-top:2px}
+.portfolio-empty.auth-hidden{display:none}
 
 .person{
   display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--border);border-radius:var(--radius-md);background:#fff
@@ -479,6 +512,8 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   .auth-brand{padding:36px 28px}
   .auth-panel{padding:24px}
   .auth-hero h1{font-size:38px}
+  .portfolio-toolbar,.portfolio-filters,.portfolio-summary{grid-template-columns:1fr}
+  .account-card-head{flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
@@ -1158,82 +1193,264 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   <section class="view" id="view-portfolio" data-title="Mi Portafolio">
     <div class="page-head">
       <div>
-        <div class="page-title">Mi Portafolio</div>
-        <div class="page-sub">RF6 · Consulta por cuenta, fondos activos, saldos, titulares relacionados y acciones permitidas.</div>
+        <div class="page-sub">RF8 · Consulta por cuenta, fondos por producto, saldos, vigencias, capitalización y acciones permitidas según estado.</div>
       </div>
       <button class="btn btn-primary" data-view-target="new-fund">Nuevo Fondo</button>
+    </div>
+    <div class="portfolio-gate">
+      <div class="alert alert-warning auth-hidden" id="portfolio-gate-pending"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span><div>La cuenta sigue en proceso de activación. Puedes revisar detalle, movimientos y completar depósitos pendientes, pero no crear operaciones nuevas.</div></div>
+      <div class="alert alert-info auth-hidden" id="portfolio-gate-update"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg></span><div>La información del expediente requiere actualización. Revisa <button class="inline-link" type="button" data-view-target="profile">Mi Perfil</button> antes de continuar con nuevas operaciones.</div></div>
     </div>
     <div class="grid grid-3">
       <div class="card metric-card"><div class="metric-small-label">Saldo total GTQ</div><div class="metric-small-value money">Q 123,880.00</div></div>
       <div class="card metric-card"><div class="metric-small-label">Saldo total USD</div><div class="metric-small-value money">$ 1,600.00</div></div>
       <div class="card metric-card"><div class="metric-small-label">Fondos activos</div><div class="metric-small-value">3</div></div>
     </div>
-    <div class="stack" style="margin-top:20px">
-      <div class="card">
-        <div class="card-title">Cuenta 001</div>
-        <div class="card-sub">Titulares: Alfredo García · Laura Morales</div>
+    <div class="card portfolio-toolbar">
+      <div class="portfolio-filters">
+        <div class="field">
+          <label class="label" for="portfolio-filter-account">Cuenta</label>
+          <select class="select" id="portfolio-filter-account">
+            <option value="all">Todas las cuentas</option>
+            <option value="001">Cuenta 001</option>
+            <option value="002">Cuenta 002</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label" for="portfolio-filter-state">Estado del fondo</label>
+          <select class="select" id="portfolio-filter-state">
+            <option value="all">Todos los estados</option>
+            <option value="active">Vigente</option>
+            <option value="pending-funds">Pendiente de fondos</option>
+            <option value="blocked">En verificación</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label" for="portfolio-filter-currency">Moneda</label>
+          <select class="select" id="portfolio-filter-currency">
+            <option value="all">GTQ y USD</option>
+            <option value="GTQ">GTQ</option>
+            <option value="USD">USD</option>
+          </select>
+        </div>
+      </div>
+      <div class="pill pill-neutral" id="portfolio-state-pill">Operación habilitada</div>
+    </div>
+    <div class="account-stack" id="portfolio-account-list">
+      <div class="card portfolio-account-card" data-account="001">
+        <div class="account-card-head">
+          <div>
+            <div class="account-card-title">Cuenta 001</div>
+            <div class="account-card-sub">Titulares: Alfredo García López · Laura Morales de García</div>
+          </div>
+          <div class="account-card-meta">
+            <span class="pill pill-success">2 fondos</span>
+            <span class="pill pill-neutral">Cuenta conjunta</span>
+          </div>
+        </div>
+        <div class="portfolio-summary">
+          <div class="portfolio-summary-item"><div class="portfolio-summary-label">Saldo actual</div><div class="portfolio-summary-value money">Q 114,320.00</div></div>
+          <div class="portfolio-summary-item"><div class="portfolio-summary-label">Saldo disponible</div><div class="portfolio-summary-value money">Q 44,320.00</div></div>
+          <div class="portfolio-summary-item"><div class="portfolio-summary-label">Capitalizado acumulado</div><div class="portfolio-summary-value money">Q 1,240.00</div></div>
+        </div>
         <div class="fund-list">
-          <div class="fund-row">
-            <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span></div>
-            <div class="fund-main"><div class="fund-name">Fondo Bursátil GTQ</div><div class="fund-desc">Capitalización mensual · Beneficiarios completos</div></div>
-            <div class="fund-right"><div class="fund-amount money">Q 84,320.00</div><div class="fund-pct">Vigente</div></div>
+          <div class="fund-row portfolio-fund-row" data-account="001" data-fund-id="bursatil-gtq" data-fund-state="active" data-fund-currency="GTQ">
+            <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m22 7-8.5 8.5-5-5L2 17"></path><path d="M16 7h6v6"></path></svg></span></div>
+            <div class="fund-main">
+              <div class="fund-name-row">
+                <div class="fund-name">Fondo Bursátil GTQ</div>
+                <span class="pill pill-success">Vigente</span>
+              </div>
+              <div class="fund-desc-lines">
+                <div class="fund-desc-line">Saldo disponible: <span class="money">Q 24,320.00</span></div>
+                <div class="fund-desc-line">Vigencia: Indefinida</div>
+                <div class="fund-desc-line">Capitalización: Mensual</div>
+                <div class="fund-desc-line">Monto capitalizado: <span class="money">Q 480.00</span> · Movimientos: 18</div>
+              </div>
+            </div>
+            <div class="fund-right"><div class="fund-amount money">Q 84,320.00</div><div class="fund-pct">Saldo actual</div></div>
             <div class="fund-actions">
               <div class="more-menu">
                 <button class="more-menu-toggle" type="button" aria-label="Más acciones">
                   <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
                 </button>
                 <div class="more-menu-panel">
-                  <button class="more-menu-item" type="button" data-view-target="fund-detail">Detalle</button>
-                  <button class="more-menu-item" type="button" data-view-target="new-investment">Invertir</button>
-                  <button class="more-menu-item" type="button" data-view-target="redemption">Recompra</button>
+                  <button class="more-menu-item" type="button" data-fund-open="bursatil-gtq">Ver detalle</button>
+                  <button class="more-menu-item" type="button" data-view-target="new-investment" data-action-kind="active-only">Invertir</button>
+                  <button class="more-menu-item" type="button" data-view-target="redemption" data-action-kind="active-only">Recompra</button>
+                  <button class="more-menu-item" type="button" data-view-target="beneficiaries" data-action-kind="always">Beneficiarios</button>
+                  <button class="more-menu-item" type="button" data-view-target="signatories" data-action-kind="always">Otros firmantes</button>
+                  <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="fund-row">
-            <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span></div>
-            <div class="fund-main"><div class="fund-name">Fondo a Plazo GTQ</div><div class="fund-desc">Permanencia mínima cumplida · Recompra habilitada</div></div>
-            <div class="fund-right"><div class="fund-amount money">Q 30,000.00</div><div class="fund-pct">7.2% anual</div></div>
-            <div class="fund-actions"><button class="btn btn-sm btn-outline" data-view-target="fund-detail">Detalle</button><button class="btn btn-sm btn-outline-aqua" data-view-target="redemption">Recompra</button></div>
+          <div class="fund-row portfolio-fund-row" data-account="001" data-fund-id="plazo-gtq" data-fund-state="active" data-fund-currency="GTQ">
+            <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></span></div>
+            <div class="fund-main">
+              <div class="fund-name-row">
+                <div class="fund-name">Fondo a Plazo GTQ</div>
+                <span class="pill pill-success">Vigente</span>
+              </div>
+              <div class="fund-desc-lines">
+                <div class="fund-desc-line">Saldo disponible: <span class="money">Q 20,000.00</span></div>
+                <div class="fund-desc-line">Vigencia: 30/06/2026</div>
+                <div class="fund-desc-line">Capitalización: Al vencimiento</div>
+                <div class="fund-desc-line">Monto capitalizado: <span class="money">Q 760.00</span> · Movimientos: 4</div>
+              </div>
+            </div>
+            <div class="fund-right"><div class="fund-amount money">Q 30,000.00</div><div class="fund-pct">Saldo actual</div></div>
+            <div class="fund-actions">
+              <div class="more-menu">
+                <button class="more-menu-toggle" type="button" aria-label="Más acciones">
+                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
+                </button>
+                <div class="more-menu-panel">
+                  <button class="more-menu-item" type="button" data-fund-open="plazo-gtq">Ver detalle</button>
+                  <button class="more-menu-item" type="button" data-view-target="new-investment" data-action-kind="active-only">Invertir</button>
+                  <button class="more-menu-item" type="button" data-view-target="redemption" data-action-kind="active-only">Recompra</button>
+                  <button class="more-menu-item" type="button" data-view-target="beneficiaries" data-action-kind="always">Beneficiarios</button>
+                  <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-title">Cuenta 002</div>
-        <div class="card-sub">Titular: Alfredo García</div>
+      <div class="card portfolio-account-card" data-account="002">
+        <div class="account-card-head">
+          <div>
+            <div class="account-card-title">Cuenta 002</div>
+            <div class="account-card-sub">Titular: Alfredo García López</div>
+          </div>
+          <div class="account-card-meta">
+            <span class="pill pill-neutral">3 fondos</span>
+            <span class="pill pill-info">Moneda mixta</span>
+          </div>
+        </div>
+        <div class="portfolio-summary">
+          <div class="portfolio-summary-item"><div class="portfolio-summary-label">Saldo actual USD</div><div class="portfolio-summary-value money">$ 1,600.00</div></div>
+          <div class="portfolio-summary-item"><div class="portfolio-summary-label">Pendiente de fondos</div><div class="portfolio-summary-value money">Q 10,000.00</div></div>
+          <div class="portfolio-summary-item"><div class="portfolio-summary-label">En verificación</div><div class="portfolio-summary-value">1 fondo</div></div>
+        </div>
         <div class="fund-list">
-          <div class="fund-row">
-            <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span></div>
-            <div class="fund-main"><div class="fund-name">Fondo Bursátil USD</div><div class="fund-desc">Estado activo · Expediente pendiente de beneficiarios</div></div>
-            <div class="fund-right"><div class="fund-amount money">$ 1,600.00</div><div class="fund-pct">3.8% anual</div></div>
-            <div class="fund-actions"><button class="btn btn-sm btn-outline" data-view-target="fund-detail">Detalle</button><button class="btn btn-sm btn-primary" data-view-target="new-investment">Invertir</button></div>
+          <div class="fund-row portfolio-fund-row" data-account="002" data-fund-id="bursatil-usd" data-fund-state="active" data-fund-currency="USD">
+            <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14.5a3.5 3.5 0 0 1 0 7H6"></path></svg></span></div>
+            <div class="fund-main">
+              <div class="fund-name-row">
+                <div class="fund-name">Fondo Bursátil USD</div>
+                <span class="pill pill-success">Vigente</span>
+              </div>
+              <div class="fund-desc-lines">
+                <div class="fund-desc-line">Saldo disponible: <span class="money">$ 1,100.00</span></div>
+                <div class="fund-desc-line">Vigencia: Indefinida</div>
+                <div class="fund-desc-line">Capitalización: Mensual</div>
+                <div class="fund-desc-line">Monto capitalizado: <span class="money">$ 56.00</span> · Movimientos: 9</div>
+              </div>
+            </div>
+            <div class="fund-right"><div class="fund-amount money">$ 1,600.00</div><div class="fund-pct">Saldo actual</div></div>
+            <div class="fund-actions">
+              <div class="more-menu">
+                <button class="more-menu-toggle" type="button" aria-label="Más acciones">
+                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
+                </button>
+                <div class="more-menu-panel">
+                  <button class="more-menu-item" type="button" data-fund-open="bursatil-usd">Ver detalle</button>
+                  <button class="more-menu-item" type="button" data-view-target="new-investment" data-action-kind="active-only">Invertir</button>
+                  <button class="more-menu-item" type="button" data-view-target="redemption" data-action-kind="active-only">Recompra</button>
+                  <button class="more-menu-item" type="button" data-view-target="beneficiaries" data-action-kind="always">Beneficiarios</button>
+                  <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fund-row portfolio-fund-row is-muted" data-account="002" data-fund-id="crecimiento-gtq" data-fund-state="pending-funds" data-fund-currency="GTQ">
+            <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 16V8"></path><path d="M8 12h8"></path><path d="M4 4h16v16H4z"></path></svg></span></div>
+            <div class="fund-main">
+              <div class="fund-name-row">
+                <div class="fund-name">Fondo Crecimiento GTQ</div>
+                <span class="pill pill-warning">Pendiente de fondos</span>
+              </div>
+              <div class="fund-desc-lines">
+                <div class="fund-desc-line">Saldo disponible: <span class="money">Q 0.00</span></div>
+                <div class="fund-desc-line">Vigencia: Se activa al validar depósito</div>
+                <div class="fund-desc-line">Capitalización: Trimestral</div>
+                <div class="fund-desc-line">Monto capitalizado: <span class="money">Q 0.00</span> · Movimientos: 1</div>
+              </div>
+            </div>
+            <div class="fund-right"><div class="fund-amount money">Q 10,000.00</div><div class="fund-pct">Monto esperado</div></div>
+            <div class="fund-actions">
+              <div class="more-menu">
+                <button class="more-menu-toggle" type="button" aria-label="Más acciones">
+                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
+                </button>
+                <div class="more-menu-panel">
+                  <button class="more-menu-item" type="button" data-fund-open="crecimiento-gtq">Ver detalle</button>
+                  <button class="more-menu-item" type="button" data-view-target="confirm-deposit" data-action-kind="pending-only">Confirmar depósito</button>
+                  <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fund-row portfolio-fund-row is-muted" data-account="002" data-fund-id="estrategico-gtq" data-fund-state="blocked" data-fund-currency="GTQ">
+            <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z"></path><path d="M9 12l2 2 4-4"></path></svg></span></div>
+            <div class="fund-main">
+              <div class="fund-name-row">
+                <div class="fund-name">Fondo Estratégico GTQ</div>
+                <span class="pill pill-info">En verificación</span>
+              </div>
+              <div class="fund-desc-lines">
+                <div class="fund-desc-line">Saldo disponible: <span class="money">Q 0.00</span></div>
+                <div class="fund-desc-line">Vigencia: Congelado por cumplimiento</div>
+                <div class="fund-desc-line">Capitalización: Mensual</div>
+                <div class="fund-desc-line">Monto capitalizado: <span class="money">Q 0.00</span> · Movimientos: 2</div>
+              </div>
+            </div>
+            <div class="fund-right"><div class="fund-amount money">Q 0.00</div><div class="fund-pct">Sin saldo operativo</div></div>
+            <div class="fund-actions">
+              <div class="more-menu">
+                <button class="more-menu-toggle" type="button" aria-label="Más acciones">
+                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
+                </button>
+                <div class="more-menu-panel">
+                  <button class="more-menu-item" type="button" data-fund-open="estrategico-gtq">Ver detalle</button>
+                  <button class="more-menu-item" type="button" data-view-target="beneficiaries" data-action-kind="always">Beneficiarios</button>
+                  <button class="more-menu-item" type="button" data-view-target="signatories" data-action-kind="always">Otros firmantes</button>
+                  <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="card portfolio-empty auth-hidden" id="portfolio-empty">
+      <div class="section-title">Sin resultados</div>
+      <div class="card-sub">Ajusta los filtros para volver a mostrar fondos dentro del portafolio.</div>
     </div>
   </section>
 
   <section class="view" id="view-fund-detail" data-title="Detalle de Fondo">
     <div class="page-head">
       <div>
-        <div class="page-title">Fondo Bursátil GTQ</div>
-        <div class="page-sub">RF8 · Vista consolidada del fondo, titulares, cuenta relacionada, condiciones y acciones.</div>
+        <div class="page-title" id="fund-detail-title">Fondo Bursátil GTQ</div>
+        <div class="page-sub" id="fund-detail-sub">RF8 · Vista consolidada del fondo, titulares, cuenta relacionada, condiciones y acciones.</div>
       </div>
       <div class="btn-row">
-        <button class="btn btn-primary" data-view-target="new-investment">Nueva Inversión</button>
-        <button class="btn btn-outline-aqua" data-view-target="redemption">Solicitar Recompra</button>
+        <button class="btn btn-primary" id="fund-detail-invest" data-view-target="new-investment">Nueva Inversión</button>
+        <button class="btn btn-outline-aqua" id="fund-detail-redeem" data-view-target="redemption">Solicitar Recompra</button>
       </div>
     </div>
     <div class="grid grid-3">
-      <div class="card metric-card"><div class="metric-small-label">Saldo actual</div><div class="metric-small-value money">Q 84,320.00</div></div>
-      <div class="card metric-card"><div class="metric-small-label">Rendimiento estimado</div><div class="metric-small-value">5.5%</div></div>
-      <div class="card metric-card"><div class="metric-small-label">Estado</div><div class="metric-small-value">Vigente</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Saldo actual</div><div class="metric-small-value money" id="fund-detail-balance">Q 84,320.00</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Saldo disponible</div><div class="metric-small-value money" id="fund-detail-available">Q 24,320.00</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Estado</div><div class="metric-small-value" id="fund-detail-state">Vigente</div></div>
     </div>
     <div class="dual" style="margin-top:20px">
       <div class="stack">
         <div class="card">
           <div class="section-title">Resumen del producto</div>
-          <div class="kv">
+          <div class="kv" id="fund-detail-summary">
             <div><span>Cuenta</span>001</div>
             <div><span>Moneda</span>GTQ</div>
             <div><span>Capitalización</span>Mensual</div>
@@ -1244,7 +1461,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         </div>
         <div class="card">
           <div class="section-title">Titulares relacionados</div>
-          <div class="list">
+          <div class="list" id="fund-detail-holders">
             <div class="person"><div class="person-avatar">AG</div><div><div class="person-name">Alfredo García López</div><div class="person-meta">Titular principal · PEP No · CPE No</div></div><div class="person-tail"><span class="pill pill-success">Vigente</span></div></div>
             <div class="person"><div class="person-avatar">LM</div><div><div class="person-name">Laura Morales de García</div><div class="person-meta">Cotitular · PEP No · CPE No</div></div><div class="person-tail"><span class="pill pill-success">Vigente</span></div></div>
           </div>
@@ -1253,7 +1470,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
       <div class="stack">
         <div class="card">
           <div class="section-title">Estado de expediente</div>
-          <div class="list">
+          <div class="list" id="fund-detail-status-list">
             <div class="alert alert-success"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><div>Beneficiarios completos y distribución al 100%.</div></div>
             <div class="alert alert-success"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><div>Sin restricciones PEP/CPE detectadas.</div></div>
             <div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>Firmantes autorizados: 1 registro activo.</div></div>
@@ -1649,12 +1866,170 @@ const authState = {
   recoveryEmail:"",
   generatedTempPassword:"",
   registerStep:0,
-  dashboardState:"active"
+  dashboardState:"active",
+  selectedFund:"bursatil-gtq"
 };
 const rememberedEmailKey = "pdei-web-mock-remembered-email";
+const fundDetailData = {
+  "bursatil-gtq": {
+    title:"Fondo Bursátil GTQ",
+    sub:"RF8 · Cuenta 001 · Producto vigente con inversión y recompra habilitadas.",
+    balance:"Q 84,320.00",
+    available:"Q 24,320.00",
+    state:"Vigente",
+    stateKind:"success",
+    canInvest:true,
+    canRedeem:true,
+    summary:[
+      ["Cuenta","001"],
+      ["Moneda","GTQ"],
+      ["Capitalización","Mensual"],
+      ["Inversión mínima","Q 500.00"],
+      ["Permanencia","Sin mínimo"],
+      ["Recompra","Disponible"]
+    ],
+    holders:[
+      ["AG","Alfredo García López","Titular principal · PEP No · CPE No","Vigente","success"],
+      ["LM","Laura Morales de García","Cotitular · PEP No · CPE No","Vigente","success"]
+    ],
+    status:[
+      ["success","Beneficiarios completos y distribución al 100%."],
+      ["success","Sin restricciones PEP/CPE detectadas."],
+      ["info","Firmantes autorizados: 1 registro activo."]
+    ]
+  },
+  "plazo-gtq": {
+    title:"Fondo a Plazo GTQ",
+    sub:"RF8 · Cuenta 001 · Fondo vigente con permanencia mínima cumplida y recompra parcial habilitada.",
+    balance:"Q 30,000.00",
+    available:"Q 20,000.00",
+    state:"Vigente",
+    stateKind:"success",
+    canInvest:true,
+    canRedeem:true,
+    summary:[
+      ["Cuenta","001"],
+      ["Moneda","GTQ"],
+      ["Capitalización","Al vencimiento"],
+      ["Inversión mínima","Q 1,000.00"],
+      ["Permanencia","30 días cumplidos"],
+      ["Recompra","Parcial o total"]
+    ],
+    holders:[
+      ["AG","Alfredo García López","Titular principal · PEP No · CPE No","Vigente","success"],
+      ["LM","Laura Morales de García","Cotitular · PEP No · CPE No","Vigente","success"]
+    ],
+    status:[
+      ["success","Permanencia mínima cumplida para desinversión."],
+      ["success","Beneficiarios completos y vigentes."],
+      ["info","Movimientos limitados a operaciones del plazo seleccionado."]
+    ]
+  },
+  "bursatil-usd": {
+    title:"Fondo Bursátil USD",
+    sub:"RF8 · Cuenta 002 · Producto activo en USD con acciones operativas disponibles.",
+    balance:"$ 1,600.00",
+    available:"$ 1,100.00",
+    state:"Vigente",
+    stateKind:"success",
+    canInvest:true,
+    canRedeem:true,
+    summary:[
+      ["Cuenta","002"],
+      ["Moneda","USD"],
+      ["Capitalización","Mensual"],
+      ["Inversión mínima","$ 100.00"],
+      ["Permanencia","Sin mínimo"],
+      ["Recompra","Disponible"]
+    ],
+    holders:[
+      ["AG","Alfredo García López","Titular único · PEP No · CPE No","Vigente","success"]
+    ],
+    status:[
+      ["warning","Expediente con actualización pendiente de beneficiarios."],
+      ["success","Producto vigente y habilitado para nuevas inversiones."],
+      ["info","Cuenta bancaria USD asociada y validada."]
+    ]
+  },
+  "crecimiento-gtq": {
+    title:"Fondo Crecimiento GTQ",
+    sub:"RF13 · Cuenta 002 · Fondo pendiente de activación hasta validar depósito y comprobante.",
+    balance:"Q 10,000.00",
+    available:"Q 0.00",
+    state:"Pendiente de fondos",
+    stateKind:"warning",
+    canInvest:false,
+    canRedeem:false,
+    summary:[
+      ["Cuenta","002"],
+      ["Moneda","GTQ"],
+      ["Capitalización","Trimestral"],
+      ["Inversión mínima","Q 10,000.00"],
+      ["Permanencia","Aún no inicia"],
+      ["Recompra","No disponible"]
+    ],
+    holders:[
+      ["AG","Alfredo García López","Titular único · PEP No · CPE No","Pendiente","warning"]
+    ],
+    status:[
+      ["warning","Depósito pendiente de conciliación y validación interna."],
+      ["info","Comprobante requerido para activar el fondo."],
+      ["info","Las operaciones adicionales se habilitan después de la activación."]
+    ]
+  },
+  "estrategico-gtq": {
+    title:"Fondo Estratégico GTQ",
+    sub:"RF8 · Cuenta 002 · Producto inmovilizado mientras se completa revisión de cumplimiento.",
+    balance:"Q 0.00",
+    available:"Q 0.00",
+    state:"En verificación",
+    stateKind:"info",
+    canInvest:false,
+    canRedeem:false,
+    summary:[
+      ["Cuenta","002"],
+      ["Moneda","GTQ"],
+      ["Capitalización","Mensual"],
+      ["Inversión mínima","Q 5,000.00"],
+      ["Permanencia","No aplica"],
+      ["Recompra","Bloqueada"]
+    ],
+    holders:[
+      ["AG","Alfredo García López","Titular único · PEP No · CPE No","En revisión","info"]
+    ],
+    status:[
+      ["warning","Cumplimiento revisa documentación adicional del expediente."],
+      ["info","No hay saldo operativo mientras el fondo permanezca bloqueado."],
+      ["info","Beneficiarios y firmantes siguen consultables durante la revisión."]
+    ]
+  }
+};
 
 function byId(id) {
   return document.getElementById(id);
+}
+
+function setQueryState() {
+  const params = new URLSearchParams(window.location.search);
+  params.set("view", document.querySelector(".view.active")?.id.replace("view-","") || "landing");
+  params.set("state", authState.dashboardState);
+  if (authState.selectedFund) params.set("fund", authState.selectedFund);
+  const next = `${window.location.pathname}?${params.toString()}`;
+  window.history.replaceState({}, "", next);
+}
+
+function getAlertIcon(kind) {
+  if (kind === "success") {
+    return '<span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></span>';
+  }
+  if (kind === "warning") {
+    return '<span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span>';
+  }
+  return '<span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span>';
+}
+
+function getPillClass(kind) {
+  return kind === "success" ? "pill-success" : kind === "warning" ? "pill-warning" : "pill-info";
 }
 
 function getUser(email) {
@@ -1772,6 +2147,50 @@ function renderRegisterStep() {
   updateRegisterSummary();
 }
 
+function renderFundDetail() {
+  const fund = fundDetailData[authState.selectedFund] || fundDetailData["bursatil-gtq"];
+  const allowInvest = fund.canInvest && authState.dashboardState === "active";
+  const allowRedeem = fund.canRedeem && authState.dashboardState === "active";
+  byId("fund-detail-title").textContent = fund.title;
+  byId("fund-detail-sub").textContent = fund.sub;
+  byId("fund-detail-balance").textContent = fund.balance;
+  byId("fund-detail-available").textContent = fund.available;
+  byId("fund-detail-state").textContent = fund.state;
+  byId("fund-detail-summary").innerHTML = fund.summary.map(([label, value]) => `<div><span>${label}</span>${value}</div>`).join("");
+  byId("fund-detail-holders").innerHTML = fund.holders.map(([avatar, name, meta, status, kind]) => `
+    <div class="person">
+      <div class="person-avatar">${avatar}</div>
+      <div><div class="person-name">${name}</div><div class="person-meta">${meta}</div></div>
+      <div class="person-tail"><span class="pill ${getPillClass(kind)}">${status}</span></div>
+    </div>
+  `).join("");
+  byId("fund-detail-status-list").innerHTML = fund.status.map(([kind, copy]) => `
+    <div class="alert alert-${kind}">${getAlertIcon(kind)}<div>${copy}</div></div>
+  `).join("");
+  byId("fund-detail-invest").disabled = !allowInvest;
+  byId("fund-detail-redeem").disabled = !allowRedeem;
+}
+
+function renderPortfolio() {
+  const account = byId("portfolio-filter-account")?.value || "all";
+  const state = byId("portfolio-filter-state")?.value || "all";
+  const currency = byId("portfolio-filter-currency")?.value || "all";
+  let visibleFunds = 0;
+  document.querySelectorAll("#view-portfolio .portfolio-fund-row").forEach(row => {
+    const matchesAccount = account === "all" || row.dataset.account === account;
+    const matchesState = state === "all" || row.dataset.fundState === state;
+    const matchesCurrency = currency === "all" || row.dataset.fundCurrency === currency;
+    const show = matchesAccount && matchesState && matchesCurrency;
+    row.classList.toggle("auth-hidden", !show);
+    if (show) visibleFunds += 1;
+  });
+  document.querySelectorAll("#view-portfolio .portfolio-account-card").forEach(card => {
+    const hasVisibleRows = Array.from(card.querySelectorAll(".portfolio-fund-row")).some(row => !row.classList.contains("auth-hidden"));
+    card.classList.toggle("auth-hidden", !hasVisibleRows);
+  });
+  byId("portfolio-empty")?.classList.toggle("auth-hidden", visibleFunds !== 0);
+}
+
 function renderDashboardState() {
   const state = authState.dashboardState;
   const pendingGate = byId("dashboard-gate-pending");
@@ -1792,6 +2211,21 @@ function renderDashboardState() {
     const allow = state === "active" ? true : kind === "always" || (state === "pending" && kind === "pending-only");
     if ("disabled" in node) node.disabled = !allow;
   });
+  const portfolioPendingGate = byId("portfolio-gate-pending");
+  const portfolioUpdateGate = byId("portfolio-gate-update");
+  const portfolioStatePill = byId("portfolio-state-pill");
+  if (portfolioPendingGate) portfolioPendingGate.classList.toggle("auth-hidden", state !== "pending");
+  if (portfolioUpdateGate) portfolioUpdateGate.classList.toggle("auth-hidden", state !== "update");
+  if (portfolioStatePill) {
+    portfolioStatePill.className = "pill " + (state === "active" ? "pill-success" : state === "pending" ? "pill-warning" : "pill-info");
+    portfolioStatePill.textContent = state === "active" ? "Operación habilitada" : state === "pending" ? "Cuenta no activa" : "Actualizar datos";
+  }
+  document.querySelectorAll("#view-portfolio [data-action-kind]").forEach(node => {
+    const kind = node.getAttribute("data-action-kind");
+    const allow = state === "active" ? true : kind === "always" || (state === "pending" && kind === "pending-only");
+    if ("disabled" in node) node.disabled = !allow;
+  });
+  setQueryState();
 }
 
 function validateRegisterStep(step) {
@@ -1862,7 +2296,10 @@ function showView(name) {
   });
   if (name === "twofa") prepareTwofaView();
   if (name === "register") renderRegisterStep();
-  if (name === "dashboard") renderDashboardState();
+  if (name === "dashboard" || name === "portfolio") renderDashboardState();
+  if (name === "portfolio") renderPortfolio();
+  if (name === "fund-detail") renderFundDetail();
+  setQueryState();
 }
 
 items.forEach(item => {
@@ -1895,7 +2332,18 @@ document.addEventListener("click", () => {
 });
 
 document.querySelectorAll("[data-view-target]").forEach(button => {
-  button.addEventListener("click", () => showView(button.getAttribute("data-view-target")));
+  button.addEventListener("click", () => {
+    const sourceRow = button.closest(".portfolio-fund-row");
+    if (sourceRow?.dataset.fundId) authState.selectedFund = sourceRow.dataset.fundId;
+    showView(button.getAttribute("data-view-target"));
+  });
+});
+
+document.querySelectorAll("[data-fund-open]").forEach(button => {
+  button.addEventListener("click", () => {
+    authState.selectedFund = button.getAttribute("data-fund-open");
+    showView("fund-detail");
+  });
 });
 
 const loginEmail = byId("login-email");
@@ -2111,7 +2559,23 @@ document.querySelectorAll("[data-dashboard-state]").forEach(button => {
   });
 });
 
-showView("landing");
+["portfolio-filter-account","portfolio-filter-state","portfolio-filter-currency"].forEach(id => {
+  byId(id)?.addEventListener("change", renderPortfolio);
+});
+
+const initialParams = new URLSearchParams(window.location.search);
+const initialState = initialParams.get("state");
+const initialFund = initialParams.get("fund");
+const requestedInitialView = initialParams.get("view");
+const initialView = Array.from(views).some(view => view.id === `view-${requestedInitialView}`) ? requestedInitialView : "landing";
+if (initialState && ["active","pending","update"].includes(initialState)) {
+  authState.dashboardState = initialState;
+}
+if (initialFund && fundDetailData[initialFund]) {
+  authState.selectedFund = initialFund;
+}
+
+showView(initialView);
 </script>
 </body>
 </html>
