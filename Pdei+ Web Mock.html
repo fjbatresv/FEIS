@@ -276,6 +276,30 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .portfolio-fund-row .fund-pct{color:var(--text-lt);font-weight:700}
 .portfolio-fund-row .more-menu-toggle{margin-top:2px}
 .portfolio-empty.auth-hidden{display:none}
+.movements-toolbar{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end;margin:20px 0
+}
+.movements-filters{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px
+}
+.movements-filters .field{margin:0}
+.movements-period-bar{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:start;margin-bottom:20px
+}
+.movements-periods{display:flex;flex-wrap:wrap;gap:8px}
+.movements-range{
+  display:grid;grid-template-columns:repeat(2,minmax(0,180px));gap:12px;padding:14px 16px;border:1px solid var(--border);border-radius:16px;background:#fff
+}
+.movements-range.auth-hidden{display:none}
+.movements-range .field{margin:0}
+.movements-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:20px}
+.chip-btn{
+  padding:7px 14px;border-radius:999px;border:1.5px solid var(--border);background:#fff;color:var(--text-sec);font-size:13px;cursor:pointer
+}
+.chip-btn.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.table-wrap{overflow:auto}
+.movements-empty.auth-hidden,.export-note.auth-hidden{display:none}
+.export-note{margin-top:14px}
 
 .person{
   display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--border);border-radius:var(--radius-md);background:#fff
@@ -512,7 +536,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   .auth-brand{padding:36px 28px}
   .auth-panel{padding:24px}
   .auth-hero h1{font-size:38px}
-  .portfolio-toolbar,.portfolio-filters,.portfolio-summary{grid-template-columns:1fr}
+  .portfolio-toolbar,.portfolio-filters,.portfolio-summary,.movements-toolbar,.movements-filters,.movements-kpis,.movements-period-bar,.movements-range{grid-template-columns:1fr}
   .account-card-head{flex-direction:column;align-items:flex-start}
 }
 </style>
@@ -1613,32 +1637,72 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   <section class="view" id="view-movements" data-title="Movimientos">
     <div class="page-head">
       <div>
-        <div class="page-title">Movimientos</div>
-        <div class="page-sub">RF18 · Filtros por periodo, exportación y detalle de débitos, créditos y saldo.</div>
+        <div class="page-sub">RF18 · Filtros por periodo, cuenta, fondo y estado; exportación simulada y detalle de débitos, créditos y saldo.</div>
       </div>
-      <button class="btn btn-outline">Exportar</button>
+      <button class="btn btn-outline" id="movements-export" type="button">Exportar</button>
     </div>
-    <div class="chips" style="margin-bottom:20px">
-      <div class="chip active">Mes actual</div>
-      <div class="chip">Mes anterior</div>
-      <div class="chip">Trimestre</div>
-      <div class="chip">Semestre</div>
-      <div class="chip">Rango de fechas</div>
+    <div class="card movements-toolbar">
+      <div class="movements-filters">
+        <div class="field">
+          <label class="label" for="movements-account-filter">Cuenta</label>
+          <select class="select" id="movements-account-filter">
+            <option value="all">Todas las cuentas</option>
+            <option value="001" selected>Cuenta 001</option>
+            <option value="002">Cuenta 002</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label" for="movements-fund-filter">Fondo</label>
+          <select class="select" id="movements-fund-filter">
+            <option value="all">Todos los fondos</option>
+            <option value="bursatil-gtq">Fondo Bursátil GTQ</option>
+            <option value="plazo-gtq">Fondo a Plazo GTQ</option>
+            <option value="bursatil-usd">Fondo Bursátil USD</option>
+            <option value="crecimiento-gtq">Fondo Crecimiento GTQ</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label" for="movements-status-filter">Estado</label>
+          <select class="select" id="movements-status-filter">
+            <option value="all">Todos los estados</option>
+            <option value="Disponible">Disponible</option>
+            <option value="Aplicado">Aplicado</option>
+            <option value="Entregado">Entregado</option>
+            <option value="Pendiente validación">Pendiente validación</option>
+          </select>
+        </div>
+      </div>
+      <div class="pill pill-neutral" id="movements-count-pill">0 movimientos</div>
     </div>
-    <div class="grid grid-3" style="margin-bottom:20px">
-      <div class="card metric-card"><div class="metric-small-label">Saldo actual</div><div class="metric-small-value money">Q 125,480.00</div></div>
-      <div class="card metric-card"><div class="metric-small-label">Total compras</div><div class="metric-small-value money">Q 15,000.00</div></div>
-      <div class="card metric-card"><div class="metric-small-label">Rendimientos del mes</div><div class="metric-small-value money">Q 480.00</div></div>
+    <div class="movements-period-bar">
+      <div class="movements-periods" id="movements-periods">
+        <button class="chip-btn active" type="button" data-movements-period="current-month">Mes actual</button>
+        <button class="chip-btn" type="button" data-movements-period="previous-month">Mes anterior</button>
+        <button class="chip-btn" type="button" data-movements-period="quarter">Trimestre</button>
+        <button class="chip-btn" type="button" data-movements-period="semester">Semestre</button>
+        <button class="chip-btn" type="button" data-movements-period="range">Rango de fechas</button>
+      </div>
+      <div class="movements-range auth-hidden" id="movements-range-fields">
+        <div class="field">
+          <label class="label" for="movements-date-from">Desde</label>
+          <input class="input" id="movements-date-from" type="date" value="2026-03-15">
+        </div>
+        <div class="field">
+          <label class="label" for="movements-date-to">Hasta</label>
+          <input class="input" id="movements-date-to" type="date" value="2026-04-22">
+        </div>
+      </div>
     </div>
+    <div class="movements-kpis" id="movements-kpis"></div>
     <div class="card">
+      <div class="table-wrap">
       <table class="table">
         <thead><tr><th>Fecha</th><th>Descripción</th><th>Estado</th><th class="text-right">Débito</th><th class="text-right">Crédito</th><th class="text-right">Saldo</th></tr></thead>
-        <tbody>
-          <tr><td>15/04/2026</td><td>Compra · Inversión #8</td><td><span class="pill pill-success">Disponible</span></td><td class="text-right"></td><td class="text-right"><span class="money">Q 10,000.00</span></td><td class="text-right"><span class="money">Q 125,480.00</span></td></tr>
-          <tr><td>10/04/2026</td><td>Rendimiento capitalizado</td><td><span class="pill pill-success">Aplicado</span></td><td class="text-right"></td><td class="text-right"><span class="money">Q 480.00</span></td><td class="text-right"><span class="money">Q 115,480.00</span></td></tr>
-          <tr><td>20/03/2026</td><td>Recompra parcial</td><td><span class="pill pill-warning">Entregado</span></td><td class="text-right"><span class="money">Q 5,000.00</span></td><td class="text-right"></td><td class="text-right"><span class="money">Q 110,000.00</span></td></tr>
-        </tbody>
+        <tbody id="movements-table-body"></tbody>
       </table>
+      </div>
+      <div class="alert alert-info export-note auth-hidden" id="movements-export-note"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span><div id="movements-export-copy">Se generó una exportación simulada.</div></div>
+      <div class="alert alert-warning movements-empty auth-hidden" id="movements-empty"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span><div>No hay movimientos que coincidan con los filtros seleccionados.</div></div>
     </div>
   </section>
 
@@ -2004,6 +2068,17 @@ const fundDetailData = {
     ]
   }
 };
+const movementsData = [
+  { date:"2026-04-15", description:"Compra · Inversión #8", status:"Disponible", account:"001", fund:"bursatil-gtq", debit:"", credit:"Q 10,000.00", balance:"Q 125,480.00", kind:"credit" },
+  { date:"2026-04-10", description:"Rendimiento capitalizado", status:"Aplicado", account:"001", fund:"bursatil-gtq", debit:"", credit:"Q 480.00", balance:"Q 115,480.00", kind:"credit" },
+  { date:"2026-04-01", description:"Compra · Inversión #7", status:"Disponible", account:"001", fund:"plazo-gtq", debit:"", credit:"Q 5,000.00", balance:"Q 115,000.00", kind:"credit" },
+  { date:"2026-03-20", description:"Recompra parcial", status:"Entregado", account:"001", fund:"plazo-gtq", debit:"Q 5,000.00", credit:"", balance:"Q 110,000.00", kind:"debit" },
+  { date:"2026-03-15", description:"Rendimiento capitalizado", status:"Aplicado", account:"001", fund:"plazo-gtq", debit:"", credit:"Q 460.00", balance:"Q 115,000.00", kind:"credit" },
+  { date:"2026-03-01", description:"Compra · Inversión #6", status:"Disponible", account:"001", fund:"bursatil-gtq", debit:"", credit:"Q 20,000.00", balance:"Q 114,540.00", kind:"credit" },
+  { date:"2026-04-22", description:"Compra · Inversión USD #4", status:"Disponible", account:"002", fund:"bursatil-usd", debit:"", credit:"$ 400.00", balance:"$ 1,600.00", kind:"credit" },
+  { date:"2026-04-12", description:"Rendimiento capitalizado", status:"Aplicado", account:"002", fund:"bursatil-usd", debit:"", credit:"$ 56.00", balance:"$ 1,200.00", kind:"credit" },
+  { date:"2026-04-08", description:"Depósito informado", status:"Pendiente validación", account:"002", fund:"crecimiento-gtq", debit:"", credit:"Q 10,000.00", balance:"Q 10,000.00", kind:"credit" }
+];
 
 function byId(id) {
   return document.getElementById(id);
@@ -2030,6 +2105,21 @@ function getAlertIcon(kind) {
 
 function getPillClass(kind) {
   return kind === "success" ? "pill-success" : kind === "warning" ? "pill-warning" : "pill-info";
+}
+
+function parseMoney(value) {
+  if (!value) return 0;
+  const normalized = value.replace(/[^\d.-]/g, "");
+  return Number(normalized || 0);
+}
+
+function formatDateDisplay(value) {
+  const date = new Date(`${value}T12:00:00`);
+  return date.toLocaleDateString("es-GT", { day:"2-digit", month:"2-digit", year:"numeric" });
+}
+
+function getMoneySymbol(value) {
+  return value?.trim().startsWith("$") ? "$" : "Q";
 }
 
 function getUser(email) {
@@ -2191,6 +2281,63 @@ function renderPortfolio() {
   byId("portfolio-empty")?.classList.toggle("auth-hidden", visibleFunds !== 0);
 }
 
+function renderMovements() {
+  const account = byId("movements-account-filter")?.value || "all";
+  const fund = byId("movements-fund-filter")?.value || "all";
+  const status = byId("movements-status-filter")?.value || "all";
+  const period = document.querySelector("[data-movements-period].active")?.getAttribute("data-movements-period") || "current-month";
+  const fromInput = byId("movements-date-from")?.value || "2026-03-15";
+  const toInput = byId("movements-date-to")?.value || "2026-04-22";
+  const periodMap = {
+    "current-month": ["2026-04-01","2026-04-30"],
+    "previous-month": ["2026-03-01","2026-03-31"],
+    "quarter": ["2026-02-01","2026-04-30"],
+    "semester": ["2025-11-01","2026-04-30"],
+    "range": [fromInput,toInput]
+  };
+  const [from, to] = periodMap[period];
+  byId("movements-range-fields").classList.toggle("auth-hidden", period !== "range");
+  const rows = movementsData.filter(item => {
+    const matchesAccount = account === "all" || item.account === account;
+    const matchesFund = fund === "all" || item.fund === fund;
+    const matchesStatus = status === "all" || item.status === status;
+    const matchesPeriod = from && to ? item.date >= from && item.date <= to : true;
+    return matchesAccount && matchesFund && matchesStatus && matchesPeriod;
+  }).sort((a, b) => b.date.localeCompare(a.date));
+  const tbody = byId("movements-table-body");
+  tbody.innerHTML = rows.map(item => `
+    <tr>
+      <td>${formatDateDisplay(item.date)}</td>
+      <td>${item.description}</td>
+      <td><span class="pill ${item.status === "Pendiente validación" ? "pill-warning" : item.status === "Entregado" ? "pill-info" : "pill-success"}">${item.status}</span></td>
+      <td class="text-right">${item.debit ? `<span class="money">${item.debit}</span>` : ""}</td>
+      <td class="text-right">${item.credit ? `<span class="money">${item.credit}</span>` : ""}</td>
+      <td class="text-right"><span class="money">${item.balance}</span></td>
+    </tr>
+  `).join("");
+  const moneyRows = rows.filter(item => item.balance || item.credit || item.debit);
+  const currencies = Array.from(new Set(moneyRows.map(item => getMoneySymbol(item.balance || item.credit || item.debit))));
+  const kpiHtml = currencies.map(symbol => {
+    const currencyRows = moneyRows.filter(item => getMoneySymbol(item.balance || item.credit || item.debit) === symbol);
+    const totalDebits = currencyRows.reduce((sum, item) => sum + parseMoney(item.debit), 0);
+    const totalCredits = currencyRows.reduce((sum, item) => sum + parseMoney(item.credit), 0);
+    const lastBalance = currencyRows[0]?.balance || `${symbol} 0.00`;
+    return `
+      <div class="card metric-card"><div class="metric-small-label">Saldo actual ${symbol === "$" ? "USD" : "GTQ"}</div><div class="metric-small-value money">${lastBalance}</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Total créditos ${symbol === "$" ? "USD" : "GTQ"}</div><div class="metric-small-value money">${symbol} ${totalCredits.toLocaleString("en-US", { minimumFractionDigits:2, maximumFractionDigits:2 })}</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Total débitos ${symbol === "$" ? "USD" : "GTQ"}</div><div class="metric-small-value money">${symbol} ${totalDebits.toLocaleString("en-US", { minimumFractionDigits:2, maximumFractionDigits:2 })}</div></div>
+    `;
+  }).join("");
+  byId("movements-kpis").innerHTML = kpiHtml || `
+    <div class="card metric-card"><div class="metric-small-label">Saldo actual</div><div class="metric-small-value money">Q 0.00</div></div>
+    <div class="card metric-card"><div class="metric-small-label">Total créditos</div><div class="metric-small-value money">Q 0.00</div></div>
+    <div class="card metric-card"><div class="metric-small-label">Total débitos</div><div class="metric-small-value money">Q 0.00</div></div>
+  `;
+  byId("movements-count-pill").textContent = `${rows.length} movimiento${rows.length === 1 ? "" : "s"}`;
+  byId("movements-empty").classList.toggle("auth-hidden", rows.length !== 0);
+  byId("movements-export-note").classList.add("auth-hidden");
+}
+
 function renderDashboardState() {
   const state = authState.dashboardState;
   const pendingGate = byId("dashboard-gate-pending");
@@ -2299,6 +2446,7 @@ function showView(name) {
   if (name === "dashboard" || name === "portfolio") renderDashboardState();
   if (name === "portfolio") renderPortfolio();
   if (name === "fund-detail") renderFundDetail();
+  if (name === "movements") renderMovements();
   setQueryState();
 }
 
@@ -2335,6 +2483,10 @@ document.querySelectorAll("[data-view-target]").forEach(button => {
   button.addEventListener("click", () => {
     const sourceRow = button.closest(".portfolio-fund-row");
     if (sourceRow?.dataset.fundId) authState.selectedFund = sourceRow.dataset.fundId;
+    if (button.getAttribute("data-view-target") === "movements" && sourceRow) {
+      byId("movements-account-filter").value = sourceRow.dataset.account || "001";
+      byId("movements-fund-filter").value = sourceRow.dataset.fundId || "all";
+    }
     showView(button.getAttribute("data-view-target"));
   });
 });
@@ -2561,6 +2713,36 @@ document.querySelectorAll("[data-dashboard-state]").forEach(button => {
 
 ["portfolio-filter-account","portfolio-filter-state","portfolio-filter-currency"].forEach(id => {
   byId(id)?.addEventListener("change", renderPortfolio);
+});
+
+["movements-account-filter","movements-fund-filter","movements-status-filter"].forEach(id => {
+  byId(id)?.addEventListener("change", renderMovements);
+});
+
+["movements-date-from","movements-date-to"].forEach(id => {
+  byId(id)?.addEventListener("change", renderMovements);
+});
+
+document.querySelectorAll("[data-movements-period]").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll("[data-movements-period]").forEach(other => other.classList.remove("active"));
+    button.classList.add("active");
+    renderMovements();
+  });
+});
+
+byId("movements-export")?.addEventListener("click", () => {
+  const account = byId("movements-account-filter")?.selectedOptions[0]?.textContent || "Todas las cuentas";
+  const fund = byId("movements-fund-filter")?.selectedOptions[0]?.textContent || "Todos los fondos";
+  const period = document.querySelector("[data-movements-period].active")?.textContent || "Periodo actual";
+  const from = byId("movements-date-from")?.value;
+  const to = byId("movements-date-to")?.value;
+  const suffix = document.querySelector("[data-movements-period].active")?.getAttribute("data-movements-period") === "range" && from && to
+    ? ` · ${formatDateDisplay(from)} a ${formatDateDisplay(to)}`
+    : "";
+  const fileName = `movimientos-${(account || "todas").toLowerCase().replaceAll(" ","-")}-${new Date().toISOString().slice(0,10)}.xlsx`;
+  byId("movements-export-copy").textContent = `Exportación simulada generada para ${account} · ${fund} · ${period}${suffix}. Archivo: ${fileName}.`;
+  byId("movements-export-note").classList.remove("auth-hidden");
 });
 
 const initialParams = new URLSearchParams(window.location.search);
