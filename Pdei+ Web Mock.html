@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pdei+ Web Mock</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#2B2B5E;
+  --navy-dark:#1e1e45;
+  --navy-mid:#35356e;
+  --aqua:#00CDE5;
+  --dark-aqua:#00798E;
+  --white:#FFFFFF;
+  --bg:#F4F6F9;
+  --bg-card:#FFFFFF;
+  --gray-lt:#EEF0F5;
+  --border:#DDE2EC;
+  --text:#1a1a2e;
+  --text-sec:#5a6478;
+  --text-lt:#8892A4;
+  --success:#22C55E;
+  --warning:#F59E0B;
+  --danger:#EF4444;
+  --info:#3B82F6;
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:16px;
+  --radius-btn:14px;
+  --radius-pill:20px;
+  --shadow-card:0 2px 16px rgba(0,0,0,.07);
+  --sidebar-w:210px;
+  --header-h:64px;
+}
+body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+button,input,select,textarea{font:inherit}
+a{text-decoration:none;color:inherit}
+body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
+
+#sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);
+  background:linear-gradient(180deg,var(--navy) 0%,var(--navy-dark) 100%);
+  display:flex;flex-direction:column;overflow-y:auto;z-index:20
+}
+#header{
+  position:fixed;top:0;left:var(--sidebar-w);right:0;height:var(--header-h);
+  background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;z-index:15
+}
+#main{
+  margin-left:var(--sidebar-w);margin-top:var(--header-h);
+  height:calc(100vh - var(--header-h));overflow-y:auto;padding:32px 36px 48px
+}
+
+.brand{
+  padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center
+}
+.brand-name{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.4px}
+.brand-name span{color:var(--aqua)}
+.avatar{
+  width:40px;height:40px;border-radius:50%;background:var(--aqua);color:var(--navy);
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0
+}
+.sb-group{
+  padding:8px 10px 0
+}
+.sb-group-toggle{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px 10px;border:none;background:transparent;color:rgba(255,255,255,.42);
+  font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;cursor:pointer
+}
+.sb-group-toggle:hover{color:rgba(255,255,255,.72)}
+.sb-group-left{display:flex;align-items:center;gap:10px}
+.sb-caret{width:14px;height:14px;display:inline-flex;transition:transform .18s ease}
+.sb-group.open .sb-caret{transform:rotate(90deg)}
+.sb-group-items{display:none;padding-top:2px}
+.sb-group.open .sb-group-items{display:block}
+.sb-group.active-parent .sb-group-toggle{color:#fff}
+.sb-group.active-parent .sb-group-left .icon{color:var(--aqua)}
+.sb-group:first-of-type{padding-top:14px}
+.sb-item.active{
+  background:rgba(255,255,255,.12);color:#fff
+}
+.sb-item{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;margin:2px 8px;border-radius:10px;
+  color:rgba(255,255,255,.68);font-size:13.5px;font-weight:500;cursor:pointer;transition:.15s
+}
+.sb-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.sb-item.active .icon{color:var(--aqua)}
+.sb-bottom{margin-top:auto;padding:12px 8px;border-top:1px solid rgba(255,255,255,.08)}
+.icon{width:18px;height:18px;display:inline-flex;flex-shrink:0}
+
+.hdr-title{font-size:22px;font-weight:700}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-chip{
+  display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;
+  border:1px solid var(--border);background:#fff;font-size:12px;color:var(--text-sec)
+}
+.hdr-bell{
+  width:38px;height:38px;border-radius:10px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-sec)
+}
+
+.view{display:none}
+.view.active{display:block}
+.view-auth{min-height:100vh}
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px}
+.page-title{font-size:28px;font-weight:700;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--text-sec)}
+.stack{display:flex;flex-direction:column;gap:20px}
+.grid{display:grid;gap:20px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+.card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);padding:24px
+}
+.card-title{font-size:18px;font-weight:700;margin-bottom:6px}
+.card-sub{font-size:13px;color:var(--text-sec);margin-bottom:18px}
+.section-title{font-size:20px;font-weight:700;margin-bottom:16px}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:var(--radius-btn);
+  font-size:14px;font-weight:600;border:2px solid transparent;cursor:pointer;transition:.15s
+}
+.btn-primary{background:var(--aqua);color:var(--navy)}
+.btn-primary:hover{background:var(--dark-aqua);color:#fff}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-outline{background:#fff;border-color:var(--border);color:var(--text)}
+.btn-outline-aqua{background:#fff;border-color:var(--aqua);color:var(--dark-aqua)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-sm{padding:8px 14px;font-size:12px;border-radius:10px}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px}
+
+.pill{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600
+}
+.pill-success{background:rgba(34,197,94,.14);color:#166534}
+.pill-warning{background:rgba(245,158,11,.14);color:#92400e}
+.pill-danger{background:rgba(239,68,68,.14);color:#991b1b}
+.pill-info{background:rgba(59,130,246,.12);color:#1d4ed8}
+.pill-neutral{background:var(--gray-lt);color:var(--text-sec)}
+
+.alert{
+  display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:var(--radius-md);font-size:14px
+}
+.alert-warning{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.28);color:#92400e}
+.alert-info{background:rgba(59,130,246,.09);border:1px solid rgba(59,130,246,.22);color:#1e40af}
+.alert-success{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.22);color:#166534}
+.alert-danger{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.22);color:#991b1b}
+
+.metric-hero{
+  background:linear-gradient(135deg,var(--navy) 0%,#1a1a45 100%);color:#fff;display:flex;flex-direction:column;justify-content:space-between;min-height:184px;overflow:hidden
+}
+.metric-label{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.58);margin-bottom:10px}
+.metric-value{font-size:clamp(32px,2.7vw,42px);font-weight:800;line-height:1;white-space:nowrap}
+.metric-value span{color:var(--aqua)}
+.metric-sub{font-size:13px;color:rgba(255,255,255,.56);margin-top:10px}
+.metric-card{display:flex;flex-direction:column;justify-content:space-between;min-height:132px}
+.metric-small-label{font-size:12px;color:var(--text-lt);margin-bottom:5px}
+.metric-small-value{font-size:26px;font-weight:700;line-height:1.15;white-space:nowrap}
+.metric-small-change{font-size:12px;font-weight:600;margin-top:4px}
+.up{color:var(--success)}
+.down{color:var(--danger)}
+.money{white-space:nowrap;display:inline-block;max-width:100%}
+.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.quick-action{
+  background:#f7f8fb;border:2px solid #dfe5f0;border-radius:22px;padding:28px 20px;display:flex;flex-direction:column;gap:16px;
+  align-items:center;text-align:center;cursor:pointer;transition:.15s;min-height:152px;justify-content:center
+}
+.quick-action:hover{border-color:#cfd8e8;transform:translateY(-1px);background:#f4f6fb}
+.quick-action .icon-wrap{
+  width:42px;height:42px;color:#3a3a3a;display:flex;align-items:center;justify-content:center
+}
+.quick-action .icon-wrap .icon{width:30px;height:30px}
+.quick-action-title{font-size:20px;font-weight:800;color:#31356c;line-height:1.1}
+.quick-action-copy{display:none}
+
+.fund-list{display:flex;flex-direction:column}
+.fund-row{
+  display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--border)
+}
+.fund-row:last-child{border-bottom:none}
+.fund-icon{
+  width:42px;height:42px;border-radius:12px;background:rgba(0,205,229,.12);color:var(--dark-aqua);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0
+}
+.fund-main{min-width:0}
+.fund-name{font-size:15px;font-weight:700}
+.fund-desc{font-size:12px;color:var(--text-lt);margin-top:2px}
+.fund-right{margin-left:auto;text-align:right}
+.fund-amount{font-size:15px;font-weight:700}
+.fund-pct{font-size:12px;font-weight:600;color:var(--success)}
+.fund-actions{display:flex;gap:8px;margin-left:18px}
+
+.person{
+  display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--border);border-radius:var(--radius-md);background:#fff
+}
+.person-avatar{
+  width:42px;height:42px;border-radius:50%;background:var(--navy);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800
+}
+.person-name{font-size:14px;font-weight:700}
+.person-meta{font-size:12px;color:var(--text-lt);margin-top:3px}
+.person-tail{margin-left:auto;text-align:right}
+.person-pct{font-size:22px;font-weight:800;color:var(--aqua)}
+
+.table{width:100%;border-collapse:collapse;font-size:13.5px}
+.table th{
+  background:var(--navy);color:#fff;text-align:left;padding:11px 14px;font-size:12px;font-weight:600
+}
+.table th:first-child{border-radius:10px 0 0 0}
+.table th:last-child{border-radius:0 10px 0 0}
+.table td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.table tbody tr:hover td{background:#fafcff}
+.text-right{text-align:right}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  padding:7px 14px;border-radius:999px;border:1.5px solid var(--border);background:#fff;color:var(--text-sec);font-size:13px
+}
+.chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
+
+.step-bar{display:flex;align-items:flex-start;margin-bottom:18px}
+.step-item{flex:1;text-align:center;position:relative}
+.step-item:not(:last-child)::after{
+  content:"";position:absolute;top:14px;left:calc(50% + 14px);right:calc(-50% + 14px);height:2px;background:var(--border)
+}
+.step-item.done:not(:last-child)::after{background:var(--aqua)}
+.step-dot{
+  width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:#fff;color:var(--text-lt);
+  margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;position:relative;z-index:1
+}
+.step-item.done .step-dot{background:var(--aqua);border-color:var(--aqua);color:var(--navy)}
+.step-item.active .step-dot{background:var(--navy);border-color:var(--navy);color:#fff}
+.step-lbl{font-size:11px;color:var(--text-lt)}
+.step-item.active .step-lbl{color:var(--navy);font-weight:600}
+.step-item.done .step-lbl{color:var(--dark-aqua)}
+
+.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.field-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.field{display:flex;flex-direction:column;gap:6px}
+.label{font-size:13px;font-weight:500;color:var(--text-sec)}
+.input,.select,.textarea{
+  width:100%;padding:13px 15px;border-radius:var(--radius-md);border:1.5px solid var(--border);background:#fff;color:var(--text);outline:none
+}
+.textarea{min-height:96px;resize:vertical}
+.input:focus,.select:focus,.textarea:focus{border-color:var(--aqua);box-shadow:0 0 0 3px rgba(0,205,229,.12)}
+.hint{font-size:12px;color:var(--text-lt)}
+
+.progress{
+  display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--gray-lt);border-radius:10px
+}
+.progress-bar{flex:1;height:8px;background:#dbe2ed;border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:var(--aqua)}
+
+.dual{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+.list{display:flex;flex-direction:column;gap:12px}
+.kv{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;font-size:13px
+}
+.kv div span{display:block;font-size:12px;color:var(--text-lt);margin-bottom:4px}
+
+.auth-shell{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:minmax(320px,1.1fr) minmax(420px,.9fr);
+  background:
+    radial-gradient(circle at top left, rgba(0,205,229,.12), transparent 28%),
+    linear-gradient(135deg,#20265a 0%,#161d44 52%,#102e3d 100%)
+}
+.auth-brand{
+  padding:56px 56px 48px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  color:#fff
+}
+.auth-nav{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:56px
+}
+.auth-logo{display:flex;align-items:center;gap:10px}
+.auth-logo-mark{
+  width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center
+}
+.auth-logo-name{font-size:28px;font-weight:800;letter-spacing:-.5px}
+.auth-logo-name span{color:var(--aqua)}
+.auth-links{display:flex;gap:20px;font-size:13px;color:rgba(255,255,255,.72)}
+.auth-hero h1{font-size:46px;line-height:1.05;max-width:10ch;margin-bottom:16px}
+.auth-hero p{max-width:52ch;font-size:16px;color:rgba(255,255,255,.72)}
+.auth-pillars{display:grid;gap:14px;margin-top:32px;max-width:460px}
+.auth-pillar{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)
+}
+.auth-pillar-copy{font-size:14px;color:rgba(255,255,255,.84)}
+.auth-panel{
+  background:rgba(255,255,255,.97);
+  display:flex;align-items:center;justify-content:center;padding:40px
+}
+.auth-card{
+  width:100%;max-width:460px;background:#fff;border:1px solid var(--border);border-radius:24px;box-shadow:0 28px 80px rgba(15,23,42,.16);padding:32px
+}
+.auth-kicker{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-lt);margin-bottom:10px}
+.auth-title{font-size:30px;font-weight:800;line-height:1.08;margin-bottom:8px}
+.auth-copy{font-size:14px;color:var(--text-sec);margin-bottom:24px}
+.auth-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.auth-divider{height:1px;background:var(--border);margin:22px 0}
+.auth-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+
+body.auth-mode #sidebar,
+body.auth-mode #header{display:none}
+body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
+
+@media (max-width:1180px){
+  .grid-4,.grid-3,.grid-2,.dual,.field-grid,.field-grid-3,.kv{grid-template-columns:1fr}
+  .page-head{flex-direction:column}
+  .fund-row{align-items:flex-start;flex-wrap:wrap}
+  .fund-right,.fund-actions{margin-left:0}
+  .quick-grid,.auth-mini-grid{grid-template-columns:1fr}
+  .auth-shell{grid-template-columns:1fr}
+  .auth-brand{padding:36px 28px}
+  .auth-panel{padding:24px}
+  .auth-hero h1{font-size:38px}
+}
+</style>
+</head>
+<body>
+<aside id="sidebar">
+  <div class="brand">
+    <div class="brand-mark">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><path d="M8 12h8"></path><path d="M12 8v8"></path></svg>
+    </div>
+    <div class="brand-name">Pdei<span>+</span></div>
+  </div>
+  <div class="sb-user">
+    <div class="avatar">AG</div>
+    <div>
+      <div class="sb-user-name">Alfredo García</div>
+      <div class="sb-user-meta">Cliente FEIS</div>
+    </div>
+  </div>
+
+  <div class="sb-section">Acceso</div>
+  <a class="sb-item" data-view="landing"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg></span>Landing</a>
+  <a class="sb-item" data-view="login"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg></span>Login</a>
+  <a class="sb-item" data-view="twofa"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 1 1 8 0v4"></path></svg></span>2FA</a>
+  <a class="sb-item" data-view="recovery"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 1 1 5.82 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg></span>Recuperación</a>
+  <a class="sb-item" data-view="register"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></span>Registro</a>
+
+  <div class="sb-section">Principal</div>
+  <a class="sb-item" data-view="dashboard"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>Dashboard</a>
+  <a class="sb-item" data-view="portfolio"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span>Mi Portafolio</a>
+  <a class="sb-item" data-view="fund-detail"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span>Detalle de Fondo</a>
+  <a class="sb-item" data-view="new-fund"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>Nuevo Fondo</a>
+
+  <div class="sb-section">Operaciones</div>
+  <a class="sb-item" data-view="new-investment"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></span>Nueva Inversión</a>
+  <a class="sb-item" data-view="confirm-deposit"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M21 21H3"/></svg></span>Confirmar Depósito</a>
+  <a class="sb-item" data-view="redemption"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v6h6"/><path d="M21 12A9 9 0 0 0 6 5.3L3 8"/><path d="M21 22v-6h-6"/><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"/></svg></span>Recompras</a>
+  <a class="sb-item" data-view="movements"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg></span>Movimientos</a>
+
+  <div class="sb-section">Configuración</div>
+  <a class="sb-item" data-view="beneficiaries"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Beneficiarios</a>
+  <a class="sb-item" data-view="signatories"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>Otros Firmantes</a>
+  <a class="sb-item" data-view="holders"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a6 6 0 0 0-12 0"/><circle cx="12" cy="11" r="4"/><circle cx="12" cy="12" r="10"/></svg></span>Otros Titulares</a>
+  <a class="sb-item" data-view="new-account"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V8.6a1 1 0 0 1 .55-.9l6-3a1 1 0 0 1 .9 0l6 3a1 1 0 0 1 .55.9V20"/><path d="M12 10v10"/></svg></span>Nueva Cuenta</a>
+  <a class="sb-item" data-view="profile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a6 6 0 0 0-12 0"/><circle cx="12" cy="11" r="4"/><circle cx="12" cy="12" r="10"/></svg></span>Mi Perfil</a>
+
+  <div class="sb-bottom">
+    <a class="sb-item"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg></span>Cerrar Sesión</a>
+  </div>
+</aside>
+
+<header id="header">
+  <div class="hdr-title" id="header-title">Dashboard</div>
+  <div class="hdr-right">
+    <div class="hdr-chip"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>Mock web estático</div>
+    <div class="hdr-bell"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></span></div>
+    <div class="avatar">AG</div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="view view-auth" id="view-landing" data-title="Landing">
+    <div class="auth-shell">
+      <div class="auth-brand">
+        <div>
+          <div class="auth-nav">
+            <div class="auth-logo">
+              <div class="auth-logo-mark">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><path d="M8 12h8"></path><path d="M12 8v8"></path></svg>
+              </div>
+              <div class="auth-logo-name">Pdei<span>+</span></div>
+            </div>
+            <div class="auth-links">
+              <span>Seguridad</span>
+              <span>Productos</span>
+              <span>Contacto</span>
+            </div>
+          </div>
+          <div class="auth-hero">
+            <h1>Gestiona tu portafolio con claridad.</h1>
+            <p>Pdei+ centraliza consulta, inversión, recompra y administración documental en un solo portal para clientes FEIS, con reglas operativas claras y seguimiento visible en cada paso.</p>
+          </div>
+          <div class="auth-pillars">
+            <div class="auth-pillar"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span><div class="auth-pillar-copy">Consulta saldos, rendimientos, titulares y expedientes por cuenta.</div></div>
+            <div class="auth-pillar"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></span><div class="auth-pillar-copy">Opera inversiones y recompra bajo validaciones FEIS y condiciones del producto.</div></div>
+            <div class="auth-pillar"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></span><div class="auth-pillar-copy">Acceso reforzado con 2FA y seguimiento de pendientes de activación o expediente.</div></div>
+          </div>
+        </div>
+        <div class="auth-links">
+          <span>Portal FEIS 2026</span>
+          <span>Mock web sin servicios</span>
+        </div>
+      </div>
+      <div class="auth-panel">
+        <div class="auth-card">
+          <div class="auth-kicker">Acceso web</div>
+          <div class="auth-title">Portal Portafolio de Inversiones Plus</div>
+          <div class="auth-copy">Referencia funcional para experiencia web. Usa navegación local con datos estáticos para revisar el comportamiento esperado del producto.</div>
+          <div class="auth-actions">
+            <button class="btn btn-primary" data-view-target="login">Ingresar</button>
+            <button class="btn btn-outline-aqua" data-view-target="register">Solicitar acceso</button>
+          </div>
+          <div class="auth-divider"></div>
+          <div class="auth-mini-grid">
+            <div class="card" style="padding:18px">
+              <div class="metric-small-label">Fondos operables</div>
+              <div class="metric-small-value money">3 productos</div>
+            </div>
+            <div class="card" style="padding:18px">
+              <div class="metric-small-label">Acciones disponibles</div>
+              <div class="metric-small-value money">12 vistas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view view-auth" id="view-login" data-title="Ingreso">
+    <div class="auth-shell">
+      <div class="auth-brand">
+        <div>
+          <div class="auth-logo">
+            <div class="auth-logo-mark"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"></rect><path d="M8 12h8"></path><path d="M12 8v8"></path></svg></div>
+            <div class="auth-logo-name">Pdei<span>+</span></div>
+          </div>
+          <div class="auth-hero" style="margin-top:54px">
+            <h1>Ingresa a tu portafolio.</h1>
+            <p>Acceso para clientes con expediente validado, autenticación en dos pasos y productos FEIS habilitados.</p>
+          </div>
+        </div>
+      </div>
+      <div class="auth-panel">
+        <div class="auth-card">
+          <div class="auth-kicker">Login</div>
+          <div class="auth-title">Iniciar sesión</div>
+          <div class="auth-copy">Usa tu correo registrado y contraseña temporal o definitiva para continuar al segundo factor.</div>
+          <div class="stack" style="gap:16px">
+            <div class="field"><label class="label">Correo electrónico</label><input class="input" value="alfredo.garcia@gmail.com"></div>
+            <div class="field"><label class="label">Contraseña</label><input class="input" type="password" value="123456789"></div>
+          </div>
+          <div class="auth-actions">
+            <button class="btn btn-primary" data-view-target="twofa">Continuar</button>
+            <button class="btn btn-outline" data-view-target="recovery">Olvidé mi contraseña</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view view-auth" id="view-twofa" data-title="2FA">
+    <div class="auth-shell">
+      <div class="auth-brand">
+        <div class="auth-hero">
+          <h1>Verifica tu identidad.</h1>
+          <p>Segundo factor obligatorio con código dinámico enviado al método previamente configurado.</p>
+        </div>
+      </div>
+      <div class="auth-panel">
+        <div class="auth-card">
+          <div class="auth-kicker">2FA</div>
+          <div class="auth-title">Código de verificación</div>
+          <div class="auth-copy">Ingresa el código de 6 dígitos enviado al dispositivo asociado. El código se renueva cada 30 segundos.</div>
+          <div class="grid grid-4" style="grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:22px 0">
+            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">4</div>
+            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">8</div>
+            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">1</div>
+            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">7</div>
+            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">2</div>
+            <div class="card" style="padding:14px;text-align:center;font-size:22px;font-weight:800">9</div>
+          </div>
+          <div class="auth-actions">
+            <button class="btn btn-primary" data-view-target="dashboard">Validar e ingresar</button>
+            <button class="btn btn-outline">Reenviar código</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view view-auth" id="view-recovery" data-title="Recuperación">
+    <div class="auth-shell">
+      <div class="auth-brand">
+        <div class="auth-hero">
+          <h1>Recupera tu acceso.</h1>
+          <p>El proceso genera una ruta segura para restablecer credenciales y revalidar el método de autenticación.</p>
+        </div>
+      </div>
+      <div class="auth-panel">
+        <div class="auth-card">
+          <div class="auth-kicker">Recuperación</div>
+          <div class="auth-title">Solicitar restablecimiento</div>
+          <div class="auth-copy">Se enviará un enlace temporal al correo registrado del cliente para iniciar la recuperación.</div>
+          <div class="field"><label class="label">Correo electrónico</label><input class="input" value="alfredo.garcia@gmail.com"></div>
+          <div class="auth-actions">
+            <button class="btn btn-primary">Enviar enlace</button>
+            <button class="btn btn-outline" data-view-target="login">Volver al login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view view-auth" id="view-register" data-title="Registro">
+    <div class="auth-shell">
+      <div class="auth-brand">
+        <div>
+          <div class="auth-hero">
+            <h1>Alta de expediente digital.</h1>
+            <p>Mock resumido del registro DERCAS para cliente individual, con progresión visible y reglas clave del flujo real.</p>
+          </div>
+        </div>
+      </div>
+      <div class="auth-panel">
+        <div class="auth-card" style="max-width:620px">
+          <div class="auth-kicker">Registro</div>
+          <div class="auth-title">Solicitud de acceso y habilitación</div>
+          <div class="auth-copy">Versión condensada del flujo de términos, acceso, datos personales, bancos y confirmación de expediente.</div>
+          <div class="step-bar" style="margin-bottom:24px">
+            <div class="step-item done"><div class="step-dot">1</div><div class="step-lbl">T&amp;C</div></div>
+            <div class="step-item done"><div class="step-dot">2</div><div class="step-lbl">Acceso</div></div>
+            <div class="step-item active"><div class="step-dot">3</div><div class="step-lbl">Datos</div></div>
+            <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Bancos</div></div>
+            <div class="step-item"><div class="step-dot">5</div><div class="step-lbl">Confirmación</div></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label class="label">Primer nombre</label><input class="input" value="Alfredo"></div>
+            <div class="field"><label class="label">Primer apellido</label><input class="input" value="García"></div>
+            <div class="field"><label class="label">Tipo de documento</label><select class="select"><option>DPI</option><option>Pasaporte</option></select></div>
+            <div class="field"><label class="label">Número de documento</label><input class="input" value="2456 78901 0101"></div>
+            <div class="field"><label class="label">Correo electrónico</label><input class="input" value="alfredo.garcia@gmail.com"></div>
+            <div class="field"><label class="label">Teléfono móvil</label><input class="input" value="+502 5555-1234"></div>
+          </div>
+          <div class="alert alert-warning" style="margin-top:18px"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>Si PEP/CPE es afirmativo o hay inconsistencias de residencia, el expediente debe escalarse o bloquearse según la regla del flujo.</div></div>
+          <div class="auth-actions">
+            <button class="btn btn-outline">Anterior</button>
+            <button class="btn btn-primary" data-view-target="dashboard">Continuar con bancos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-dashboard" data-title="Dashboard">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Buenos días, Alfredo</div>
+        <div class="page-sub">RF5 · Resumen consolidado de portafolio, fondos activos, alertas y accesos directos operativos.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" data-view-target="new-investment">Nueva Inversión</button>
+        <button class="btn btn-outline-aqua" data-view-target="new-fund">Crear Fondo</button>
+      </div>
+    </div>
+    <div class="stack" style="gap:16px">
+      <div class="card metric-hero">
+        <div class="metric-label">Saldo Total</div>
+        <div class="metric-value money">Q 125,480<span>.00</span></div>
+        <div class="metric-sub">3 fondos activos · 2 cuentas habilitadas</div>
+      </div>
+      <div class="grid grid-3">
+        <div class="card metric-card">
+          <div class="metric-small-label">Rendimiento acumulado</div>
+          <div class="metric-small-value money">Q 8,420.15</div>
+          <div class="metric-small-change up">+8.2% vs periodo anterior</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-small-label">Aportes del mes</div>
+          <div class="metric-small-value money">Q 15,000.00</div>
+          <div class="metric-small-change up">3 operaciones aprobadas</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-small-label">Pendientes</div>
+          <div class="metric-small-value">2</div>
+          <div class="metric-small-change down">1 depósito por confirmar</div>
+        </div>
+      </div>
+    </div>
+    <div class="dual" style="margin-top:20px">
+      <div class="stack">
+        <div class="card">
+          <div class="section-title">Fondos destacados</div>
+          <div class="fund-list">
+            <div class="fund-row">
+              <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span></div>
+              <div class="fund-main">
+                <div class="fund-name">Fondo Bursátil GTQ</div>
+                <div class="fund-desc">Cuenta 001 · Capitalización mensual · Estado vigente</div>
+              </div>
+              <div class="fund-right">
+                <div class="fund-amount money">Q 84,320.00</div>
+                <div class="fund-pct">+6.1%</div>
+              </div>
+              <div class="fund-actions">
+                <button class="btn btn-sm btn-outline" data-view-target="fund-detail">Ver detalle</button>
+                <button class="btn btn-sm btn-primary" data-view-target="new-investment">Invertir</button>
+              </div>
+            </div>
+            <div class="fund-row">
+              <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span></div>
+              <div class="fund-main">
+                <div class="fund-name">Fondo Bursátil USD</div>
+                <div class="fund-desc">Cuenta 002 · Dólares · Estado vigente</div>
+              </div>
+              <div class="fund-right">
+                <div class="fund-amount money">$ 1,600.00</div>
+                <div class="fund-pct">+3.8%</div>
+              </div>
+              <div class="fund-actions">
+                <button class="btn btn-sm btn-outline" data-view-target="fund-detail">Ver detalle</button>
+                <button class="btn btn-sm btn-primary" data-view-target="new-investment">Invertir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title">Actividad reciente</div>
+          <table class="table">
+            <thead><tr><th>Fecha</th><th>Operación</th><th>Fondo</th><th>Estado</th><th class="text-right">Monto</th></tr></thead>
+            <tbody>
+              <tr><td>30/04/2026</td><td>Compra</td><td>Fondo Bursátil GTQ</td><td><span class="pill pill-success">Aplicado</span></td><td class="text-right">Q 10,000.00</td></tr>
+              <tr><td>28/04/2026</td><td>Rendimiento</td><td>Fondo Bursátil GTQ</td><td><span class="pill pill-success">Capitalizado</span></td><td class="text-right">Q 480.00</td></tr>
+              <tr><td>26/04/2026</td><td>Depósito</td><td>Nuevo Fondo GTQ</td><td><span class="pill pill-warning">Pendiente validación</span></td><td class="text-right">Q 10,000.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <div class="section-title">Alertas operativas</div>
+          <div class="list">
+            <div class="alert alert-warning"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>Hay un fondo pendiente de activación por falta de validación del comprobante.</div></div>
+            <div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>La cuenta 002 requiere cargar beneficiarios para completar expediente.</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title">Acciones rápidas</div>
+          <div class="quick-grid">
+            <button class="quick-action" data-view-target="new-account">
+              <div class="icon-wrap"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M2 20h20"></path><path d="M5 20V8.6a1 1 0 0 1 .55-.9l6-3a1 1 0 0 1 .9 0l6 3a1 1 0 0 1 .55.9V20"></path><path d="M12 10v10"></path></svg></span></div>
+              <div class="quick-action-title">Nueva cuenta</div>
+              <div class="quick-action-copy">Habilita una cuenta adicional.</div>
+            </button>
+            <button class="quick-action" data-view-target="profile">
+              <div class="icon-wrap"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></span></div>
+              <div class="quick-action-title">Actualizar perfil</div>
+              <div class="quick-action-copy">Edita datos del cliente.</div>
+            </button>
+            <button class="quick-action" data-view-target="signatories">
+              <div class="icon-wrap"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span></div>
+              <div class="quick-action-title">Agregar firmante</div>
+              <div class="quick-action-copy">Autoriza un tercero.</div>
+            </button>
+            <button class="quick-action" data-view-target="movements">
+              <div class="icon-wrap"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M21 21H3"></path></svg></span></div>
+              <div class="quick-action-title">Exportar movimientos</div>
+              <div class="quick-action-copy">Consulta el histórico.</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-portfolio" data-title="Mi Portafolio">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Mi Portafolio</div>
+        <div class="page-sub">RF6 · Consulta por cuenta, fondos activos, saldos, titulares relacionados y acciones permitidas.</div>
+      </div>
+      <button class="btn btn-primary" data-view-target="new-fund">Nuevo Fondo</button>
+    </div>
+    <div class="grid grid-3">
+      <div class="card metric-card"><div class="metric-small-label">Saldo total GTQ</div><div class="metric-small-value money">Q 123,880.00</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Saldo total USD</div><div class="metric-small-value money">$ 1,600.00</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Fondos activos</div><div class="metric-small-value">3</div></div>
+    </div>
+    <div class="stack" style="margin-top:20px">
+      <div class="card">
+        <div class="card-title">Cuenta 001</div>
+        <div class="card-sub">Titulares: Alfredo García · Laura Morales</div>
+        <div class="fund-list">
+          <div class="fund-row">
+            <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span></div>
+            <div class="fund-main"><div class="fund-name">Fondo Bursátil GTQ</div><div class="fund-desc">Capitalización mensual · Beneficiarios completos</div></div>
+            <div class="fund-right"><div class="fund-amount money">Q 84,320.00</div><div class="fund-pct">Vigente</div></div>
+            <div class="fund-actions"><button class="btn btn-sm btn-outline" data-view-target="fund-detail">Detalle</button><button class="btn btn-sm btn-primary" data-view-target="new-investment">Invertir</button><button class="btn btn-sm btn-outline-aqua" data-view-target="redemption">Recompra</button></div>
+          </div>
+          <div class="fund-row">
+            <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span></div>
+            <div class="fund-main"><div class="fund-name">Fondo a Plazo GTQ</div><div class="fund-desc">Permanencia mínima cumplida · Recompra habilitada</div></div>
+            <div class="fund-right"><div class="fund-amount money">Q 30,000.00</div><div class="fund-pct">7.2% anual</div></div>
+            <div class="fund-actions"><button class="btn btn-sm btn-outline" data-view-target="fund-detail">Detalle</button><button class="btn btn-sm btn-outline-aqua" data-view-target="redemption">Recompra</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Cuenta 002</div>
+        <div class="card-sub">Titular: Alfredo García</div>
+        <div class="fund-list">
+          <div class="fund-row">
+            <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span></div>
+            <div class="fund-main"><div class="fund-name">Fondo Bursátil USD</div><div class="fund-desc">Estado activo · Expediente pendiente de beneficiarios</div></div>
+            <div class="fund-right"><div class="fund-amount money">$ 1,600.00</div><div class="fund-pct">3.8% anual</div></div>
+            <div class="fund-actions"><button class="btn btn-sm btn-outline" data-view-target="fund-detail">Detalle</button><button class="btn btn-sm btn-primary" data-view-target="new-investment">Invertir</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-fund-detail" data-title="Detalle de Fondo">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Fondo Bursátil GTQ</div>
+        <div class="page-sub">RF8 · Vista consolidada del fondo, titulares, cuenta relacionada, condiciones y acciones.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" data-view-target="new-investment">Nueva Inversión</button>
+        <button class="btn btn-outline-aqua" data-view-target="redemption">Solicitar Recompra</button>
+      </div>
+    </div>
+    <div class="grid grid-3">
+      <div class="card metric-card"><div class="metric-small-label">Saldo actual</div><div class="metric-small-value money">Q 84,320.00</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Rendimiento estimado</div><div class="metric-small-value">5.5%</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Estado</div><div class="metric-small-value">Vigente</div></div>
+    </div>
+    <div class="dual" style="margin-top:20px">
+      <div class="stack">
+        <div class="card">
+          <div class="section-title">Resumen del producto</div>
+          <div class="kv">
+            <div><span>Cuenta</span>001</div>
+            <div><span>Moneda</span>GTQ</div>
+            <div><span>Capitalización</span>Mensual</div>
+            <div><span>Inversión mínima</span>Q 500.00</div>
+            <div><span>Permanencia</span>Sin mínimo</div>
+            <div><span>Recompra</span>Disponible</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title">Titulares relacionados</div>
+          <div class="list">
+            <div class="person"><div class="person-avatar">AG</div><div><div class="person-name">Alfredo García López</div><div class="person-meta">Titular principal · PEP No · CPE No</div></div><div class="person-tail"><span class="pill pill-success">Vigente</span></div></div>
+            <div class="person"><div class="person-avatar">LM</div><div><div class="person-name">Laura Morales de García</div><div class="person-meta">Cotitular · PEP No · CPE No</div></div><div class="person-tail"><span class="pill pill-success">Vigente</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <div class="section-title">Estado de expediente</div>
+          <div class="list">
+            <div class="alert alert-success"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><div>Beneficiarios completos y distribución al 100%.</div></div>
+            <div class="alert alert-success"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><div>Sin restricciones PEP/CPE detectadas.</div></div>
+            <div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>Firmantes autorizados: 1 registro activo.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-new-investment" data-title="Nueva Inversión">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Nueva Inversión</div>
+        <div class="page-sub">RF14-RF16 · Flujo de inversión con selección de fondo, monto, cuenta bancaria y reglas de validación.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step-bar">
+        <div class="step-item done"><div class="step-dot">1</div><div class="step-lbl">Fondo</div></div>
+        <div class="step-item active"><div class="step-dot">2</div><div class="step-lbl">Monto</div></div>
+        <div class="step-item"><div class="step-dot">3</div><div class="step-lbl">Banco</div></div>
+        <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Confirmación</div></div>
+      </div>
+      <div class="dual">
+        <div class="stack">
+          <div class="field-grid">
+            <div class="field"><label class="label">Cuenta</label><select class="select"><option>Cuenta 001</option><option>Cuenta 002</option></select></div>
+            <div class="field"><label class="label">Tipo de fondo</label><select class="select"><option>Fondo Bursátil GTQ</option><option>Fondo Bursátil USD</option></select></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label class="label">Monto a invertir</label><input class="input" value="Q 25,000.00"></div>
+            <div class="field"><label class="label">Rendimientos</label><select class="select"><option>Capitalizar</option><option>Retirar a cuenta</option></select></div>
+          </div>
+          <div class="field"><label class="label">Banco origen</label><select class="select"><option>Banco Industrial · Monetaria · 041-200851-7</option><option>BAC · Ahorro · 003-445892-1</option></select><div class="hint">Se usan únicamente cuentas asociadas al titular o cotitular válido.</div></div>
+          <div class="alert alert-success"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><div>Monto dentro del límite FEIS permitido para la cuenta seleccionada.</div></div>
+        </div>
+        <div class="card" style="padding:20px">
+          <div class="card-title">Resumen de inversión</div>
+          <div class="list" style="font-size:13px">
+            <div><strong>Fondo:</strong> Fondo Bursátil GTQ</div>
+            <div><strong>Monto nuevo:</strong> Q 25,000.00</div>
+            <div><strong>Saldo actual:</strong> Q 84,320.00</div>
+            <div><strong>Total proyectado:</strong> Q 109,320.00</div>
+            <div><strong>Cuenta débito:</strong> BI · 041-200851-7</div>
+          </div>
+          <div class="btn-row" style="margin-top:18px">
+            <button class="btn btn-outline">Anterior</button>
+            <button class="btn btn-primary">Continuar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-confirm-deposit" data-title="Confirmar Depósito">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Confirmar Depósito</div>
+        <div class="page-sub">RF13 · Fondo pendiente de activación con instrucciones bancarias y carga de comprobante.</div>
+      </div>
+    </div>
+    <div class="dual">
+      <div class="stack">
+        <div class="alert alert-warning"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>El fondo no se activará hasta validar el depósito y el comprobante asociado.</div></div>
+        <div class="card">
+          <div class="section-title">Datos de depósito</div>
+          <div class="kv">
+            <div><span>Banco receptor</span>Banco Industrial</div>
+            <div><span>Cuenta</span>040-0012345-6</div>
+            <div><span>Moneda</span>GTQ</div>
+            <div><span>A nombre de</span>Portafolio de Inversiones, S.A.</div>
+            <div><span>Monto esperado</span>Q 10,000.00</div>
+            <div><span>Referencia</span>FEIS-00123-ANA</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title">Comprobante</div>
+          <div class="field"><label class="label">Archivo cargado</label><input class="input" value="comprobante_transferencia.pdf" readonly></div>
+          <div class="hint" style="margin-top:8px">Mock sin integración. Se muestra el estado esperado del flujo.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Estado del caso</div>
+        <div class="list">
+          <div class="person"><div class="person-avatar">1</div><div><div class="person-name">Depósito realizado</div><div class="person-meta">Capturado por el cliente</div></div></div>
+          <div class="person"><div class="person-avatar">2</div><div><div class="person-name">Comprobante adjunto</div><div class="person-meta">Pendiente de validación interna</div></div></div>
+          <div class="person"><div class="person-avatar">3</div><div><div class="person-name">Activación del fondo</div><div class="person-meta">Se habilita después de aprobar evidencia</div></div></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:18px" data-view-target="dashboard">Confirmar depósito</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-redemption" data-title="Recompras">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Recompra / Desinversión</div>
+        <div class="page-sub">RF17 · Solo fondos vigentes, con saldo disponible y permanencia mínima cumplida.</div>
+      </div>
+    </div>
+    <div class="dual">
+      <div class="stack">
+        <div class="card">
+          <div class="field-grid">
+            <div class="field"><label class="label">Fondo</label><select class="select"><option>Fondo a Plazo GTQ</option></select></div>
+            <div class="field"><label class="label">Monto a retirar</label><input class="input" value="Q 5,000.00"></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label class="label">Cuenta destino</label><select class="select"><option>Banco Industrial · 041-200851-7</option></select></div>
+            <div class="field"><label class="label">Tipo de solicitud</label><select class="select"><option>Parcial</option><option>Total</option></select></div>
+          </div>
+          <div class="alert alert-success" style="margin-top:16px"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><div>Fondo vigente, permanencia cumplida y monto dentro del saldo disponible.</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Condiciones</div>
+        <div class="list" style="font-size:13px">
+          <div><strong>Saldo disponible:</strong> Q 30,000.00</div>
+          <div><strong>Permanencia mínima:</strong> Cumplida</div>
+          <div><strong>Estado del fondo:</strong> Vigente</div>
+          <div><strong>Tiempo estimado:</strong> 24-48 horas hábiles</div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:18px" data-view-target="movements">Solicitar recompra</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-movements" data-title="Movimientos">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Movimientos</div>
+        <div class="page-sub">RF18 · Filtros por periodo, exportación y detalle de débitos, créditos y saldo.</div>
+      </div>
+      <button class="btn btn-outline">Exportar</button>
+    </div>
+    <div class="chips" style="margin-bottom:20px">
+      <div class="chip active">Mes actual</div>
+      <div class="chip">Mes anterior</div>
+      <div class="chip">Trimestre</div>
+      <div class="chip">Semestre</div>
+      <div class="chip">Rango de fechas</div>
+    </div>
+    <div class="grid grid-3" style="margin-bottom:20px">
+      <div class="card metric-card"><div class="metric-small-label">Saldo actual</div><div class="metric-small-value money">Q 125,480.00</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Total compras</div><div class="metric-small-value money">Q 15,000.00</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Rendimientos del mes</div><div class="metric-small-value money">Q 480.00</div></div>
+    </div>
+    <div class="card">
+      <table class="table">
+        <thead><tr><th>Fecha</th><th>Descripción</th><th>Estado</th><th class="text-right">Débito</th><th class="text-right">Crédito</th><th class="text-right">Saldo</th></tr></thead>
+        <tbody>
+          <tr><td>15/04/2026</td><td>Compra · Inversión #8</td><td><span class="pill pill-success">Disponible</span></td><td class="text-right"></td><td class="text-right">Q 10,000.00</td><td class="text-right">Q 125,480.00</td></tr>
+          <tr><td>10/04/2026</td><td>Rendimiento capitalizado</td><td><span class="pill pill-success">Aplicado</span></td><td class="text-right"></td><td class="text-right">Q 480.00</td><td class="text-right">Q 115,480.00</td></tr>
+          <tr><td>20/03/2026</td><td>Recompra parcial</td><td><span class="pill pill-warning">Entregado</span></td><td class="text-right">Q 5,000.00</td><td class="text-right"></td><td class="text-right">Q 110,000.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="view" id="view-beneficiaries" data-title="Beneficiarios">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Beneficiarios</div>
+        <div class="page-sub">RF11 · La distribución total debe sumar 100% para completar expediente.</div>
+      </div>
+      <button class="btn btn-primary" data-view-target="beneficiaries">Agregar beneficiario</button>
+    </div>
+    <div class="progress">
+      <strong>Distribución total</strong>
+      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+      <span class="pill pill-success">100% completo</span>
+    </div>
+    <div class="stack" style="margin-top:20px">
+      <div class="person"><div class="person-avatar">AG</div><div><div class="person-name">Ana María García López</div><div class="person-meta">Hija · DPI 2847 63491 0101 · No PEP · No CPE</div></div><div class="person-tail"><div class="person-pct">60%</div></div></div>
+      <div class="person"><div class="person-avatar">CG</div><div><div class="person-name">Carlos Alberto García López</div><div class="person-meta">Hijo · DPI 9876 54321 0202 · No PEP · No CPE</div></div><div class="person-tail"><div class="person-pct">40%</div></div></div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <div class="card-title">Nuevo beneficiario</div>
+      <div class="field-grid-3">
+        <div class="field"><label class="label">Tipo de documento</label><select class="select"><option>DPI</option></select></div>
+        <div class="field"><label class="label">Número de documento</label><input class="input" placeholder="1234 56789 0101"></div>
+        <div class="field"><label class="label">Porcentaje</label><input class="input" placeholder="0 - 100"></div>
+        <div class="field"><label class="label">Primer nombre</label><input class="input"></div>
+        <div class="field"><label class="label">Primer apellido</label><input class="input"></div>
+        <div class="field"><label class="label">Relación</label><select class="select"><option>Hijo/a</option><option>Cónyuge</option></select></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-signatories" data-title="Otros Firmantes">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Otros Firmantes</div>
+        <div class="page-sub">RF12 · No son titulares, pero pueden tener autorización específica sobre el fondo o producto.</div>
+      </div>
+      <button class="btn btn-primary" data-view-target="signatories">Agregar firmante</button>
+    </div>
+    <div class="stack">
+      <div class="person"><div class="person-avatar">LF</div><div><div class="person-name">Luis Fernando Méndez</div><div class="person-meta">Firmante autorizado · DPI 5544 33221 0303 · No PEP · No CPE</div></div><div class="person-tail"><span class="pill pill-info">Activo</span></div></div>
+      <div class="alert alert-warning"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>Si país de nacimiento y residencia son ambos distintos a Guatemala, el flujo no debe continuar.</div></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-holders" data-title="Otros Titulares">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Otros Titulares</div>
+        <div class="page-sub">RF10 · Consulta de titulares asociados a la cuenta y datos relevantes del expediente.</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="person"><div class="person-avatar">AG</div><div><div class="person-name">Alfredo García López</div><div class="person-meta">Titular principal · DPI 2485 39874 0101 · BI GTQ</div></div><div class="person-tail"><span class="pill pill-success">Vigente</span></div></div>
+      <div class="person"><div class="person-avatar">LM</div><div><div class="person-name">Laura Morales de García</div><div class="person-meta">Cotitular · DPI 1992 48201 0101 · BAC GTQ</div></div><div class="person-tail"><span class="pill pill-success">Vigente</span></div></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-new-fund" data-title="Nuevo Fondo">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Nuevo Fondo de Inversión</div>
+        <div class="page-sub">RF9 · Creación de fondo sobre una cuenta existente, con selección de producto y validaciones del expediente.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step-bar">
+        <div class="step-item active"><div class="step-dot">1</div><div class="step-lbl">Producto</div></div>
+        <div class="step-item"><div class="step-dot">2</div><div class="step-lbl">Monto</div></div>
+        <div class="step-item"><div class="step-dot">3</div><div class="step-lbl">Beneficiarios</div></div>
+        <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Depósito</div></div>
+      </div>
+      <div class="grid grid-3">
+        <div class="card"><div class="card-title">Fondo Bursátil GTQ</div><div class="card-sub">5.5% anual estimado · Inversión mínima <span class="money">Q 500.00</span></div><button class="btn btn-primary" data-view-target="confirm-deposit">Seleccionar</button></div>
+        <div class="card"><div class="card-title">Fondo Bursátil USD</div><div class="card-sub">3.8% anual estimado · Inversión mínima <span class="money">$ 100.00</span></div><button class="btn btn-outline" data-view-target="confirm-deposit">Seleccionar</button></div>
+        <div class="card"><div class="card-title">Fondo a Plazo GTQ</div><div class="card-sub">7.2% anual · Permanencia mínima 30 días</div><button class="btn btn-outline" data-view-target="confirm-deposit">Seleccionar</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-new-account" data-title="Nueva Cuenta">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Habilitar Nueva Cuenta</div>
+        <div class="page-sub">RF7 · Asociada al titular activo, con opción de cotitular y creación posterior de fondo.</div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>La nueva cuenta quedará asociada al perfil activo y podrá incluir un cotitular si no duplica una configuración ya existente.</div></div>
+      <div class="card">
+        <div class="card-title">Titular activo</div>
+        <div class="kv">
+          <div><span>Documento</span>DPI 2485 39874 0101</div>
+          <div><span>Nombre</span>Alfredo García López</div>
+          <div><span>PEP / CPE</span>No / No</div>
+          <div><span>Residencia</span>Zona 10, Guatemala</div>
+          <div><span>Banco principal</span>BI GTQ · 041-200851-7</div>
+          <div><span>Fuente ingresos</span>Salario · Q 18,000/mes</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Cotitular opcional</div>
+        <div class="card-sub">Se aplican las mismas validaciones del proceso de registro y las reglas de duplicidad de cuenta.</div>
+        <button class="btn btn-outline" data-view-target="holders">Agregar cotitular</button>
+      </div>
+      <div class="alert alert-danger"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>Si ya existe una cuenta FEIS del mismo tipo con los mismos titulares, la creación debe bloquearse.</div></div>
+      <div class="btn-row"><button class="btn btn-outline" data-view-target="dashboard">Cancelar</button><button class="btn btn-primary" data-view-target="new-fund">Confirmar nueva cuenta</button></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-profile" data-title="Mi Perfil">
+    <div class="page-head">
+      <div>
+        <div class="page-title">Mi Perfil</div>
+        <div class="page-sub">Perfil consolidado del cliente, cuentas bancarias asociadas, residencia y estado financiero.</div>
+      </div>
+      <button class="btn btn-primary" data-view-target="profile">Editar datos</button>
+    </div>
+    <div class="dual">
+      <div class="stack">
+        <div class="card">
+          <div class="person" style="padding:0;border:none">
+            <div class="person-avatar" style="width:64px;height:64px;font-size:18px">AG</div>
+            <div>
+              <div class="person-name" style="font-size:18px">Alfredo José García López</div>
+              <div class="person-meta">DPI 2456 78901 0101 · Cliente activo · 2FA habilitado</div>
+            </div>
+          </div>
+          <div class="kv" style="margin-top:18px">
+            <div><span>Correo</span>alfredo.garcia@gmail.com</div>
+            <div><span>Fecha nacimiento</span>12/04/1988</div>
+            <div><span>Estado civil</span>Casado</div>
+            <div><span>Nacionalidad</span>Guatemalteca</div>
+            <div><span>PEP / CPE</span>No / No</div>
+            <div><span>Teléfono</span>+502 5555-1234</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Residencia y contacto</div>
+          <div class="kv">
+            <div><span>Dirección</span>Zona 10, Colonia Oakland</div>
+            <div><span>Municipio</span>Guatemala</div>
+            <div><span>Departamento</span>Guatemala</div>
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <div class="card-title">Cuentas bancarias</div>
+          <div class="list">
+            <div class="person"><div class="person-avatar">BI</div><div><div class="person-name">Banco Industrial</div><div class="person-meta">Monetaria · GTQ · ****3456</div></div><div class="person-tail"><span class="pill pill-success">Principal</span></div></div>
+            <div class="person"><div class="person-avatar">GT</div><div><div class="person-name">G&amp;T Continental</div><div class="person-meta">Ahorro · USD · ****8901</div></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Perfil financiero</div>
+          <div class="kv">
+            <div><span>Fuente de ingresos</span>Salario / empleo</div>
+            <div><span>Rango ingresos</span>Q 15,000 - Q 30,000</div>
+            <div><span>Actividad económica</span>Servicios profesionales</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const items = document.querySelectorAll(".sb-item[data-view]");
+const views = document.querySelectorAll(".view");
+const title = document.getElementById("header-title");
+const authViews = new Set(["landing","login","twofa","recovery","register"]);
+
+function showView(name) {
+  items.forEach(item => item.classList.toggle("active", item.dataset.view === name));
+  views.forEach(view => view.classList.toggle("active", view.id === "view-" + name));
+  const active = document.getElementById("view-" + name);
+  if (active) title.textContent = active.dataset.title || "Pdei+";
+  document.body.classList.toggle("auth-mode", authViews.has(name));
+}
+
+items.forEach(item => {
+  item.addEventListener("click", () => showView(item.dataset.view));
+});
+
+document.querySelectorAll("[data-view-target]").forEach(button => {
+  button.addEventListener("click", () => showView(button.getAttribute("data-view-target")));
+});
+
+showView("landing");
+</script>
+</body>
+</html>
