@@ -12,6 +12,8 @@
   --navy-mid:#35356e;
   --aqua:#00CDE5;
   --dark-aqua:#00798E;
+  --font-main:'NeulisSans', 'Segoe UI', system-ui, sans-serif;
+  --font-secondary:'FuturaPT', 'Segoe UI', system-ui, sans-serif;
   --white:#FFFFFF;
   --bg:#F4F6F9;
   --bg-card:#FFFFFF;
@@ -33,10 +35,17 @@
   --sidebar-w:210px;
   --header-h:64px;
 }
-body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+body{font-family:var(--font-main);background:var(--bg);color:var(--text);line-height:1.45}
 button,input,select,textarea{font:inherit}
 a{text-decoration:none;color:inherit}
 body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
+:focus-visible{
+  outline:2px solid var(--aqua);
+  outline-offset:2px;
+}
+:focus:not(:focus-visible){
+  outline:none;
+}
 
 #sidebar{
   position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);
@@ -120,7 +129,22 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .subflow-head.split{justify-content:space-between}
 .subflow-head.split .subflow-back{margin-right:0}
 .page-title{font-size:28px;font-weight:700;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--text-sec)}
+.rf-tag{
+  display:inline-flex;
+  align-items:center;
+  padding:2px 8px;
+  border-radius:999px;
+  background:rgba(43,43,94,.08);
+  border:1px solid rgba(43,43,94,.18);
+  color:var(--navy);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.5px;
+  margin-right:8px;
+  vertical-align:middle;
+  white-space:nowrap;
+}
+.page-sub{display:flex;align-items:baseline;gap:0;flex-wrap:wrap;font-size:14px;color:var(--text-sec)}
 .stack{display:flex;flex-direction:column;gap:20px}
 .grid{display:grid;gap:20px}
 .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -136,7 +160,7 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .section-title{font-size:20px;font-weight:700;margin-bottom:16px}
 .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
 .icon-btn{
-  width:36px;height:36px;padding:0;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--navy);
+  width:40px;height:40px;padding:0;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--navy);
   display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s
 }
 .icon-btn:hover{border-color:#cfd8e8;background:#f7f9fc}
@@ -148,7 +172,7 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .btn-primary{background:var(--aqua);color:var(--navy)}
 .btn-primary:hover{background:var(--dark-aqua);color:#fff}
 .btn-navy{background:var(--navy);color:#fff}
-.btn-outline{background:#fff;border-color:var(--border);color:var(--text)}
+.btn-outline{background:#fff;border-color:#c5ccda;color:var(--text)}
 .btn-outline-aqua{background:#fff;border-color:var(--aqua);color:var(--dark-aqua)}
 .btn-danger{background:var(--danger);color:#fff}
 .btn-sm{padding:8px 14px;font-size:12px;border-radius:10px}
@@ -241,7 +265,7 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .fund-actions .btn{justify-content:center}
 .more-menu{position:relative}
 .more-menu-toggle{
-  width:36px;height:36px;padding:0;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--navy);
+  width:40px;height:40px;padding:0;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--navy);
   display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s
 }
 .more-menu-toggle:hover{border-color:#cfd8e8;background:#f7f9fc}
@@ -666,15 +690,15 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
           </div>
         </div>
         <div class="auth-links">
-          <span>Portal FEIS 2026</span>
-          <span>Mock web sin servicios</span>
+          <span>Pdei+ · Portal FEIS 2026</span>
+          <span>Portafolio de Inversiones Plus</span>
         </div>
       </div>
       <div class="auth-panel">
         <div class="auth-card">
           <div class="auth-kicker">Acceso web</div>
           <div class="auth-title">Portal Portafolio de Inversiones Plus</div>
-          <div class="auth-copy">Referencia funcional para experiencia web. Usa navegación local con datos estáticos para revisar el comportamiento esperado del producto.</div>
+          <div class="auth-copy">Ingresa con tus credenciales para consultar saldos, realizar inversiones y administrar tu expediente FEIS.</div>
           <div class="auth-actions">
             <button class="btn btn-primary" data-view-target="login">Ingresar</button>
             <button class="btn btn-outline-aqua" data-view-target="register">Solicitar acceso</button>
@@ -766,12 +790,12 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             </div>
           </div>
           <div class="otp-grid">
-            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
-            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
-            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
-            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
-            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
-            <input class="otp-slot" inputmode="numeric" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
           </div>
           <div class="auth-status" id="twofa-status"></div>
           <div class="auth-actions">
@@ -1056,20 +1080,25 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="page-head">
       <div>
         <div class="page-title">Buenos días, Alfredo</div>
-        <div class="page-sub">RF5 · Resumen consolidado de portafolio, fondos activos, alertas y accesos directos operativos.</div>
+        <div class="page-sub"><span class="rf-tag">RF5</span>Resumen consolidado de portafolio, fondos activos, alertas y accesos directos operativos.</div>
       </div>
     </div>
-    <div class="scenario-bar">
-      <div>
-        <div class="scenario-label">Escenario de acceso</div>
-        <div class="chips" id="dashboard-state-switcher">
-          <button class="chip active" type="button" data-dashboard-state="active">Cuenta activa</button>
-          <button class="chip" type="button" data-dashboard-state="pending">Pendiente activación</button>
-          <button class="chip" type="button" data-dashboard-state="update">Actualización requerida</button>
+    <details class="dev-panel" style="margin-bottom:16px">
+      <summary style="font-size:11px;color:var(--text-lt);cursor:pointer;user-select:none;letter-spacing:.8px;text-transform:uppercase;">
+        ⚙ Vista de prototipo — escenarios de prueba
+      </summary>
+      <div class="scenario-bar">
+        <div>
+          <div class="scenario-label">Escenario de acceso</div>
+          <div class="chips" id="dashboard-state-switcher">
+            <button class="chip active" type="button" data-dashboard-state="active">Cuenta activa</button>
+            <button class="chip" type="button" data-dashboard-state="pending">Pendiente activación</button>
+            <button class="chip" type="button" data-dashboard-state="update">Actualización requerida</button>
+          </div>
         </div>
+        <div class="pill pill-neutral" id="dashboard-state-pill">Operación habilitada</div>
       </div>
-      <div class="pill pill-neutral" id="dashboard-state-pill">Operación habilitada</div>
-    </div>
+    </details>
     <div class="dashboard-gate auth-hidden" id="dashboard-gate-pending">
       <div class="alert alert-warning" style="margin-bottom:20px"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span><div>La cuenta aún no está activa ni validada. Según RF5, las opciones operativas deben permanecer bloqueadas hasta completar activación y validación de expediente.</div></div>
     </div>
@@ -1126,7 +1155,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
               <div class="fund-actions">
                 <div class="more-menu">
-                  <button class="more-menu-toggle" type="button" aria-label="Más acciones">
+                  <button class="more-menu-toggle" type="button" aria-label="Más acciones" aria-haspopup="true" aria-expanded="false">
                     <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
                   </button>
                   <div class="more-menu-panel">
@@ -1154,7 +1183,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
               <div class="fund-actions">
                 <div class="more-menu">
-                  <button class="more-menu-toggle" type="button" aria-label="Más acciones">
+                  <button class="more-menu-toggle" type="button" aria-label="Más acciones" aria-haspopup="true" aria-expanded="false">
                     <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
                   </button>
                   <div class="more-menu-panel">
@@ -1181,7 +1210,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
               <div class="fund-actions">
                 <div class="more-menu">
-                  <button class="more-menu-toggle" type="button" aria-label="Más acciones">
+                  <button class="more-menu-toggle" type="button" aria-label="Más acciones" aria-haspopup="true" aria-expanded="false">
                     <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
                   </button>
                   <div class="more-menu-panel">
@@ -1243,7 +1272,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   <section class="view" id="view-portfolio" data-title="Mi Portafolio">
     <div class="page-head">
       <div>
-        <div class="page-sub">RF8 · Consulta por cuenta, fondos por producto, saldos, vigencias, capitalización y acciones permitidas según estado.</div>
+        <div class="page-sub"><span class="rf-tag">RF8</span>Consulta por cuenta, fondos por producto, saldos, vigencias, capitalización y acciones permitidas según estado.</div>
       </div>
       <button class="btn btn-primary" data-view-target="new-fund">Nuevo Fondo</button>
     </div>
@@ -1319,7 +1348,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
             </div>
             <div class="fund-right"><div class="fund-amount money">Q 84,320.00</div><div class="fund-pct">Saldo actual</div></div>
-            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="bursatil-gtq" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
+            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="bursatil-gtq" aria-label="Ver detalle de fondo" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
           <div class="fund-row portfolio-fund-row" data-account="001" data-fund-id="plazo-gtq" data-fund-state="active" data-fund-currency="GTQ">
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></span></div>
@@ -1336,7 +1365,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
             </div>
             <div class="fund-right"><div class="fund-amount money">Q 30,000.00</div><div class="fund-pct">Saldo actual</div></div>
-            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="plazo-gtq" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
+            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="plazo-gtq" aria-label="Ver detalle de fondo" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
         </div>
       </div>
@@ -1372,7 +1401,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
             </div>
             <div class="fund-right"><div class="fund-amount money">$ 1,600.00</div><div class="fund-pct">Saldo actual</div></div>
-            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="bursatil-usd" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
+            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="bursatil-usd" aria-label="Ver detalle de fondo" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
           <div class="fund-row portfolio-fund-row is-muted" data-account="002" data-fund-id="crecimiento-gtq" data-fund-state="pending-funds" data-fund-currency="GTQ">
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 16V8"></path><path d="M8 12h8"></path><path d="M4 4h16v16H4z"></path></svg></span></div>
@@ -1389,7 +1418,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
             </div>
             <div class="fund-right"><div class="fund-amount money">Q 10,000.00</div><div class="fund-pct">Monto esperado</div></div>
-            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="crecimiento-gtq" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
+            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="crecimiento-gtq" aria-label="Ver detalle de fondo" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
           <div class="fund-row portfolio-fund-row is-muted" data-account="002" data-fund-id="estrategico-gtq" data-fund-state="blocked" data-fund-currency="GTQ">
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z"></path><path d="M9 12l2 2 4-4"></path></svg></span></div>
@@ -1406,7 +1435,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
             </div>
             <div class="fund-right"><div class="fund-amount money">Q 0.00</div><div class="fund-pct">Sin saldo operativo</div></div>
-            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="estrategico-gtq" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
+            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="estrategico-gtq" aria-label="Ver detalle de fondo" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
         </div>
       </div>
@@ -1421,7 +1450,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="page-head subflow-head">
       <div>
         <button class="btn btn-outline subflow-back" type="button" id="fund-detail-back">Volver al portafolio</button>
-        <div class="page-sub" id="fund-detail-sub">RF8 · Vista consolidada del fondo, titulares, cuenta relacionada, condiciones y acciones.</div>
+        <div class="page-sub" id="fund-detail-sub"><span class="rf-tag">RF8</span>Vista consolidada del fondo, titulares, cuenta relacionada, condiciones y acciones.</div>
       </div>
     </div>
     <div class="alert alert-warning auth-hidden" id="fund-detail-gate-pending"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span><div>La cuenta sigue en proceso de activación. Puedes revisar el detalle y completar depósitos pendientes, pero no iniciar operaciones nuevas.</div></div>
@@ -1518,7 +1547,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="page-head subflow-head">
       <button class="btn btn-outline subflow-back" type="button" id="new-investment-back">Volver al detalle</button>
       <div>
-        <div class="page-sub">RF14-RF16 · Flujo de inversión con selección de fondo, monto, cuenta bancaria y reglas de validación.</div>
+        <div class="page-sub"><span class="rf-tag">RF14-RF16</span>Flujo de inversión con selección de fondo, monto, cuenta bancaria y reglas de validación.</div>
       </div>
     </div>
     <div class="auth-status" id="new-investment-status"></div>
@@ -1625,7 +1654,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="page-head">
       <div>
         <div class="page-title">Confirmar Depósito</div>
-        <div class="page-sub">RF13 · Fondo pendiente de activación con instrucciones bancarias y carga de comprobante.</div>
+        <div class="page-sub"><span class="rf-tag">RF13</span>Fondo pendiente de activación con instrucciones bancarias y carga de comprobante.</div>
       </div>
     </div>
     <div class="dual">
@@ -1673,7 +1702,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="page-head subflow-head">
       <button class="btn btn-outline subflow-back" type="button" id="redemption-back">Volver al detalle</button>
       <div>
-        <div class="page-sub">RF17 · Solo fondos vigentes, con saldo disponible y permanencia mínima cumplida.</div>
+        <div class="page-sub"><span class="rf-tag">RF17</span>Solo fondos vigentes, con saldo disponible y permanencia mínima cumplida.</div>
       </div>
     </div>
     <div class="auth-status" id="redemption-status"></div>
@@ -1755,7 +1784,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   <section class="view" id="view-movements" data-title="Movimientos">
     <div class="page-head">
       <div>
-        <div class="page-sub">RF18 · Filtros por periodo, cuenta, fondo y estado; exportación simulada y detalle de débitos, créditos y saldo.</div>
+        <div class="page-sub"><span class="rf-tag">RF18</span>Filtros por periodo, cuenta, fondo y estado; exportación simulada y detalle de débitos, créditos y saldo.</div>
       </div>
       <button class="btn btn-outline" id="movements-export" type="button">Exportar</button>
     </div>
@@ -1828,7 +1857,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="page-head subflow-head">
       <div>
         <button class="btn btn-outline subflow-back" type="button" id="beneficiaries-back">Volver al detalle</button>
-        <div class="page-sub" id="beneficiaries-sub">RF11 · La distribución total debe sumar 100% para completar expediente.</div>
+        <div class="page-sub" id="beneficiaries-sub"><span class="rf-tag">RF11</span>La distribución total debe sumar 100% para completar expediente.</div>
       </div>
     </div>
     <div class="auth-status" id="beneficiaries-status"></div>
@@ -1857,7 +1886,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="page-head subflow-head">
       <div>
         <button class="btn btn-outline subflow-back" type="button" id="signatories-back">Volver al detalle</button>
-        <div class="page-sub" id="signatories-sub">RF12 · No son titulares, pero pueden tener autorización específica sobre el fondo o producto.</div>
+        <div class="page-sub" id="signatories-sub"><span class="rf-tag">RF12</span>No son titulares, pero pueden tener autorización específica sobre el fondo o producto.</div>
       </div>
     </div>
     <div class="auth-status" id="signatories-status"></div>
@@ -1884,7 +1913,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="page-head">
       <div>
         <div class="page-title">Titulares</div>
-        <div class="page-sub">RF10 · Consulta de titulares asociados a la cuenta y datos relevantes del expediente.</div>
+        <div class="page-sub"><span class="rf-tag">RF10</span>Consulta de titulares asociados a la cuenta y datos relevantes del expediente.</div>
       </div>
       <button class="btn btn-primary" type="button" id="holders-edit-trigger">Solicitar cambio</button>
     </div>
@@ -1900,7 +1929,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="page-head">
       <div>
         <div class="page-title">Nuevo Fondo de Inversión</div>
-        <div class="page-sub">RF9 · Creación de fondo sobre una cuenta existente, con selección de producto y validaciones del expediente.</div>
+        <div class="page-sub"><span class="rf-tag">RF9</span>Creación de fondo sobre una cuenta existente, con selección de producto y validaciones del expediente.</div>
       </div>
     </div>
     <div class="alert alert-warning auth-hidden" id="new-fund-gate"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span><div id="new-fund-gate-copy">Solo un cliente activo puede crear nuevos fondos o productos según RF9.</div></div>
@@ -2087,7 +2116,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="page-head subflow-head">
       <button class="btn btn-outline subflow-back" type="button" id="new-account-back-link">Volver a mi perfil</button>
       <div>
-        <div class="page-sub">RF7 · Asociada al titular activo, con opción de cotitular y creación posterior de fondo.</div>
+        <div class="page-sub"><span class="rf-tag">RF7</span>Asociada al titular activo, con opción de cotitular y creación posterior de fondo.</div>
       </div>
     </div>
     <div class="auth-status" id="new-account-status"></div>
@@ -2327,8 +2356,8 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             </button>
           </div>
           <div class="list">
-            <div class="person"><div class="person-avatar">BI</div><div><div class="person-name">Banco Industrial</div><div class="person-meta">Monetaria · GTQ · ****3456</div><div style="margin-top:10px"><span class="pill pill-success">Principal</span></div></div><div class="person-tail"><button class="more-menu-toggle" type="button" id="profile-account-detail-1" aria-label="Ver detalle de cuenta"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div></div>
-            <div class="person"><div class="person-avatar">GT</div><div><div class="person-name">G&amp;T Continental</div><div class="person-meta">Ahorro · USD · ****8901</div></div><div class="person-tail"><button class="more-menu-toggle" type="button" id="profile-account-detail-2" aria-label="Ver detalle de cuenta"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div></div>
+            <div class="person"><div class="person-avatar">BI</div><div><div class="person-name">Banco Industrial</div><div class="person-meta">Monetaria · GTQ · ****3456</div><div style="margin-top:10px"><span class="pill pill-success">Principal</span></div></div><div class="person-tail"><button class="more-menu-toggle" type="button" id="profile-account-detail-1" aria-label="Ver detalle de cuenta" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div></div>
+            <div class="person"><div class="person-avatar">GT</div><div><div class="person-name">G&amp;T Continental</div><div class="person-meta">Ahorro · USD · ****8901</div></div><div class="person-tail"><button class="more-menu-toggle" type="button" id="profile-account-detail-2" aria-label="Ver detalle de cuenta" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div></div>
           </div>
         </div>
         <div class="card">
@@ -3173,7 +3202,7 @@ function renderFundDetail() {
   const allowConfirmDeposit = fund.canConfirmDeposit && authState.dashboardState !== "update";
   const statePillClass = fund.stateKind === "success" ? "pill-success" : fund.stateKind === "warning" ? "pill-warning" : "pill-info";
   byId("fund-detail-title").textContent = fund.title;
-  byId("fund-detail-sub").textContent = fund.sub;
+  setPageSubWithRf("fund-detail-sub", "RF8", fund.sub);
   byId("fund-detail-balance").textContent = fund.balance;
   byId("fund-detail-available").textContent = fund.available;
   byId("fund-detail-state").textContent = fund.state;
@@ -3255,7 +3284,7 @@ function loadSignatoryIntoForm(index) {
 function renderSignatories() {
   const fund = fundDetailData[authState.selectedFund] || fundDetailData["bursatil-gtq"];
   const signatories = getSignatoriesForSelectedFund();
-  byId("signatories-sub").textContent = `RF12 · ${fund.title} · Gestión de autorizaciones específicas para el producto seleccionado.`;
+  setPageSubWithRf("signatories-sub", "RF12", `${fund.title} · Gestión de autorizaciones específicas para el producto seleccionado.`);
   byId("signatories-list").innerHTML = signatories.length ? signatories.map((signatory, index) => `
     <div class="person">
       <div class="person-avatar">${getSignatoryInitials(signatory)}</div>
@@ -3314,7 +3343,7 @@ function renderBeneficiaries() {
   const beneficiaries = getBeneficiariesForSelectedFund();
   const total = getBeneficiariesTotal();
   const complete = beneficiaries.length > 0 && Math.abs(total - 100) < 0.001;
-  byId("beneficiaries-sub").textContent = `RF11 · ${fund.title} · La distribución total debe sumar 100% para completar expediente.`;
+  setPageSubWithRf("beneficiaries-sub", "RF11", `${fund.title} · La distribución total debe sumar 100% para completar expediente.`);
   byId("beneficiaries-progress-fill").style.width = `${Math.min(total, 100)}%`;
   byId("beneficiaries-progress-pill").className = `pill ${complete ? "pill-success" : "pill-warning"}`;
   byId("beneficiaries-progress-pill").textContent = `${total.toFixed(2).replace(/\.00$/, "")}% ${complete ? "completo" : "distribuido"}`;
@@ -3471,7 +3500,7 @@ function renderAccountDetail() {
   `;
   byId("account-detail-funds-list").innerHTML = account.fundIds.map(fundId => {
     const fund = fundDetailData[fundId];
-    return `<div class="person"><div class="person-avatar">${fund.summary.find(([label]) => label === "Moneda")?.[1] === "USD" ? "US" : "GT"}</div><div><div class="person-name">${fund.title}</div><div class="person-meta">${fund.state} · ${fund.balance}</div></div><div class="person-tail"><button class="more-menu-toggle" type="button" data-account-fund-open="${fundId}" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div></div>`;
+    return `<div class="person"><div class="person-avatar">${fund.summary.find(([label]) => label === "Moneda")?.[1] === "USD" ? "US" : "GT"}</div><div><div class="person-name">${fund.title}</div><div class="person-meta">${fund.state} · ${fund.balance}</div></div><div class="person-tail"><button class="more-menu-toggle" type="button" data-account-fund-open="${fundId}" aria-label="Ver detalle de fondo" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div></div>`;
   }).join("");
   byId("account-detail-holders-list").innerHTML = holders.map(holder => `
     <div class="person">
@@ -3978,13 +4007,22 @@ function validateRedemptionStep(step) {
   return "";
 }
 
+function setPageSubWithRf(id, tag, description) {
+  const node = byId(id);
+  if (!node) return;
+  node.innerHTML = `<span class="rf-tag">${tag}</span>${description}`;
+}
+
 function showView(name) {
   items.forEach(item => item.classList.toggle("active", item.dataset.view === name));
   views.forEach(view => view.classList.toggle("active", view.id === "view-" + name));
   const active = document.getElementById("view-" + name);
   if (active) title.textContent = active.dataset.title || "Pdei+";
   document.body.classList.toggle("auth-mode", authViews.has(name));
-  moreMenus.forEach(menu => menu.classList.remove("open"));
+  moreMenus.forEach(menu => {
+    menu.classList.remove("open");
+    menu.querySelector(".more-menu-toggle")?.setAttribute("aria-expanded", "false");
+  });
   if (name === "twofa") prepareTwofaView();
   if (name === "register") renderRegisterStep();
   if (name === "dashboard" || name === "portfolio") renderDashboardState();
@@ -4017,16 +4055,25 @@ byId("alerts-toggle")?.addEventListener("click", event => {
 moreMenus.forEach(menu => {
   const toggle = menu.querySelector(".more-menu-toggle");
   if (!toggle) return;
+  if (!toggle.hasAttribute("aria-haspopup")) toggle.setAttribute("aria-haspopup", "true");
+  if (!toggle.hasAttribute("aria-expanded")) toggle.setAttribute("aria-expanded", "false");
   toggle.addEventListener("click", event => {
     event.stopPropagation();
     const willOpen = !menu.classList.contains("open");
-    moreMenus.forEach(other => other.classList.remove("open"));
+    moreMenus.forEach(other => {
+      other.classList.remove("open");
+      other.querySelector(".more-menu-toggle")?.setAttribute("aria-expanded", "false");
+    });
     menu.classList.toggle("open", willOpen);
+    toggle.setAttribute("aria-expanded", willOpen ? "true" : "false");
   });
 });
 
 document.addEventListener("click", () => {
-  moreMenus.forEach(menu => menu.classList.remove("open"));
+  moreMenus.forEach(menu => {
+    menu.classList.remove("open");
+    menu.querySelector(".more-menu-toggle")?.setAttribute("aria-expanded", "false");
+  });
   byId("alerts-panel")?.classList.remove("open");
 });
 
