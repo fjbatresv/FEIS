@@ -2046,33 +2046,91 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   </section>
 
   <section class="view" id="view-new-account" data-title="Nueva Cuenta">
-    <div class="page-head">
+    <div class="page-head subflow-head">
+      <button class="btn btn-outline subflow-back" type="button" id="new-account-back-link">Volver a mi perfil</button>
       <div>
-        <div class="page-title">Habilitar Nueva Cuenta</div>
         <div class="page-sub">RF7 · Asociada al titular activo, con opción de cotitular y creación posterior de fondo.</div>
       </div>
     </div>
     <div class="auth-status" id="new-account-status"></div>
-    <div class="stack">
-      <div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>La nueva cuenta quedará asociada al perfil activo y podrá incluir un cotitular si no duplica una configuración ya existente.</div></div>
-      <div class="card">
-        <div class="card-title">Titular activo</div>
-        <div class="kv">
-          <div><span>Documento</span>DPI 2485 39874 0101</div>
-          <div><span>Nombre</span>Alfredo García López</div>
-          <div><span>PEP / CPE</span>No / No</div>
-          <div><span>Residencia</span>Zona 10, Guatemala</div>
-          <div><span>Banco principal</span>BI GTQ · 041-200851-7</div>
-          <div><span>Fuente ingresos</span>Salario · Q 18,000/mes</div>
+    <div class="card">
+      <div class="step-bar" id="new-account-steps">
+        <div class="step-item active"><div class="step-dot">1</div><div class="step-lbl">Contexto</div></div>
+        <div class="step-item"><div class="step-dot">2</div><div class="step-lbl">Cuenta</div></div>
+        <div class="step-item"><div class="step-dot">3</div><div class="step-lbl">Cotitular</div></div>
+        <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Resultado</div></div>
+      </div>
+      <div class="wizard-pane active" data-new-account-pane="0">
+        <div class="dual">
+          <div class="card">
+            <div class="card-title">Titular activo</div>
+            <div class="kv">
+              <div><span>Documento</span>DPI 2485 39874 0101</div>
+              <div><span>Nombre</span>Alfredo García López</div>
+              <div><span>PEP / CPE</span>No / No</div>
+              <div><span>Residencia</span>Zona 10, Guatemala</div>
+              <div><span>Banco principal</span>BI GTQ · 041-200851-7</div>
+              <div><span>Fuente ingresos</span>Salario · Q 18,000/mes</div>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span><div>La nueva cuenta quedará asociada al perfil activo y podrá incluir un cotitular si no duplica una configuración ya existente.</div></div>
+            <div class="alert alert-danger"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>Si ya existe una cuenta FEIS del mismo tipo con los mismos titulares, la creación debe bloquearse.</div></div>
+          </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-title">Cotitular opcional</div>
-        <div class="card-sub">Se aplican las mismas validaciones del proceso de registro y las reglas de duplicidad de cuenta.</div>
-        <button class="btn btn-outline" data-view-target="holders">Agregar cotitular</button>
+      <div class="wizard-pane" data-new-account-pane="1">
+        <div class="field-grid">
+          <div class="field"><label class="label" for="new-account-bank">Banco</label><select class="select" id="new-account-bank"><option>Banco Industrial</option><option>G&T Continental</option><option>BAC</option></select></div>
+          <div class="field"><label class="label" for="new-account-type">Tipo de cuenta</label><select class="select" id="new-account-type"><option>Monetaria</option><option>Ahorro</option></select></div>
+        </div>
+        <div class="field-grid">
+          <div class="field"><label class="label" for="new-account-currency">Moneda</label><select class="select" id="new-account-currency"><option>GTQ</option><option>USD</option></select></div>
+          <div class="field"><label class="label" for="new-account-mask">Número enmascarado</label><input class="input" id="new-account-mask" value="****0000"></div>
+        </div>
+        <div class="field"><label class="label" for="new-account-alias">Alias</label><input class="input" id="new-account-alias" value="Nueva cuenta GTQ"></div>
+        <div class="choice-row" style="margin-top:18px">
+          <label class="choice-chip"><input type="checkbox" id="new-account-primary">Marcar como principal</label>
+          <label class="choice-chip"><input type="checkbox" id="new-account-ops" checked>Usar para rendimientos y recompras</label>
+        </div>
       </div>
-      <div class="alert alert-danger"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>Si ya existe una cuenta FEIS del mismo tipo con los mismos titulares, la creación debe bloquearse.</div></div>
-      <div class="btn-row"><button class="btn btn-outline" data-view-target="dashboard">Cancelar</button><button class="btn btn-primary" type="button" id="new-account-confirm">Confirmar nueva cuenta</button></div>
+      <div class="wizard-pane" data-new-account-pane="2">
+        <div class="field">
+          <label class="label">Cotitular opcional</label>
+          <div class="choice-row">
+            <label class="choice-chip"><input type="radio" name="new-account-holder" value="no" checked>Sin cotitular</label>
+            <label class="choice-chip"><input type="radio" name="new-account-holder" value="yes">Agregar cotitular</label>
+          </div>
+        </div>
+        <div class="field-grid auth-hidden" id="new-account-holder-fields" style="margin-top:18px">
+          <div class="field"><label class="label" for="new-account-holder-name">Nombre del cotitular</label><input class="input" id="new-account-holder-name" placeholder="Nombre completo"></div>
+          <div class="field"><label class="label" for="new-account-holder-document">Documento del cotitular</label><input class="input" id="new-account-holder-document" placeholder="DPI o pasaporte"></div>
+        </div>
+        <div class="summary-kv" id="new-account-summary" style="margin-top:18px"></div>
+      </div>
+      <div class="wizard-pane" data-new-account-pane="3">
+        <div class="wizard-complete">
+          <div class="register-complete-badge"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+          <div>
+            <div class="auth-title" style="font-size:28px;margin-bottom:6px">Cuenta creada en borrador</div>
+            <div class="auth-copy" style="margin-bottom:0">La cuenta quedó asociada al perfil activo dentro del mock. El siguiente paso real sería usarla para nuevos fondos, rendimientos o recompras.</div>
+          </div>
+          <div class="register-result">
+            <strong>Resultado del flujo</strong>
+            <div id="new-account-result-line">Banco Industrial · Monetaria · GTQ</div>
+            <div>Estado inicial: <span class="pill pill-warning">Borrador</span></div>
+            <code id="new-account-result-id">CTA-2026-001</code>
+          </div>
+          <div class="wizard-complete-actions">
+            <button class="btn btn-outline" type="button" id="new-account-go-profile">Volver a mi perfil</button>
+            <button class="btn btn-primary" type="button" id="new-account-go-manage">Gestionar cuenta</button>
+          </div>
+        </div>
+      </div>
+      <div class="auth-actions wizard-actions">
+        <button class="btn btn-outline" type="button" id="new-account-prev">Anterior</button>
+        <button class="btn btn-primary" type="button" id="new-account-next">Continuar</button>
+      </div>
     </div>
   </section>
 
@@ -2329,6 +2387,19 @@ const authState = {
   signatoryEditIndex:-1,
   selectedAccount:"bi-gtq",
   accountEditMode:false,
+  newAccountStep:0,
+  newAccount:{
+    bank:"Banco Industrial",
+    type:"Monetaria",
+    currency:"GTQ",
+    accountMasked:"****0000",
+    alias:"Nueva cuenta GTQ",
+    includeHolder:"no",
+    holderName:"",
+    holderDocument:"",
+    markPrimary:false,
+    useForOps:true
+  },
   redemptionStep:0,
   redemption:{
     account:"001",
@@ -3164,6 +3235,61 @@ function renderProfileState() {
   byId("profile-financial-save").textContent = authState.profileFinancialEditMode ? "Guardar perfil financiero" : "Actualizar perfil financiero";
 }
 
+function renderNewAccountStep() {
+  document.querySelectorAll("[data-new-account-pane]").forEach((pane, index) => {
+    pane.classList.toggle("active", index === authState.newAccountStep);
+  });
+  document.querySelectorAll("#new-account-steps .step-item").forEach((step, index) => {
+    step.classList.toggle("active", index === authState.newAccountStep);
+    step.classList.toggle("done", index < authState.newAccountStep);
+  });
+  byId("new-account-prev").classList.toggle("auth-hidden", authState.newAccountStep === 0 || authState.newAccountStep === 3);
+  byId("new-account-next").classList.toggle("auth-hidden", authState.newAccountStep === 3);
+  byId("new-account-next").textContent = authState.newAccountStep === 2 ? "Crear cuenta" : "Continuar";
+  byId("new-account-holder-fields").classList.toggle("auth-hidden", authState.newAccount.includeHolder !== "yes");
+  byId("new-account-bank").value = authState.newAccount.bank;
+  byId("new-account-type").value = authState.newAccount.type;
+  byId("new-account-currency").value = authState.newAccount.currency;
+  byId("new-account-mask").value = authState.newAccount.accountMasked;
+  byId("new-account-alias").value = authState.newAccount.alias;
+  byId("new-account-primary").checked = authState.newAccount.markPrimary;
+  byId("new-account-ops").checked = authState.newAccount.useForOps;
+  byId("new-account-holder-name").value = authState.newAccount.holderName;
+  byId("new-account-holder-document").value = authState.newAccount.holderDocument;
+  document.querySelectorAll('input[name="new-account-holder"]').forEach(input => {
+    input.checked = input.value === authState.newAccount.includeHolder;
+  });
+  byId("new-account-summary").innerHTML = `
+    <div class="summary-kv-row"><div class="summary-kv-label">Banco</div><div class="summary-kv-value">${authState.newAccount.bank}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Cuenta</div><div class="summary-kv-value">${authState.newAccount.type} · ${authState.newAccount.currency} · ${authState.newAccount.accountMasked}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Alias</div><div class="summary-kv-value">${authState.newAccount.alias}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Cotitular</div><div class="summary-kv-value">${authState.newAccount.includeHolder === "yes" ? `${authState.newAccount.holderName || "Pendiente nombre"} · ${authState.newAccount.holderDocument || "Pendiente documento"}` : "Sin cotitular"}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Uso operativo</div><div class="summary-kv-value">${authState.newAccount.useForOps ? "Rendimientos y recompras" : "Solo consulta"}</div></div>
+  `;
+  byId("new-account-result-line").textContent = `${authState.newAccount.bank} · ${authState.newAccount.type} · ${authState.newAccount.currency}`;
+}
+
+function validateNewAccountStep(step) {
+  setStatus("new-account-status", "", "");
+  if (step === 1) {
+    if (!byId("new-account-mask").value.trim()) return "Ingresa el número enmascarado de la cuenta.";
+    if (!byId("new-account-alias").value.trim()) return "Ingresa un alias para la nueva cuenta.";
+  }
+  if (step === 2) {
+    if (authState.newAccount.includeHolder === "yes" && (!byId("new-account-holder-name").value.trim() || !byId("new-account-holder-document").value.trim())) {
+      return "Completa nombre y documento del cotitular antes de crear la cuenta.";
+    }
+    const duplicate = Object.values(profileAccounts).some(account =>
+      account.bank === authState.newAccount.bank &&
+      account.type === authState.newAccount.type &&
+      account.currency === authState.newAccount.currency &&
+      account.masked === authState.newAccount.accountMasked
+    );
+    if (duplicate) return "Ya existe una cuenta FEIS con la misma configuración visible en el mock.";
+  }
+  return "";
+}
+
 function renderAccountDetail() {
   const account = profileAccounts[authState.selectedAccount] || profileAccounts["bi-gtq"];
   const relatedFunds = account.fundIds.map(fundId => fundDetailData[fundId]).filter(Boolean);
@@ -3735,6 +3861,7 @@ function showView(name) {
   if (name === "beneficiaries") renderBeneficiaries();
   if (name === "signatories") renderSignatories();
   if (name === "account-detail") renderAccountDetail();
+  if (name === "new-account") renderNewAccountStep();
   if (name === "profile") renderProfileState();
   setQueryState();
 }
@@ -4490,8 +4617,112 @@ byId("account-detail-funds-list")?.addEventListener("click", event => {
   showView("fund-detail");
 });
 
-byId("new-account-confirm")?.addEventListener("click", () => {
-  setStatus("new-account-status", "success", "Nueva cuenta creada en estado borrador dentro del mock. El siguiente paso sería seleccionar producto o fondo.");
+byId("new-account-back-link")?.addEventListener("click", () => {
+  showView("profile");
+});
+
+["new-account-bank","new-account-type","new-account-currency","new-account-mask","new-account-alias","new-account-holder-name","new-account-holder-document"].forEach(id => {
+  byId(id)?.addEventListener("input", event => {
+    const map = {
+      "new-account-bank":"bank",
+      "new-account-type":"type",
+      "new-account-currency":"currency",
+      "new-account-mask":"accountMasked",
+      "new-account-alias":"alias",
+      "new-account-holder-name":"holderName",
+      "new-account-holder-document":"holderDocument"
+    };
+    authState.newAccount[map[id]] = event.target.value;
+    renderNewAccountStep();
+  });
+  byId(id)?.addEventListener("change", event => {
+    const map = {
+      "new-account-bank":"bank",
+      "new-account-type":"type",
+      "new-account-currency":"currency",
+      "new-account-mask":"accountMasked",
+      "new-account-alias":"alias",
+      "new-account-holder-name":"holderName",
+      "new-account-holder-document":"holderDocument"
+    };
+    authState.newAccount[map[id]] = event.target.value;
+    renderNewAccountStep();
+  });
+});
+
+byId("new-account-primary")?.addEventListener("change", event => {
+  authState.newAccount.markPrimary = event.target.checked;
+  renderNewAccountStep();
+});
+
+byId("new-account-ops")?.addEventListener("change", event => {
+  authState.newAccount.useForOps = event.target.checked;
+  renderNewAccountStep();
+});
+
+document.querySelectorAll('input[name="new-account-holder"]').forEach(input => {
+  input.addEventListener("change", () => {
+    authState.newAccount.includeHolder = input.value;
+    if (input.value === "no") {
+      authState.newAccount.holderName = "";
+      authState.newAccount.holderDocument = "";
+    }
+    renderNewAccountStep();
+  });
+});
+
+byId("new-account-prev")?.addEventListener("click", () => {
+  if (authState.newAccountStep > 0) {
+    authState.newAccountStep -= 1;
+    renderNewAccountStep();
+  }
+});
+
+byId("new-account-next")?.addEventListener("click", () => {
+  const error = validateNewAccountStep(authState.newAccountStep);
+  if (error) {
+    setStatus("new-account-status", "error", error);
+    return;
+  }
+  if (authState.newAccountStep < 3) {
+    authState.newAccountStep += 1;
+    if (authState.newAccountStep === 3) {
+      const nextId = authState.newAccount.currency === "USD" ? "new-usd" : "new-gtq";
+      profileAccounts[nextId] = {
+        id: nextId,
+        bank: authState.newAccount.bank,
+        type: authState.newAccount.type,
+        currency: authState.newAccount.currency,
+        masked: authState.newAccount.accountMasked,
+        alias: authState.newAccount.alias,
+        usage: authState.newAccount.useForOps ? "Rendimientos y recompras" : "Solo consulta",
+        usageEnabled: authState.newAccount.useForOps,
+        primary: authState.newAccount.markPrimary,
+        status: "Borrador",
+        fundIds: []
+      };
+      if (authState.newAccount.markPrimary) {
+        Object.values(profileAccounts).forEach(account => {
+          account.primary = account.id === nextId;
+        });
+      }
+      authState.selectedAccount = nextId;
+      byId("new-account-result-id").textContent = `CTA-${new Date().getFullYear()}-${String(Date.now()).slice(-3)}`;
+      setStatus("new-account-status", "success", "Nueva cuenta creada en estado borrador dentro del mock.");
+    } else {
+      setStatus("new-account-status", "", "");
+    }
+    renderNewAccountStep();
+  }
+});
+
+byId("new-account-go-profile")?.addEventListener("click", () => {
+  showView("profile");
+});
+
+byId("new-account-go-manage")?.addEventListener("click", () => {
+  authState.accountEditMode = false;
+  showView("account-detail");
 });
 
 byId("holders-edit-trigger")?.addEventListener("click", () => {
