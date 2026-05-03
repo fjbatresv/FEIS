@@ -94,6 +94,8 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .subflow-head{justify-content:flex-start}
 .subflow-back{margin-right:auto}
 .subflow-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-left:auto}
+.subflow-head.split{justify-content:space-between}
+.subflow-head.split .subflow-back{margin-right:0}
 .page-title{font-size:28px;font-weight:700;margin-bottom:4px}
 .page-sub{font-size:14px;color:var(--text-sec)}
 .stack{display:flex;flex-direction:column;gap:20px}
@@ -296,6 +298,8 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .export-note{margin-top:14px}
 .profile-edit-grid{display:grid;gap:14px;margin-top:18px}
 .profile-edit-grid.auth-hidden{display:none}
+.account-detail-grid{display:grid;gap:14px}
+.account-flag-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
 .person{
   display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--border);border-radius:var(--radius-md);background:#fff
@@ -2072,6 +2076,94 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     </div>
   </section>
 
+  <section class="view" id="view-account-detail" data-title="Gestionar Cuenta">
+    <div class="page-head subflow-head split">
+      <div>
+        <button class="btn btn-outline subflow-back" type="button" id="account-detail-back">Volver a mi perfil</button>
+        <div class="page-sub" id="account-detail-sub">Gestión contextual de la cuenta bancaria asociada al expediente activo.</div>
+      </div>
+      <button class="btn btn-primary" type="button" id="account-detail-edit-trigger">Editar cuenta</button>
+    </div>
+    <div class="auth-status" id="account-detail-status"></div>
+    <div class="dual">
+      <div class="stack">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-title" style="margin-bottom:0" id="account-detail-bank-name">Banco Industrial</div>
+              <div class="card-sub" id="account-detail-bank-meta" style="margin-bottom:0">Monetaria · GTQ · ****3456</div>
+            </div>
+            <span class="pill pill-success" id="account-detail-primary-pill">Principal</span>
+          </div>
+          <div class="kv">
+            <div><span>Alias</span><strong id="account-detail-alias-text">Cuenta principal GTQ</strong></div>
+            <div><span>Número enmascarado</span><strong id="account-detail-mask-text">****3456</strong></div>
+            <div><span>Uso operativo</span><strong id="account-detail-usage-text">Rendimientos y recompras</strong></div>
+            <div><span>Estado</span><strong id="account-detail-status-text">Activa</strong></div>
+          </div>
+          <div class="profile-edit-grid auth-hidden" id="account-detail-edit-grid">
+            <div class="field-grid">
+              <div class="field"><label class="label" for="account-detail-alias-input">Alias</label><input class="input" id="account-detail-alias-input" value="Cuenta principal GTQ"></div>
+              <div class="field"><label class="label" for="account-detail-type-input">Tipo</label><select class="select" id="account-detail-type-input"><option>Monetaria</option><option>Ahorro</option></select></div>
+            </div>
+            <div class="field-grid">
+              <div class="field"><label class="label" for="account-detail-currency-input">Moneda</label><select class="select" id="account-detail-currency-input"><option>GTQ</option><option>USD</option></select></div>
+              <div class="field"><label class="label" for="account-detail-mask-input">Número enmascarado</label><input class="input" id="account-detail-mask-input" value="****3456"></div>
+            </div>
+            <div class="account-flag-row">
+              <label class="check-line"><input type="checkbox" id="account-detail-primary-input"><span>Marcar como cuenta principal</span></label>
+              <label class="check-line"><input type="checkbox" id="account-detail-usage-input" checked><span>Usar para rendimientos y recompras</span></label>
+            </div>
+            <div class="btn-row"><button class="btn btn-outline" type="button" id="account-detail-cancel">Cancelar</button><button class="btn btn-primary" type="button" id="account-detail-save">Guardar cuenta</button></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-title" style="margin-bottom:0">Titulares</div>
+              <div class="card-sub" style="margin-bottom:0">Relacionados con los productos de esta cuenta.</div>
+            </div>
+            <button class="icon-btn" type="button" id="account-detail-holders" aria-label="Gestionar titulares"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button>
+          </div>
+          <div class="list" id="account-detail-holders-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-title" style="margin-bottom:0">Beneficiarios</div>
+              <div class="card-sub" style="margin-bottom:0">Distribución acumulada según los productos asociados.</div>
+            </div>
+            <button class="icon-btn" type="button" id="account-detail-beneficiaries" aria-label="Gestionar beneficiarios"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button>
+          </div>
+          <div class="list" id="account-detail-beneficiaries-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-title" style="margin-bottom:0">Otros firmantes</div>
+              <div class="card-sub" style="margin-bottom:0">Autorizaciones activas sobre productos de esta cuenta.</div>
+            </div>
+            <button class="icon-btn" type="button" id="account-detail-signatories" aria-label="Gestionar otros firmantes"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button>
+          </div>
+          <div class="list" id="account-detail-signatories-list"></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <div class="section-title">Contexto operativo</div>
+          <div class="list" id="account-detail-context-list">
+            <div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span><div>La cuenta se usa para acreditación de rendimientos y entrega de recompras cuando el expediente está activo.</div></div>
+            <div class="alert alert-success"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></span><div>La cuenta bancaria está validada dentro del mock y lista para usarse en operaciones.</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title">Productos vinculados</div>
+          <div class="list" id="account-detail-funds-list"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="view" id="view-profile" data-title="Mi Perfil">
     <div class="page-head">
       <div>
@@ -2235,6 +2327,8 @@ const authState = {
   },
   beneficiaryEditIndex:-1,
   signatoryEditIndex:-1,
+  selectedAccount:"bi-gtq",
+  accountEditMode:false,
   redemptionStep:0,
   redemption:{
     account:"001",
@@ -2482,6 +2576,34 @@ const signatoriesByFund = {
   "estrategico-gtq": [
     { firstName:"Luis Fernando", lastName:"Méndez", role:"Firmante autorizado", documentType:"DPI", documentNumber:"5544 33221 0303", birthCountry:"Guatemala", residenceCountry:"Guatemala", pep:false, cpe:false, status:"Activo" }
   ]
+};
+const profileAccounts = {
+  "bi-gtq": {
+    id:"bi-gtq",
+    bank:"Banco Industrial",
+    type:"Monetaria",
+    currency:"GTQ",
+    masked:"****3456",
+    alias:"Cuenta principal GTQ",
+    usage:"Rendimientos y recompras",
+    usageEnabled:true,
+    primary:true,
+    status:"Activa",
+    fundIds:["bursatil-gtq","plazo-gtq"]
+  },
+  "gt-usd": {
+    id:"gt-usd",
+    bank:"G&T Continental",
+    type:"Ahorro",
+    currency:"USD",
+    masked:"****8901",
+    alias:"Cuenta USD operativa",
+    usage:"Rendimientos y recompras",
+    usageEnabled:true,
+    primary:false,
+    status:"Activa",
+    fundIds:["bursatil-usd","crecimiento-gtq","estrategico-gtq"]
+  }
 };
 const newFundAccounts = {
   "001": {
@@ -3042,6 +3164,75 @@ function renderProfileState() {
   byId("profile-financial-save").textContent = authState.profileFinancialEditMode ? "Guardar perfil financiero" : "Actualizar perfil financiero";
 }
 
+function renderAccountDetail() {
+  const account = profileAccounts[authState.selectedAccount] || profileAccounts["bi-gtq"];
+  const relatedFunds = account.fundIds.map(fundId => fundDetailData[fundId]).filter(Boolean);
+  const holderMap = new Map();
+  const beneficiaryEntries = [];
+  const signatoryEntries = [];
+  relatedFunds.forEach(fund => {
+    fund.holders.forEach(([avatar, name, meta, status, kind]) => {
+      if (!holderMap.has(name)) holderMap.set(name, { avatar, name, meta, status, kind });
+    });
+  });
+  account.fundIds.forEach(fundId => {
+    const fund = fundDetailData[fundId];
+    (beneficiariesByFund[fundId] || []).forEach(beneficiary => {
+      beneficiaryEntries.push({ beneficiary, fundTitle: fund?.title || fundId });
+    });
+    (signatoriesByFund[fundId] || []).forEach(signatory => {
+      signatoryEntries.push({ signatory, fundTitle: fund?.title || fundId });
+    });
+  });
+  const holders = Array.from(holderMap.values());
+  byId("account-detail-bank-name").textContent = account.bank;
+  byId("account-detail-bank-meta").textContent = `${account.type} · ${account.currency} · ${account.masked}`;
+  byId("account-detail-sub").textContent = `${account.bank} · ${account.alias} · Gestión contextual de la cuenta bancaria asociada al expediente activo.`;
+  byId("account-detail-alias-text").textContent = account.alias;
+  byId("account-detail-mask-text").textContent = account.masked;
+  byId("account-detail-usage-text").textContent = account.usageEnabled ? account.usage : "Solo consulta";
+  byId("account-detail-status-text").textContent = account.status;
+  byId("account-detail-primary-pill").className = `pill ${account.primary ? "pill-success" : "pill-neutral"}`;
+  byId("account-detail-primary-pill").textContent = account.primary ? "Principal" : "Secundaria";
+  byId("account-detail-edit-grid").classList.toggle("auth-hidden", !authState.accountEditMode);
+  byId("account-detail-edit-trigger").textContent = authState.accountEditMode ? "Editando cuenta" : "Editar cuenta";
+  byId("account-detail-alias-input").value = account.alias;
+  byId("account-detail-type-input").value = account.type;
+  byId("account-detail-currency-input").value = account.currency;
+  byId("account-detail-mask-input").value = account.masked;
+  byId("account-detail-primary-input").checked = account.primary;
+  byId("account-detail-usage-input").checked = account.usageEnabled;
+  byId("account-detail-context-list").innerHTML = `
+    <div class="alert alert-info">${getAlertIcon("info")}<div>La cuenta ${account.bank} se utiliza para ${account.usageEnabled ? "rendimientos y recompras" : "consulta, sin uso operativo"} dentro del mock.</div></div>
+    <div class="alert alert-${account.primary ? "success" : "warning"}">${getAlertIcon(account.primary ? "success" : "warning")}<div>${account.primary ? "Esta es la cuenta principal del perfil." : "La cuenta permanece secundaria y no reemplaza la principal actual."}</div></div>
+  `;
+  byId("account-detail-funds-list").innerHTML = account.fundIds.map(fundId => {
+    const fund = fundDetailData[fundId];
+    return `<div class="person"><div class="person-avatar">${fund.summary.find(([label]) => label === "Moneda")?.[1] === "USD" ? "US" : "GT"}</div><div><div class="person-name">${fund.title}</div><div class="person-meta">${fund.state} · ${fund.balance}</div></div><div class="person-tail"><button class="more-menu-toggle" type="button" data-account-fund-open="${fundId}" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div></div>`;
+  }).join("");
+  byId("account-detail-holders-list").innerHTML = holders.map(holder => `
+    <div class="person">
+      <div class="person-avatar">${holder.avatar}</div>
+      <div><div class="person-name">${holder.name}</div><div class="person-meta">${holder.meta}</div></div>
+      <div class="person-tail"><span class="pill ${getPillClass(holder.kind)}">${holder.status}</span></div>
+    </div>
+  `).join("");
+  byId("account-detail-beneficiaries-list").innerHTML = beneficiaryEntries.length ? beneficiaryEntries.slice(0, 4).map(({ beneficiary, fundTitle }) => `
+    <div class="person">
+      <div class="person-avatar">${getBeneficiaryInitials(beneficiary)}</div>
+      <div><div class="person-name">${getBeneficiaryFullName(beneficiary)}</div><div class="person-meta">${fundTitle} · ${getBeneficiaryMeta(beneficiary, true)}</div></div>
+      <div class="person-tail"><span class="pill pill-success">${Number(beneficiary.share).toFixed(2).replace(/\.00$/, "")}%</span></div>
+    </div>
+  `).join("") : `<div class="alert alert-warning">${getAlertIcon("warning")}<div>No hay beneficiarios visibles para esta cuenta.</div></div>`;
+  byId("account-detail-signatories-list").innerHTML = signatoryEntries.length ? signatoryEntries.slice(0, 4).map(({ signatory, fundTitle }) => `
+    <div class="person">
+      <div class="person-avatar">${getSignatoryInitials(signatory)}</div>
+      <div><div class="person-name">${getSignatoryFullName(signatory)}</div><div class="person-meta">${fundTitle} · ${getSignatoryMeta(signatory)}</div></div>
+      <div class="person-tail"><span class="pill ${signatory.status === "Activo" ? "pill-info" : "pill-warning"}">${signatory.status}</span></div>
+    </div>
+  `).join("") : `<div class="alert alert-info">${getAlertIcon("info")}<div>No hay otros firmantes visibles para esta cuenta.</div></div>`;
+}
+
 function renderMovements() {
   const account = byId("movements-account-filter")?.value || "all";
   const fund = byId("movements-fund-filter")?.value || "all";
@@ -3543,6 +3734,7 @@ function showView(name) {
   if (name === "movements") renderMovements();
   if (name === "beneficiaries") renderBeneficiaries();
   if (name === "signatories") renderSignatories();
+  if (name === "account-detail") renderAccountDetail();
   if (name === "profile") renderProfileState();
   setQueryState();
 }
@@ -4229,11 +4421,73 @@ byId("profile-financial-save")?.addEventListener("click", () => {
 });
 
 byId("profile-account-detail-1")?.addEventListener("click", () => {
-  setStatus("profile-status", "info", "Pendiente crear la pantalla de detalle de cuenta para Banco Industrial. Desde ahí irán titulares, beneficiarios y firmantes.");
+  authState.selectedAccount = "bi-gtq";
+  authState.accountEditMode = false;
+  showView("account-detail");
 });
 
 byId("profile-account-detail-2")?.addEventListener("click", () => {
-  setStatus("profile-status", "info", "Pendiente crear la pantalla de detalle de cuenta para G&T Continental. Desde ahí irán titulares, beneficiarios y firmantes.");
+  authState.selectedAccount = "gt-usd";
+  authState.accountEditMode = false;
+  showView("account-detail");
+});
+
+byId("account-detail-back")?.addEventListener("click", () => {
+  authState.accountEditMode = false;
+  showView("profile");
+});
+
+byId("account-detail-edit-trigger")?.addEventListener("click", () => {
+  authState.accountEditMode = true;
+  renderAccountDetail();
+  setStatus("account-detail-status", "info", "Modo edición activado para la cuenta seleccionada.");
+});
+
+byId("account-detail-cancel")?.addEventListener("click", () => {
+  authState.accountEditMode = false;
+  renderAccountDetail();
+  setStatus("account-detail-status", "", "");
+});
+
+byId("account-detail-save")?.addEventListener("click", () => {
+  const account = profileAccounts[authState.selectedAccount] || profileAccounts["bi-gtq"];
+  account.alias = byId("account-detail-alias-input").value.trim() || account.alias;
+  account.type = byId("account-detail-type-input").value;
+  account.currency = byId("account-detail-currency-input").value;
+  account.masked = byId("account-detail-mask-input").value.trim() || account.masked;
+  account.usageEnabled = byId("account-detail-usage-input").checked;
+  account.usage = account.usageEnabled ? "Rendimientos y recompras" : "Solo consulta";
+  if (byId("account-detail-primary-input").checked) {
+    Object.values(profileAccounts).forEach(item => { item.primary = item.id === account.id; });
+  } else {
+    account.primary = false;
+  }
+  authState.accountEditMode = false;
+  renderAccountDetail();
+  setStatus("account-detail-status", "success", "Cuenta actualizada correctamente en el mock.");
+});
+
+byId("account-detail-holders")?.addEventListener("click", () => {
+  showView("holders");
+});
+
+byId("account-detail-beneficiaries")?.addEventListener("click", () => {
+  const firstFund = (profileAccounts[authState.selectedAccount]?.fundIds || [])[0];
+  if (firstFund) authState.selectedFund = firstFund;
+  showView("beneficiaries");
+});
+
+byId("account-detail-signatories")?.addEventListener("click", () => {
+  const firstFund = (profileAccounts[authState.selectedAccount]?.fundIds || [])[0];
+  if (firstFund) authState.selectedFund = firstFund;
+  showView("signatories");
+});
+
+byId("account-detail-funds-list")?.addEventListener("click", event => {
+  const button = event.target.closest("[data-account-fund-open]");
+  if (!button) return;
+  authState.selectedFund = button.getAttribute("data-account-fund-open");
+  showView("fund-detail");
 });
 
 byId("new-account-confirm")?.addEventListener("click", () => {
