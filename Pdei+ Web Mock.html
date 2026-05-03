@@ -91,6 +91,9 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .view.active{display:block}
 .view-auth{min-height:100vh}
 .page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px}
+.subflow-head{justify-content:flex-start}
+.subflow-back{margin-right:auto}
+.subflow-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-left:auto}
 .page-title{font-size:28px;font-weight:700;margin-bottom:4px}
 .page-sub{font-size:14px;color:var(--text-sec)}
 .stack{display:flex;flex-direction:column;gap:20px}
@@ -106,6 +109,12 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .card-title{font-size:18px;font-weight:700;margin-bottom:6px}
 .card-sub{font-size:13px;color:var(--text-sec);margin-bottom:18px}
 .section-title{font-size:20px;font-weight:700;margin-bottom:16px}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
+.icon-btn{
+  width:36px;height:36px;padding:0;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--navy);
+  display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s
+}
+.icon-btn:hover{border-color:#cfd8e8;background:#f7f9fc}
 
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:var(--radius-btn);
@@ -259,6 +268,7 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .portfolio-fund-row .fund-right{display:grid;gap:6px;padding-top:2px}
 .portfolio-fund-row .fund-pct{color:var(--text-lt);font-weight:700}
 .portfolio-fund-row .more-menu-toggle{margin-top:2px}
+.portfolio-detail-trigger{margin-top:2px}
 .portfolio-empty.auth-hidden{display:none}
 .movements-toolbar{
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end;margin:20px 0
@@ -500,6 +510,13 @@ body.auth-mode{background:linear-gradient(180deg,#1a2147 0%,#111933 100%)}
 .beneficiary-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(140px,.7fr);gap:14px;align-items:end}
 .beneficiary-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .case-step-index{font-size:20px;font-weight:800;color:var(--navy);line-height:1;min-width:14px;text-align:center}
+.history-list{display:grid;gap:10px}
+.history-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)}
+.history-row:last-child{border-bottom:none}
+.history-copy{display:grid;gap:4px}
+.history-title{font-size:14px;font-weight:700;color:var(--navy)}
+.history-meta{font-size:12px;color:var(--text-lt)}
+.history-amount{font-size:14px;font-weight:700;color:var(--text);text-align:right}
 .wizard-summary{
   display:grid;gap:14px;padding:18px;border:1px solid var(--border);border-radius:18px;background:#fff
 }
@@ -1258,21 +1275,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
             </div>
             <div class="fund-right"><div class="fund-amount money">Q 84,320.00</div><div class="fund-pct">Saldo actual</div></div>
-            <div class="fund-actions">
-              <div class="more-menu">
-                <button class="more-menu-toggle" type="button" aria-label="Más acciones">
-                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
-                </button>
-                <div class="more-menu-panel">
-                  <button class="more-menu-item" type="button" data-fund-open="bursatil-gtq">Ver detalle</button>
-                  <button class="more-menu-item" type="button" data-view-target="new-investment" data-action-kind="active-only">Invertir</button>
-                  <button class="more-menu-item" type="button" data-view-target="redemption" data-action-kind="active-only">Recompra</button>
-                  <button class="more-menu-item" type="button" data-view-target="beneficiaries" data-action-kind="always">Beneficiarios</button>
-                  <button class="more-menu-item" type="button" data-view-target="signatories" data-action-kind="always">Otros firmantes</button>
-                  <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
-                </div>
-              </div>
-            </div>
+            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="bursatil-gtq" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
           <div class="fund-row portfolio-fund-row" data-account="001" data-fund-id="plazo-gtq" data-fund-state="active" data-fund-currency="GTQ">
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></span></div>
@@ -1289,20 +1292,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
             </div>
             <div class="fund-right"><div class="fund-amount money">Q 30,000.00</div><div class="fund-pct">Saldo actual</div></div>
-            <div class="fund-actions">
-              <div class="more-menu">
-                <button class="more-menu-toggle" type="button" aria-label="Más acciones">
-                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
-                </button>
-                <div class="more-menu-panel">
-                  <button class="more-menu-item" type="button" data-fund-open="plazo-gtq">Ver detalle</button>
-                  <button class="more-menu-item" type="button" data-view-target="new-investment" data-action-kind="active-only">Invertir</button>
-                  <button class="more-menu-item" type="button" data-view-target="redemption" data-action-kind="active-only">Recompra</button>
-                  <button class="more-menu-item" type="button" data-view-target="beneficiaries" data-action-kind="always">Beneficiarios</button>
-                  <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
-                </div>
-              </div>
-            </div>
+            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="plazo-gtq" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
         </div>
       </div>
@@ -1338,20 +1328,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
             </div>
             <div class="fund-right"><div class="fund-amount money">$ 1,600.00</div><div class="fund-pct">Saldo actual</div></div>
-            <div class="fund-actions">
-              <div class="more-menu">
-                <button class="more-menu-toggle" type="button" aria-label="Más acciones">
-                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
-                </button>
-                <div class="more-menu-panel">
-                  <button class="more-menu-item" type="button" data-fund-open="bursatil-usd">Ver detalle</button>
-                  <button class="more-menu-item" type="button" data-view-target="new-investment" data-action-kind="active-only">Invertir</button>
-                  <button class="more-menu-item" type="button" data-view-target="redemption" data-action-kind="active-only">Recompra</button>
-                  <button class="more-menu-item" type="button" data-view-target="beneficiaries" data-action-kind="always">Beneficiarios</button>
-                  <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
-                </div>
-              </div>
-            </div>
+            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="bursatil-usd" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
           <div class="fund-row portfolio-fund-row is-muted" data-account="002" data-fund-id="crecimiento-gtq" data-fund-state="pending-funds" data-fund-currency="GTQ">
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 16V8"></path><path d="M8 12h8"></path><path d="M4 4h16v16H4z"></path></svg></span></div>
@@ -1368,18 +1345,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
             </div>
             <div class="fund-right"><div class="fund-amount money">Q 10,000.00</div><div class="fund-pct">Monto esperado</div></div>
-            <div class="fund-actions">
-              <div class="more-menu">
-                <button class="more-menu-toggle" type="button" aria-label="Más acciones">
-                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
-                </button>
-                <div class="more-menu-panel">
-                  <button class="more-menu-item" type="button" data-fund-open="crecimiento-gtq">Ver detalle</button>
-                  <button class="more-menu-item" type="button" data-view-target="confirm-deposit" data-action-kind="pending-only">Confirmar depósito</button>
-                  <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
-                </div>
-              </div>
-            </div>
+            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="crecimiento-gtq" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
           <div class="fund-row portfolio-fund-row is-muted" data-account="002" data-fund-id="estrategico-gtq" data-fund-state="blocked" data-fund-currency="GTQ">
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z"></path><path d="M9 12l2 2 4-4"></path></svg></span></div>
@@ -1396,19 +1362,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               </div>
             </div>
             <div class="fund-right"><div class="fund-amount money">Q 0.00</div><div class="fund-pct">Sin saldo operativo</div></div>
-            <div class="fund-actions">
-              <div class="more-menu">
-                <button class="more-menu-toggle" type="button" aria-label="Más acciones">
-                  <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle cx="12" cy="19" r="1.5"></circle></svg></span>
-                </button>
-                <div class="more-menu-panel">
-                  <button class="more-menu-item" type="button" data-fund-open="estrategico-gtq">Ver detalle</button>
-                  <button class="more-menu-item" type="button" data-view-target="beneficiaries" data-action-kind="always">Beneficiarios</button>
-                  <button class="more-menu-item" type="button" data-view-target="signatories" data-action-kind="always">Otros firmantes</button>
-                  <button class="more-menu-item" type="button" data-view-target="movements" data-action-kind="always">Movimientos</button>
-                </div>
-              </div>
-            </div>
+            <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="estrategico-gtq" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
         </div>
       </div>
@@ -1420,25 +1374,33 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   </section>
 
   <section class="view" id="view-fund-detail" data-title="Detalle de Fondo">
-    <div class="page-head">
+    <div class="page-head subflow-head">
       <div>
-        <div class="page-title" id="fund-detail-title">Fondo Bursátil GTQ</div>
+        <button class="btn btn-outline subflow-back" type="button" id="fund-detail-back">Volver al portafolio</button>
         <div class="page-sub" id="fund-detail-sub">RF8 · Vista consolidada del fondo, titulares, cuenta relacionada, condiciones y acciones.</div>
       </div>
-      <div class="btn-row">
-        <button class="btn btn-primary" id="fund-detail-invest" data-view-target="new-investment">Nueva Inversión</button>
-        <button class="btn btn-outline-aqua" id="fund-detail-redeem" data-view-target="redemption">Solicitar Recompra</button>
-      </div>
     </div>
+    <div class="alert alert-warning auth-hidden" id="fund-detail-gate-pending"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span><div>La cuenta sigue en proceso de activación. Puedes revisar el detalle y completar depósitos pendientes, pero no iniciar operaciones nuevas.</div></div>
+    <div class="alert alert-info auth-hidden" id="fund-detail-gate-update"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg></span><div>La información del expediente requiere actualización. Revisa <button class="inline-link" type="button" data-view-target="profile">Mi Perfil</button> antes de continuar con operaciones del fondo.</div></div>
     <div class="grid grid-3">
       <div class="card metric-card"><div class="metric-small-label">Saldo actual</div><div class="metric-small-value money" id="fund-detail-balance">Q 84,320.00</div></div>
       <div class="card metric-card"><div class="metric-small-label">Saldo disponible</div><div class="metric-small-value money" id="fund-detail-available">Q 24,320.00</div></div>
-      <div class="card metric-card"><div class="metric-small-label">Estado</div><div class="metric-small-value" id="fund-detail-state">Vigente</div></div>
+      <div class="card metric-card"><div class="metric-small-label">Estado</div><div class="metric-small-value" id="fund-detail-state">Vigente</div><div style="margin-top:10px"><span class="pill pill-success" id="fund-detail-state-pill">Vigente</span></div></div>
     </div>
     <div class="dual" style="margin-top:20px">
       <div class="stack">
         <div class="card">
-          <div class="section-title">Resumen del producto</div>
+          <div class="page-head" style="margin-bottom:16px">
+            <div>
+              <div class="section-title" id="fund-detail-title">Fondo Bursátil GTQ</div>
+              <div class="card-sub">Condiciones, saldo y participantes del producto seleccionado.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="section-title" style="margin-bottom:0">Resumen del producto</div>
+          </div>
           <div class="kv" id="fund-detail-summary">
             <div><span>Cuenta</span>001</div>
             <div><span>Moneda</span>GTQ</div>
@@ -1449,16 +1411,55 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
           </div>
         </div>
         <div class="card">
-          <div class="section-title">Titulares relacionados</div>
+          <div class="card-head">
+            <div class="section-title" style="margin-bottom:0">Titulares relacionados</div>
+          </div>
           <div class="list" id="fund-detail-holders">
             <div class="person"><div class="person-avatar">AG</div><div><div class="person-name">Alfredo García López</div><div class="person-meta">Titular principal · PEP No · CPE No</div></div><div class="person-tail"><span class="pill pill-success">Vigente</span></div></div>
             <div class="person"><div class="person-avatar">LM</div><div><div class="person-name">Laura Morales de García</div><div class="person-meta">Cotitular · PEP No · CPE No</div></div><div class="person-tail"><span class="pill pill-success">Vigente</span></div></div>
           </div>
         </div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-title" style="margin-bottom:0">Beneficiarios</div>
+              <div class="card-sub" style="margin-bottom:0">Gestión por producto según RF11.</div>
+            </div>
+            <button class="icon-btn" type="button" id="fund-detail-beneficiaries-edit" aria-label="Editar beneficiarios"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"></path></svg></span></button>
+          </div>
+          <div class="list" id="fund-detail-beneficiaries-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-title" style="margin-bottom:0">Otros firmantes</div>
+              <div class="card-sub" style="margin-bottom:0">Autorizaciones complementarias según RF12.</div>
+            </div>
+            <button class="icon-btn" type="button" id="fund-detail-signatories-edit" aria-label="Editar firmantes"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"></path></svg></span></button>
+          </div>
+          <div class="list" id="fund-detail-signatories-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="section-title" style="margin-bottom:0">Últimos movimientos</div>
+              <div class="card-sub" style="margin-bottom:0">Resumen reciente del producto según RF14, RF16 y RF18.</div>
+            </div>
+            <button class="icon-btn" type="button" id="fund-detail-movements-shortcut" aria-label="Ver movimientos"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg></span></button>
+          </div>
+          <div class="history-list" id="fund-detail-movements-list"></div>
+        </div>
       </div>
       <div class="stack">
+        <div class="subflow-actions">
+          <button class="btn btn-primary" type="button" id="fund-detail-invest">Nueva inversión</button>
+          <button class="btn btn-outline-aqua" type="button" id="fund-detail-redeem">Solicitar recompra</button>
+          <button class="btn btn-outline" type="button" id="fund-detail-confirm-deposit">Confirmar depósito</button>
+        </div>
         <div class="card">
-          <div class="section-title">Estado de expediente</div>
+          <div class="card-head">
+            <div class="section-title" style="margin-bottom:0">Estado de expediente y operación</div>
+          </div>
           <div class="list" id="fund-detail-status-list">
             <div class="alert alert-success"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><div>Beneficiarios completos y distribución al 100%.</div></div>
             <div class="alert alert-success"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><div>Sin restricciones PEP/CPE detectadas.</div></div>
@@ -1470,52 +1471,101 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   </section>
 
   <section class="view" id="view-new-investment" data-title="Nueva Inversión">
-    <div class="page-head">
+    <div class="page-head subflow-head">
+      <button class="btn btn-outline subflow-back" type="button" id="new-investment-back">Volver al detalle</button>
       <div>
-        <div class="page-title">Nueva Inversión</div>
         <div class="page-sub">RF14-RF16 · Flujo de inversión con selección de fondo, monto, cuenta bancaria y reglas de validación.</div>
       </div>
     </div>
+    <div class="auth-status" id="new-investment-status"></div>
     <div class="card">
-      <div class="step-bar">
-        <div class="step-item done"><div class="step-dot">1</div><div class="step-lbl">Fondo</div></div>
-        <div class="step-item active"><div class="step-dot">2</div><div class="step-lbl">Monto</div></div>
-        <div class="step-item"><div class="step-dot">3</div><div class="step-lbl">Banco</div></div>
-        <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Confirmación</div></div>
+      <div class="step-bar" id="new-investment-steps">
+        <div class="step-item active"><div class="step-dot">1</div><div class="step-lbl">Producto</div></div>
+        <div class="step-item"><div class="step-dot">2</div><div class="step-lbl">Monto</div></div>
+        <div class="step-item"><div class="step-dot">3</div><div class="step-lbl">Fondos</div></div>
+        <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Resultado</div></div>
       </div>
-      <div class="dual">
-        <div class="stack">
-          <div class="field-grid">
-            <div class="field"><label class="label">Cuenta</label><select class="select"><option>Cuenta 001</option><option>Cuenta 002</option></select></div>
-            <div class="field"><label class="label">Tipo de fondo</label><select class="select"><option>Fondo Bursátil GTQ</option><option>Fondo Bursátil USD</option></select></div>
-          </div>
-          <div class="field-grid">
-            <div class="field">
-              <label class="label">Monto a invertir</label>
-              <div class="input-prefix">
-                <span class="input-prefix-label">Q</span>
-                <input class="input" type="number" step="0.01" min="0" value="25000.00">
-              </div>
+      <div class="wizard-pane active" data-new-investment-pane="0">
+        <div class="dual">
+          <div class="stack">
+            <div class="field-grid">
+              <div class="field"><label class="label" for="new-investment-account">Cuenta</label><select class="select" id="new-investment-account"><option value="001">Cuenta 001</option><option value="002">Cuenta 002</option></select></div>
+              <div class="field"><label class="label" for="new-investment-fund">Fondo / producto activo</label><select class="select" id="new-investment-fund"></select></div>
             </div>
-            <div class="field"><label class="label">Rendimientos</label><select class="select"><option>Capitalizar</option><option>Retirar a cuenta</option></select></div>
+            <div class="wizard-card">
+              <div class="wizard-card-title">Condición de inversión</div>
+              <div class="wizard-card-copy" id="new-investment-eligibility-copy">Solo productos vigentes pueden recibir nuevas inversiones según RF15.</div>
+            </div>
           </div>
-          <div class="field"><label class="label">Banco origen</label><select class="select"><option>Banco Industrial · Monetaria · 041-200851-7</option><option>BAC · Ahorro · 003-445892-1</option></select><div class="hint">Se usan únicamente cuentas asociadas al titular o cotitular válido.</div></div>
-          <div class="alert alert-success"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><div>Monto dentro del límite FEIS permitido para la cuenta seleccionada.</div></div>
-        </div>
-        <div class="card" style="padding:20px">
-          <div class="card-title">Resumen de inversión</div>
-          <div class="list" style="font-size:13px">
-            <div><strong>Fondo:</strong> Fondo Bursátil GTQ</div>
-            <div><strong>Monto nuevo:</strong> Q 25,000.00</div>
-            <div><strong>Saldo actual:</strong> Q 84,320.00</div>
-            <div><strong>Total proyectado:</strong> Q 109,320.00</div>
-            <div><strong>Cuenta débito:</strong> BI · 041-200851-7</div>
-          </div>
-          <div class="btn-row" style="margin-top:18px">
-            <button class="btn btn-outline">Anterior</button>
-            <button class="btn btn-primary">Continuar</button>
+          <div class="card" style="padding:20px">
+            <div class="card-title">Compras registradas</div>
+            <div class="history-list" id="new-investment-history"></div>
           </div>
         </div>
+      </div>
+      <div class="wizard-pane" data-new-investment-pane="1">
+        <div class="dual">
+          <div class="stack">
+            <div class="field-grid">
+              <div class="field">
+                <label class="label" for="new-investment-amount">Monto a invertir</label>
+                <div class="input-prefix">
+                  <span class="input-prefix-label" id="new-investment-amount-prefix">Q</span>
+                  <input class="input" id="new-investment-amount" type="number" step="0.01" min="0" value="25000.00">
+                </div>
+              </div>
+              <div class="field"><label class="label" for="new-investment-yield-mode">Rendimientos</label><select class="select" id="new-investment-yield-mode"><option value="capitalizar">Capitalizar</option><option value="retirar">Retirar a cuenta</option></select></div>
+            </div>
+            <div class="wizard-card">
+              <div class="wizard-card-title">Validación RF15</div>
+              <div class="limit-copy" id="new-investment-limit-copy"></div>
+            </div>
+          </div>
+          <div class="card" style="padding:20px">
+            <div class="card-title">Resumen de inversión</div>
+            <div class="summary-kv" id="new-investment-summary"></div>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-pane" data-new-investment-pane="2">
+        <div class="dual">
+          <div class="stack">
+            <div class="field"><label class="label" for="new-investment-bank">Cuenta o medio de pago</label><select class="select" id="new-investment-bank"></select><div class="hint">RF15 permite adjuntar evidencia del pago electrónico o transferencia aplicada a la inversión.</div></div>
+            <div class="field"><label class="label" for="new-investment-date">Fecha de inversión</label><input class="input" id="new-investment-date" type="date" value="2026-05-02"></div>
+            <div class="field"><label class="label" for="new-investment-file">Boleta o comprobante</label><input class="input" id="new-investment-file" type="file" accept=".pdf,.png,.jpg,.jpeg"></div>
+            <div class="field"><label class="label">Archivo seleccionado</label><input class="input" id="new-investment-file-name" value="Sin archivo cargado" readonly></div>
+          </div>
+          <div class="card" style="padding:20px">
+            <div class="card-title">Confirmación previa</div>
+            <div class="history-list">
+              <div class="history-row"><div class="history-copy"><div class="history-title">Fondo seleccionado</div><div class="history-meta" id="new-investment-confirm-fund">Fondo Bursátil GTQ</div></div><div class="history-amount money" id="new-investment-confirm-amount">Q 25,000.00</div></div>
+              <div class="history-row"><div class="history-copy"><div class="history-title">Fecha de confirmación</div><div class="history-meta" id="new-investment-confirm-date">02/05/2026</div></div><div class="history-amount" id="new-investment-confirm-bank">BI · 041-200851-7</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-pane" data-new-investment-pane="3">
+        <div class="wizard-complete">
+          <div class="register-complete-badge"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+          <div>
+            <div class="auth-title" style="font-size:28px;margin-bottom:6px">Inversión registrada</div>
+            <div class="auth-copy" style="margin-bottom:0">La compra queda registrada en el mock con evidencia cargada y pendiente de validación de fondos para disponibilizar el movimiento.</div>
+          </div>
+          <div class="register-result">
+            <strong>Resultado del flujo</strong>
+            <div id="new-investment-result-line">Fondo Bursátil GTQ · Q 25,000.00</div>
+            <div>Estado inicial: <span class="pill pill-warning">Pendiente validación</span></div>
+            <code id="new-investment-result-id">INV-2026-001</code>
+          </div>
+          <div class="wizard-complete-actions">
+            <button class="btn btn-outline" type="button" id="new-investment-go-detail">Volver al detalle</button>
+            <button class="btn btn-primary" type="button" id="new-investment-go-movements">Ver movimientos</button>
+          </div>
+        </div>
+      </div>
+      <div class="auth-actions wizard-actions">
+        <button class="btn btn-outline" type="button" id="new-investment-prev">Anterior</button>
+        <button class="btn btn-primary" type="button" id="new-investment-next">Continuar</button>
       </div>
     </div>
   </section>
@@ -1569,41 +1619,84 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   </section>
 
   <section class="view" id="view-redemption" data-title="Recompras">
-    <div class="page-head">
+    <div class="page-head subflow-head">
+      <button class="btn btn-outline subflow-back" type="button" id="redemption-back">Volver al detalle</button>
       <div>
-        <div class="page-title">Recompra / Desinversión</div>
         <div class="page-sub">RF17 · Solo fondos vigentes, con saldo disponible y permanencia mínima cumplida.</div>
       </div>
     </div>
-    <div class="dual">
-      <div class="stack">
-        <div class="card">
-          <div class="field-grid">
-            <div class="field"><label class="label">Fondo</label><select class="select"><option>Fondo a Plazo GTQ</option></select></div>
-            <div class="field">
-              <label class="label">Monto a retirar</label>
-              <div class="input-prefix">
-                <span class="input-prefix-label">Q</span>
-                <input class="input" type="number" step="0.01" min="0" value="5000.00">
-              </div>
+    <div class="auth-status" id="redemption-status"></div>
+    <div class="card">
+      <div class="step-bar" id="redemption-steps">
+        <div class="step-item active"><div class="step-dot">1</div><div class="step-lbl">Producto</div></div>
+        <div class="step-item"><div class="step-dot">2</div><div class="step-lbl">Monto</div></div>
+        <div class="step-item"><div class="step-dot">3</div><div class="step-lbl">Resultado</div></div>
+      </div>
+      <div class="wizard-pane active" data-redemption-pane="0">
+        <div class="dual">
+          <div class="stack">
+            <div class="field-grid">
+              <div class="field"><label class="label" for="redemption-account">Cuenta</label><select class="select" id="redemption-account"><option value="001">Cuenta 001</option><option value="002">Cuenta 002</option></select></div>
+              <div class="field"><label class="label" for="redemption-fund">Fondo / producto activo</label><select class="select" id="redemption-fund"></select></div>
+            </div>
+            <div class="wizard-card">
+              <div class="wizard-card-title">Condición de recompra</div>
+              <div class="wizard-card-copy" id="redemption-eligibility-copy">La recompra solo aplica a productos vigentes, con saldo disponible y permanencia mínima cumplida.</div>
             </div>
           </div>
-          <div class="field-grid">
-            <div class="field"><label class="label">Cuenta destino</label><select class="select"><option>Banco Industrial · 041-200851-7</option></select></div>
-            <div class="field"><label class="label">Tipo de solicitud</label><select class="select"><option>Parcial</option><option>Total</option></select></div>
+          <div class="card" style="padding:20px">
+            <div class="card-title">Recompras registradas</div>
+            <div class="history-list" id="redemption-history"></div>
           </div>
-          <div class="alert alert-success" style="margin-top:16px"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><div>Fondo vigente, permanencia cumplida y monto dentro del saldo disponible.</div></div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-title">Condiciones</div>
-        <div class="list" style="font-size:13px">
-          <div><strong>Saldo disponible:</strong> Q 30,000.00</div>
-          <div><strong>Permanencia mínima:</strong> Cumplida</div>
-          <div><strong>Estado del fondo:</strong> Vigente</div>
-          <div><strong>Tiempo estimado:</strong> 24-48 horas hábiles</div>
+      <div class="wizard-pane" data-redemption-pane="1">
+        <div class="dual">
+          <div class="stack">
+            <div class="field-grid">
+              <div class="field">
+                <label class="label" for="redemption-amount">Monto a retirar</label>
+                <div class="input-prefix">
+                  <span class="input-prefix-label" id="redemption-amount-prefix">Q</span>
+                  <input class="input" id="redemption-amount" type="number" step="0.01" min="0" value="5000.00">
+                </div>
+              </div>
+              <div class="field"><label class="label" for="redemption-request-type">Tipo de solicitud</label><select class="select" id="redemption-request-type"><option value="partial">Parcial</option><option value="total">Total</option></select></div>
+            </div>
+            <div class="field"><label class="label" for="redemption-destination-bank">Cuenta destino</label><select class="select" id="redemption-destination-bank"></select><div class="hint">Las cuentas destino deben estar confirmadas y corresponder a la moneda del fondo.</div></div>
+            <div class="wizard-card">
+              <div class="wizard-card-title">Validación RF17</div>
+              <div class="limit-copy" id="redemption-limit-copy"></div>
+            </div>
+          </div>
+          <div class="card" style="padding:20px">
+            <div class="card-title">Condiciones</div>
+            <div class="summary-kv" id="redemption-summary"></div>
+          </div>
         </div>
-        <button class="btn btn-primary" style="margin-top:18px" data-view-target="movements">Solicitar recompra</button>
+      </div>
+      <div class="wizard-pane" data-redemption-pane="2">
+        <div class="wizard-complete">
+          <div class="register-complete-badge"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></div>
+          <div>
+            <div class="auth-title" style="font-size:28px;margin-bottom:6px">Recompra solicitada</div>
+            <div class="auth-copy" style="margin-bottom:0">La desinversión queda registrada en el mock y pasa a estado pendiente hasta que se entregue la transferencia y su confirmación.</div>
+          </div>
+          <div class="register-result">
+            <strong>Resultado del flujo</strong>
+            <div id="redemption-result-line">Fondo a Plazo GTQ · Q 5,000.00</div>
+            <div>Estado inicial: <span class="pill pill-info">Pendiente</span></div>
+            <code id="redemption-result-id">RED-2026-001</code>
+          </div>
+          <div class="wizard-complete-actions">
+            <button class="btn btn-outline" type="button" id="redemption-go-detail">Volver al detalle</button>
+            <button class="btn btn-primary" type="button" id="redemption-go-movements">Ver movimientos</button>
+          </div>
+        </div>
+      </div>
+      <div class="auth-actions wizard-actions">
+        <button class="btn btn-outline" type="button" id="redemption-prev">Anterior</button>
+        <button class="btn btn-primary" type="button" id="redemption-next">Continuar</button>
       </div>
     </div>
   </section>
@@ -2112,6 +2205,24 @@ const authState = {
     receiptFileName:"",
     receiptDate:"2026-05-02"
   },
+  newInvestmentStep:0,
+  newInvestment:{
+    account:"001",
+    fund:"bursatil-gtq",
+    amount:"25000.00",
+    yieldMode:"capitalizar",
+    bank:"bi-gtq",
+    paymentDate:"2026-05-02",
+    fileName:""
+  },
+  redemptionStep:0,
+  redemption:{
+    account:"001",
+    fund:"plazo-gtq",
+    amount:"5000.00",
+    destinationBank:"bi-gtq",
+    requestType:"partial"
+  },
   profileEditMode:false,
   profileFinancialEditMode:false
 };
@@ -2124,8 +2235,10 @@ const fundDetailData = {
     available:"Q 24,320.00",
     state:"Vigente",
     stateKind:"success",
+    actionNote:"Producto vigente con saldo disponible para inversión adicional, recompra, beneficiarios, firmantes y movimientos.",
     canInvest:true,
     canRedeem:true,
+    canConfirmDeposit:false,
     summary:[
       ["Cuenta","001"],
       ["Moneda","GTQ"],
@@ -2137,6 +2250,18 @@ const fundDetailData = {
     holders:[
       ["AG","Alfredo García López","Titular principal · PEP No · CPE No","Vigente","success"],
       ["LM","Laura Morales de García","Cotitular · PEP No · CPE No","Vigente","success"]
+    ],
+    beneficiaries:[
+      ["AM","Ana María García López","Hija · 60% · No PEP · No CPE","60%","success"],
+      ["CG","Carlos Alberto García López","Hijo · 40% · No PEP · No CPE","40%","success"]
+    ],
+    signatories:[
+      ["LF","Luis Fernando Méndez","Firmante autorizado · DPI 5544 33221 0303","Activo","info"]
+    ],
+    movements:[
+      ["15/04/2026","Compra · Inversión #8","Disponible","Q 10,000.00"],
+      ["10/04/2026","Rendimiento capitalizado","Aplicado","Q 480.00"],
+      ["01/03/2026","Compra · Inversión #6","Disponible","Q 20,000.00"]
     ],
     status:[
       ["success","Beneficiarios completos y distribución al 100%."],
@@ -2151,8 +2276,10 @@ const fundDetailData = {
     available:"Q 20,000.00",
     state:"Vigente",
     stateKind:"success",
+    actionNote:"Producto vigente con permanencia cumplida y recompra parcial habilitada.",
     canInvest:true,
     canRedeem:true,
+    canConfirmDeposit:false,
     summary:[
       ["Cuenta","001"],
       ["Moneda","GTQ"],
@@ -2164,6 +2291,17 @@ const fundDetailData = {
     holders:[
       ["AG","Alfredo García López","Titular principal · PEP No · CPE No","Vigente","success"],
       ["LM","Laura Morales de García","Cotitular · PEP No · CPE No","Vigente","success"]
+    ],
+    beneficiaries:[
+      ["SM","Sofía Mendoza","Cónyuge · 100% · No PEP · No CPE","100%","success"]
+    ],
+    signatories:[
+      ["--","Sin firmantes adicionales","La operación depende solo de titulares activos","Sin registro","warning"]
+    ],
+    movements:[
+      ["20/03/2026","Recompra parcial","Entregado","Q 5,000.00"],
+      ["15/03/2026","Rendimiento capitalizado","Aplicado","Q 460.00"],
+      ["01/04/2026","Compra · Inversión #7","Disponible","Q 5,000.00"]
     ],
     status:[
       ["success","Permanencia mínima cumplida para desinversión."],
@@ -2178,8 +2316,10 @@ const fundDetailData = {
     available:"$ 1,100.00",
     state:"Vigente",
     stateKind:"success",
+    actionNote:"Producto vigente en USD. Operaciones habilitadas mientras el expediente permanezca vigente.",
     canInvest:true,
     canRedeem:true,
+    canConfirmDeposit:false,
     summary:[
       ["Cuenta","002"],
       ["Moneda","USD"],
@@ -2190,6 +2330,16 @@ const fundDetailData = {
     ],
     holders:[
       ["AG","Alfredo García López","Titular único · PEP No · CPE No","Vigente","success"]
+    ],
+    beneficiaries:[
+      ["MM","María Morales","Madre · 100% · No PEP · No CPE","100%","success"]
+    ],
+    signatories:[
+      ["CR","Cristina Ramos","Firmante autorizado · Pasaporte US 998812","Activo","info"]
+    ],
+    movements:[
+      ["22/04/2026","Compra · Inversión USD #4","Disponible","$ 400.00"],
+      ["12/04/2026","Rendimiento capitalizado","Aplicado","$ 56.00"]
     ],
     status:[
       ["warning","Expediente con actualización pendiente de beneficiarios."],
@@ -2204,8 +2354,10 @@ const fundDetailData = {
     available:"Q 0.00",
     state:"Pendiente de fondos",
     stateKind:"warning",
+    actionNote:"Producto pendiente de activación. Debe confirmarse el depósito o transferencia antes de habilitar nuevas operaciones.",
     canInvest:false,
     canRedeem:false,
+    canConfirmDeposit:true,
     summary:[
       ["Cuenta","002"],
       ["Moneda","GTQ"],
@@ -2216,6 +2368,15 @@ const fundDetailData = {
     ],
     holders:[
       ["AG","Alfredo García López","Titular único · PEP No · CPE No","Pendiente","warning"]
+    ],
+    beneficiaries:[
+      ["--","Beneficiarios pendientes","Se completarán al activar el producto","0%","warning"]
+    ],
+    signatories:[
+      ["--","Sin firmantes adicionales","Pendiente de activación del fondo","Sin registro","warning"]
+    ],
+    movements:[
+      ["08/04/2026","Depósito informado","Pendiente validación","Q 10,000.00"]
     ],
     status:[
       ["warning","Depósito pendiente de conciliación y validación interna."],
@@ -2230,8 +2391,10 @@ const fundDetailData = {
     available:"Q 0.00",
     state:"En verificación",
     stateKind:"info",
+    actionNote:"Producto inmovilizado por revisión de cumplimiento. Solo mantiene acciones de consulta y gestión contextual.",
     canInvest:false,
     canRedeem:false,
+    canConfirmDeposit:false,
     summary:[
       ["Cuenta","002"],
       ["Moneda","GTQ"],
@@ -2242,6 +2405,16 @@ const fundDetailData = {
     ],
     holders:[
       ["AG","Alfredo García López","Titular único · PEP No · CPE No","En revisión","info"]
+    ],
+    beneficiaries:[
+      ["AM","Ana María García López","Beneficiaria cargada · 100%","100%","success"]
+    ],
+    signatories:[
+      ["LF","Luis Fernando Méndez","Firmante autorizado · Sin operaciones habilitadas","Activo","info"]
+    ],
+    movements:[
+      ["28/03/2026","Bloqueo por cumplimiento","En revisión","Q 0.00"],
+      ["15/03/2026","Solicitud documental","Aplicado","Q 0.00"]
     ],
     status:[
       ["warning","Cumplimiento revisa documentación adicional del expediente."],
@@ -2319,6 +2492,16 @@ const newFundProducts = {
     bankAccount:"040-0012345-6"
   }
 };
+const investmentPaymentOptions = {
+  "001": [
+    { id:"bi-gtq", label:"Banco Industrial · Monetaria · 041-200851-7", currency:"Q" },
+    { id:"bac-gtq", label:"BAC · Ahorro · 003-445892-1", currency:"Q" }
+  ],
+  "002": [
+    { id:"gt-usd", label:"G&T Continental · Ahorro · 008-110245-3", currency:"$" },
+    { id:"bi-gtq-2", label:"Banco Industrial · Monetaria · 041-220045-8", currency:"Q" }
+  ]
+};
 
 function byId(id) {
   return document.getElementById(id);
@@ -2376,6 +2559,38 @@ function getNewFundAccount() {
 
 function getNewFundBeneficiariesTotal() {
   return Number(authState.newFund.beneficiary1Pct || 0) + Number(authState.newFund.beneficiary2Pct || 0) + Number(authState.newFund.beneficiary3Pct || 0);
+}
+
+function getActiveFundsByAccount(account) {
+  return Object.entries(fundDetailData).filter(([, fund]) => {
+    const fundAccount = fund.summary.find(([label]) => label === "Cuenta")?.[1];
+    return fundAccount === account && fund.state === "Vigente";
+  });
+}
+
+function getCurrentInvestmentFund() {
+  const entries = getActiveFundsByAccount(authState.newInvestment.account);
+  const fallback = entries[0]?.[0] || "bursatil-gtq";
+  if (!entries.some(([id]) => id === authState.newInvestment.fund)) {
+    authState.newInvestment.fund = fallback;
+  }
+  return fundDetailData[authState.newInvestment.fund] || fundDetailData["bursatil-gtq"];
+}
+
+function getRedeemableFundsByAccount(account) {
+  return Object.entries(fundDetailData).filter(([, fund]) => {
+    const fundAccount = fund.summary.find(([label]) => label === "Cuenta")?.[1];
+    return fundAccount === account && fund.state === "Vigente" && parseMoney(fund.available) > 0;
+  });
+}
+
+function getCurrentRedemptionFund() {
+  const entries = getRedeemableFundsByAccount(authState.redemption.account);
+  const fallback = entries[0]?.[0] || "plazo-gtq";
+  if (!entries.some(([id]) => id === authState.redemption.fund)) {
+    authState.redemption.fund = fallback;
+  }
+  return fundDetailData[authState.redemption.fund] || fundDetailData["plazo-gtq"];
 }
 
 function getUser(email) {
@@ -2497,11 +2712,15 @@ function renderFundDetail() {
   const fund = fundDetailData[authState.selectedFund] || fundDetailData["bursatil-gtq"];
   const allowInvest = fund.canInvest && authState.dashboardState === "active";
   const allowRedeem = fund.canRedeem && authState.dashboardState === "active";
+  const allowConfirmDeposit = fund.canConfirmDeposit && authState.dashboardState !== "update";
+  const statePillClass = fund.stateKind === "success" ? "pill-success" : fund.stateKind === "warning" ? "pill-warning" : "pill-info";
   byId("fund-detail-title").textContent = fund.title;
   byId("fund-detail-sub").textContent = fund.sub;
   byId("fund-detail-balance").textContent = fund.balance;
   byId("fund-detail-available").textContent = fund.available;
   byId("fund-detail-state").textContent = fund.state;
+  byId("fund-detail-state-pill").className = `pill ${statePillClass}`;
+  byId("fund-detail-state-pill").textContent = fund.state;
   byId("fund-detail-summary").innerHTML = fund.summary.map(([label, value]) => `<div><span>${label}</span>${value}</div>`).join("");
   byId("fund-detail-holders").innerHTML = fund.holders.map(([avatar, name, meta, status, kind]) => `
     <div class="person">
@@ -2510,11 +2729,35 @@ function renderFundDetail() {
       <div class="person-tail"><span class="pill ${getPillClass(kind)}">${status}</span></div>
     </div>
   `).join("");
-  byId("fund-detail-status-list").innerHTML = fund.status.map(([kind, copy]) => `
+  byId("fund-detail-beneficiaries-list").innerHTML = fund.beneficiaries.map(([avatar, name, meta, share, kind]) => `
+    <div class="person">
+      <div class="person-avatar">${avatar}</div>
+      <div><div class="person-name">${name}</div><div class="person-meta">${meta}</div></div>
+      <div class="person-tail"><span class="pill ${getPillClass(kind)}">${share}</span></div>
+    </div>
+  `).join("");
+  byId("fund-detail-signatories-list").innerHTML = fund.signatories.map(([avatar, name, meta, status, kind]) => `
+    <div class="person">
+      <div class="person-avatar">${avatar}</div>
+      <div><div class="person-name">${name}</div><div class="person-meta">${meta}</div></div>
+      <div class="person-tail"><span class="pill ${getPillClass(kind)}">${status}</span></div>
+    </div>
+  `).join("");
+  byId("fund-detail-movements-list").innerHTML = fund.movements.map(([date, description, status, amount]) => `
+    <div class="history-row">
+      <div class="history-copy"><div class="history-title">${description}</div><div class="history-meta">${date} · ${status}</div></div>
+      <div class="history-amount money">${amount}</div>
+    </div>
+  `).join("");
+  byId("fund-detail-status-list").innerHTML = [[fund.stateKind, fund.actionNote], ...fund.status].map(([kind, copy]) => `
     <div class="alert alert-${kind}">${getAlertIcon(kind)}<div>${copy}</div></div>
   `).join("");
+  byId("fund-detail-gate-pending").classList.toggle("auth-hidden", authState.dashboardState !== "pending");
+  byId("fund-detail-gate-update").classList.toggle("auth-hidden", authState.dashboardState !== "update");
   byId("fund-detail-invest").disabled = !allowInvest;
   byId("fund-detail-redeem").disabled = !allowRedeem;
+  byId("fund-detail-confirm-deposit").disabled = !allowConfirmDeposit;
+  byId("fund-detail-confirm-deposit").classList.toggle("auth-hidden", !fund.canConfirmDeposit);
 }
 
 function renderPortfolio() {
@@ -2847,6 +3090,171 @@ function validateNewFundStep(step) {
   return "";
 }
 
+function renderNewInvestmentStep() {
+  const blocked = authState.dashboardState !== "active";
+  const activeFunds = getActiveFundsByAccount(authState.newInvestment.account);
+  const fundSelect = byId("new-investment-fund");
+  fundSelect.innerHTML = activeFunds.map(([id, fund]) => `<option value="${id}">${fund.title}</option>`).join("");
+  fundSelect.value = authState.newInvestment.fund;
+  const fund = getCurrentInvestmentFund();
+  const account = authState.newInvestment.account;
+  const product = newFundProducts[authState.newInvestment.fund] || newFundProducts["bursatil-gtq"];
+  const exposure = newFundAccounts[account]?.exposure?.[product.currency] || 0;
+  const amount = Number(authState.newInvestment.amount || 0);
+  const reserve = authState.newInvestment.yieldMode === "capitalizar" ? product.reserveOnCap : 0;
+  const paymentOptions = (investmentPaymentOptions[account] || []).filter(option => option.currency === product.currency);
+  if (!paymentOptions.some(option => option.id === authState.newInvestment.bank)) {
+    authState.newInvestment.bank = paymentOptions[0]?.id || "";
+  }
+  byId("new-investment-account").value = account;
+  byId("new-investment-amount-prefix").textContent = product.currency;
+  byId("new-investment-amount").value = authState.newInvestment.amount;
+  byId("new-investment-amount").min = product.min;
+  byId("new-investment-yield-mode").value = authState.newInvestment.yieldMode;
+  byId("new-investment-bank").innerHTML = paymentOptions.map(option => `<option value="${option.id}">${option.label}</option>`).join("");
+  byId("new-investment-bank").value = authState.newInvestment.bank;
+  byId("new-investment-date").value = authState.newInvestment.paymentDate;
+  byId("new-investment-file-name").value = authState.newInvestment.fileName || "Sin archivo cargado";
+  document.querySelectorAll("[data-new-investment-pane]").forEach((pane, index) => {
+    pane.classList.toggle("active", index === authState.newInvestmentStep);
+  });
+  document.querySelectorAll("#new-investment-steps .step-item").forEach((step, index) => {
+    step.classList.toggle("active", index === authState.newInvestmentStep);
+    step.classList.toggle("done", index < authState.newInvestmentStep);
+  });
+  byId("new-investment-prev").classList.toggle("auth-hidden", authState.newInvestmentStep === 0 || authState.newInvestmentStep === 3);
+  byId("new-investment-next").classList.toggle("auth-hidden", authState.newInvestmentStep === 3);
+  byId("new-investment-next").disabled = blocked;
+  byId("new-investment-eligibility-copy").textContent = blocked
+    ? "Las nuevas inversiones solo se habilitan cuando la cuenta está activa y validada."
+    : `${fund.title} está vigente y puede recibir nuevas compras sobre ${newFundAccounts[account].label}.`;
+  byId("new-investment-limit-copy").innerHTML = `
+    <div class="wizard-card-copy">Saldo actual del producto: <strong>${fund.balance}</strong>.</div>
+    <div class="wizard-card-copy">Exposición acumulada visible del mock para ${product.currency === "$" ? "USD" : "GTQ"}: <strong>${formatMoney(product.currency, exposure)}</strong>.</div>
+    <div class="wizard-card-copy">Límite FEIS visible del mock: <strong>${formatMoney(product.currency, product.limit)}</strong>. Si capitalizas rendimientos se agrega una reserva visible de <strong>${formatMoney(product.currency, reserve)}</strong>.</div>
+  `;
+  byId("new-investment-summary").innerHTML = `
+    <div class="summary-kv-row"><div class="summary-kv-label">Fondo</div><div class="summary-kv-value">${fund.title}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Monto nuevo</div><div class="summary-kv-value money">${formatMoney(product.currency, amount)}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Saldo actual</div><div class="summary-kv-value money">${fund.balance}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Total proyectado</div><div class="summary-kv-value money">${formatMoney(product.currency, parseMoney(fund.balance) + amount)}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Rendimientos</div><div class="summary-kv-value">${authState.newInvestment.yieldMode === "capitalizar" ? "Capitalizar" : "Retirar a cuenta"}</div></div>
+  `;
+  byId("new-investment-confirm-fund").textContent = fund.title;
+  byId("new-investment-confirm-amount").textContent = formatMoney(product.currency, amount);
+  byId("new-investment-confirm-date").textContent = formatDateDisplay(authState.newInvestment.paymentDate);
+  byId("new-investment-confirm-bank").textContent = paymentOptions.find(option => option.id === authState.newInvestment.bank)?.label || "-";
+  const historyRows = movementsData
+    .filter(item => item.fund === authState.newInvestment.fund && item.credit)
+    .slice(0, 4)
+    .map(item => `
+      <div class="history-row">
+        <div class="history-copy"><div class="history-title">${item.description}</div><div class="history-meta">${formatDateDisplay(item.date)} · ${item.status}</div></div>
+        <div class="history-amount money">${item.credit}</div>
+      </div>
+    `).join("");
+  byId("new-investment-history").innerHTML = historyRows || `<div class="history-meta">No hay compras visibles para este producto en el mock.</div>`;
+  byId("new-investment-result-line").textContent = `${fund.title} · ${formatMoney(product.currency, amount)}`;
+}
+
+function validateNewInvestmentStep(step) {
+  setStatus("new-investment-status", "", "");
+  if (authState.dashboardState !== "active") {
+    return "RF15 solo permite nuevas inversiones cuando la cuenta está activa y validada.";
+  }
+  const product = newFundProducts[authState.newInvestment.fund] || newFundProducts["bursatil-gtq"];
+  const exposure = newFundAccounts[authState.newInvestment.account]?.exposure?.[product.currency] || 0;
+  if (step === 1) {
+    const amount = Number(authState.newInvestment.amount);
+    if (!Number.isFinite(amount) || amount <= 0) return "Ingresa un monto válido para continuar.";
+    if (amount < product.min) return `El monto mínimo para ${product.title} es ${formatMoney(product.currency, product.min)}.`;
+    const reserve = authState.newInvestment.yieldMode === "capitalizar" ? product.reserveOnCap : 0;
+    if (exposure + amount + reserve > product.limit) {
+      return `Imposibilidad de continuar: la exposición actual ${formatMoney(product.currency, exposure)} más la nueva inversión y la reserva visible excede el límite FEIS del mock de ${formatMoney(product.currency, product.limit)}.`;
+    }
+  }
+  if (step === 2) {
+    if (!authState.newInvestment.bank) return "Selecciona una cuenta o medio de pago para continuar.";
+    if (!authState.newInvestment.fileName) return "Adjunta una imagen o documento de confirmación de fondos antes de continuar.";
+  }
+  return "";
+}
+
+function renderRedemptionStep() {
+  const blocked = authState.dashboardState !== "active";
+  const redeemableFunds = getRedeemableFundsByAccount(authState.redemption.account);
+  const fundSelect = byId("redemption-fund");
+  fundSelect.innerHTML = redeemableFunds.map(([id, fund]) => `<option value="${id}">${fund.title}</option>`).join("");
+  fundSelect.value = authState.redemption.fund;
+  const fund = getCurrentRedemptionFund();
+  const product = newFundProducts[authState.redemption.fund] || newFundProducts["plazo-gtq"];
+  const available = parseMoney(fund.available);
+  const amount = Number(authState.redemption.amount || 0);
+  const destinationOptions = (investmentPaymentOptions[authState.redemption.account] || []).filter(option => option.currency === product.currency);
+  if (!destinationOptions.some(option => option.id === authState.redemption.destinationBank)) {
+    authState.redemption.destinationBank = destinationOptions[0]?.id || "";
+  }
+  byId("redemption-account").value = authState.redemption.account;
+  byId("redemption-amount-prefix").textContent = product.currency;
+  byId("redemption-amount").value = authState.redemption.amount;
+  byId("redemption-amount").max = available;
+  byId("redemption-request-type").value = authState.redemption.requestType;
+  byId("redemption-destination-bank").innerHTML = destinationOptions.map(option => `<option value="${option.id}">${option.label}</option>`).join("");
+  byId("redemption-destination-bank").value = authState.redemption.destinationBank;
+  document.querySelectorAll("[data-redemption-pane]").forEach((pane, index) => {
+    pane.classList.toggle("active", index === authState.redemptionStep);
+  });
+  document.querySelectorAll("#redemption-steps .step-item").forEach((step, index) => {
+    step.classList.toggle("active", index === authState.redemptionStep);
+    step.classList.toggle("done", index < authState.redemptionStep);
+  });
+  byId("redemption-prev").classList.toggle("auth-hidden", authState.redemptionStep === 0 || authState.redemptionStep === 2);
+  byId("redemption-next").classList.toggle("auth-hidden", authState.redemptionStep === 2);
+  byId("redemption-next").disabled = blocked;
+  byId("redemption-eligibility-copy").textContent = blocked
+    ? "Las nuevas recompras solo se habilitan cuando la cuenta está activa y validada."
+    : `${fund.title} se encuentra vigente, con saldo disponible y elegible para desinversión.`;
+  byId("redemption-limit-copy").innerHTML = `
+    <div class="wizard-card-copy">Saldo disponible: <strong>${fund.available}</strong>.</div>
+    <div class="wizard-card-copy">Estado del fondo: <strong>${fund.state}</strong>.</div>
+    <div class="wizard-card-copy">La cuenta destino debe estar confirmada y corresponder a la moneda del fondo según RF17.</div>
+  `;
+  byId("redemption-summary").innerHTML = `
+    <div class="summary-kv-row"><div class="summary-kv-label">Fondo</div><div class="summary-kv-value">${fund.title}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Saldo disponible</div><div class="summary-kv-value money">${fund.available}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Monto solicitado</div><div class="summary-kv-value money">${formatMoney(product.currency, amount)}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Tipo</div><div class="summary-kv-value">${authState.redemption.requestType === "total" ? "Total" : "Parcial"}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Tiempo estimado</div><div class="summary-kv-value">24-48 horas hábiles</div></div>
+  `;
+  const historyRows = movementsData
+    .filter(item => item.fund === authState.redemption.fund && item.debit)
+    .slice(0, 4)
+    .map(item => `
+      <div class="history-row">
+        <div class="history-copy"><div class="history-title">${item.description}</div><div class="history-meta">${formatDateDisplay(item.date)} · ${item.status}</div></div>
+        <div class="history-amount money">${item.debit}</div>
+      </div>
+    `).join("");
+  byId("redemption-history").innerHTML = historyRows || `<div class="history-meta">No hay recompras visibles para este producto en el mock.</div>`;
+  byId("redemption-result-line").textContent = `${fund.title} · ${formatMoney(product.currency, amount)}`;
+}
+
+function validateRedemptionStep(step) {
+  setStatus("redemption-status", "", "");
+  if (authState.dashboardState !== "active") {
+    return "RF17 solo permite nuevas recompras cuando la cuenta está activa y validada.";
+  }
+  const fund = getCurrentRedemptionFund();
+  const available = parseMoney(fund.available);
+  if (step === 1) {
+    const amount = Number(authState.redemption.amount);
+    if (!Number.isFinite(amount) || amount <= 0) return "Ingresa un monto válido para continuar.";
+    if (amount > available) return `El monto a desinvertir debe ser menor o igual al saldo disponible de ${fund.available}.`;
+    if (!authState.redemption.destinationBank) return "Selecciona una cuenta destino válida para continuar.";
+  }
+  return "";
+}
+
 function showView(name) {
   items.forEach(item => item.classList.toggle("active", item.dataset.view === name));
   views.forEach(view => view.classList.toggle("active", view.id === "view-" + name));
@@ -2860,7 +3268,9 @@ function showView(name) {
   if (name === "portfolio") renderPortfolio();
   if (name === "fund-detail") renderFundDetail();
   if (name === "new-fund") renderNewFundStep();
+  if (name === "new-investment") renderNewInvestmentStep();
   if (name === "confirm-deposit") renderConfirmDeposit();
+  if (name === "redemption") renderRedemptionStep();
   if (name === "movements") renderMovements();
   if (name === "profile") renderProfileState();
   setQueryState();
@@ -2891,6 +3301,21 @@ document.querySelectorAll("[data-view-target]").forEach(button => {
     if (sourceRow?.dataset.fundId) authState.selectedFund = sourceRow.dataset.fundId;
     if (button.getAttribute("data-view-target") === "new-fund" && sourceRow?.dataset.account) {
       authState.newFund.account = sourceRow.dataset.account;
+    }
+    if (button.getAttribute("data-view-target") === "new-investment") {
+      const fallbackFund = sourceRow?.dataset.fundId || authState.selectedFund;
+      const fallbackData = fundDetailData[fallbackFund];
+      const fallbackAccount = sourceRow?.dataset.account || fallbackData?.summary.find(([label]) => label === "Cuenta")?.[1] || "001";
+      const fallbackProduct = newFundProducts[fallbackFund] ? fallbackFund : getActiveFundsByAccount(fallbackAccount)[0]?.[0] || "bursatil-gtq";
+      const product = newFundProducts[fallbackProduct] || newFundProducts["bursatil-gtq"];
+      authState.newInvestment.account = fallbackAccount;
+      authState.newInvestment.fund = fallbackProduct;
+      authState.newInvestment.amount = product.min.toFixed(2);
+      authState.newInvestment.yieldMode = "capitalizar";
+      authState.newInvestment.bank = "";
+      authState.newInvestment.paymentDate = "2026-05-02";
+      authState.newInvestment.fileName = "";
+      authState.newInvestmentStep = 0;
     }
     if (button.getAttribute("data-view-target") === "confirm-deposit" && sourceRow?.dataset.account && sourceRow?.dataset.fundId) {
       authState.newFund.account = sourceRow.dataset.account;
@@ -3116,6 +3541,214 @@ byId("register-go-login")?.addEventListener("click", () => {
 
 byId("register-go-landing")?.addEventListener("click", () => {
   showView("landing");
+});
+
+byId("fund-detail-back")?.addEventListener("click", () => {
+  showView("portfolio");
+});
+
+byId("fund-detail-invest")?.addEventListener("click", () => {
+  if (byId("fund-detail-invest").disabled) return;
+  const fund = fundDetailData[authState.selectedFund] || fundDetailData["bursatil-gtq"];
+  const product = newFundProducts[authState.selectedFund] || newFundProducts["bursatil-gtq"];
+  authState.newInvestment.account = fund.summary.find(([label]) => label === "Cuenta")?.[1] || "001";
+  authState.newInvestment.fund = authState.selectedFund;
+  authState.newInvestment.amount = product.min.toFixed(2);
+  authState.newInvestment.yieldMode = "capitalizar";
+  authState.newInvestment.bank = "";
+  authState.newInvestment.paymentDate = "2026-05-02";
+  authState.newInvestmentStep = 0;
+  authState.newInvestment.fileName = "";
+  showView("new-investment");
+});
+
+byId("fund-detail-redeem")?.addEventListener("click", () => {
+  if (byId("fund-detail-redeem").disabled) return;
+  const fund = fundDetailData[authState.selectedFund] || fundDetailData["plazo-gtq"];
+  const account = fund.summary.find(([label]) => label === "Cuenta")?.[1] || "001";
+  authState.redemption.account = account;
+  authState.redemption.fund = authState.selectedFund;
+  authState.redemption.amount = parseMoney(fund.available).toFixed(2);
+  authState.redemption.requestType = "partial";
+  authState.redemption.destinationBank = "";
+  authState.redemptionStep = 0;
+  showView("redemption");
+});
+
+byId("fund-detail-beneficiaries-edit")?.addEventListener("click", () => {
+  showView("beneficiaries");
+});
+
+byId("fund-detail-signatories-edit")?.addEventListener("click", () => {
+  showView("signatories");
+});
+
+byId("fund-detail-movements-shortcut")?.addEventListener("click", () => {
+  const fund = fundDetailData[authState.selectedFund] || fundDetailData["bursatil-gtq"];
+  const account = fund.summary.find(([label]) => label === "Cuenta")?.[1] || "001";
+  byId("movements-account-filter").value = account;
+  byId("movements-fund-filter").value = authState.selectedFund;
+  showView("movements");
+});
+
+byId("fund-detail-confirm-deposit")?.addEventListener("click", () => {
+  if (byId("fund-detail-confirm-deposit").disabled) return;
+  const fund = fundDetailData[authState.selectedFund] || fundDetailData["crecimiento-gtq"];
+  const account = fund.summary.find(([label]) => label === "Cuenta")?.[1] || "002";
+  authState.newFund.account = account;
+  authState.newFund.product = newFundProducts[authState.selectedFund] ? authState.selectedFund : "crecimiento-gtq";
+  authState.newFund.amount = String(parseMoney(fund.balance || "0"));
+  authState.newFund.alias = authState.newFund.alias || "Sin alias";
+  showView("confirm-deposit");
+});
+
+byId("new-investment-back")?.addEventListener("click", () => {
+  showView("fund-detail");
+});
+
+byId("new-investment-account")?.addEventListener("change", event => {
+  authState.newInvestment.account = event.target.value;
+  const firstFund = getActiveFundsByAccount(authState.newInvestment.account)[0]?.[0];
+  if (firstFund) authState.newInvestment.fund = firstFund;
+  renderNewInvestmentStep();
+});
+
+byId("new-investment-fund")?.addEventListener("change", event => {
+  authState.newInvestment.fund = event.target.value;
+  renderNewInvestmentStep();
+});
+
+byId("new-investment-amount")?.addEventListener("input", event => {
+  authState.newInvestment.amount = event.target.value;
+  renderNewInvestmentStep();
+});
+
+byId("new-investment-yield-mode")?.addEventListener("change", event => {
+  authState.newInvestment.yieldMode = event.target.value;
+  renderNewInvestmentStep();
+});
+
+byId("new-investment-bank")?.addEventListener("change", event => {
+  authState.newInvestment.bank = event.target.value;
+  renderNewInvestmentStep();
+});
+
+byId("new-investment-date")?.addEventListener("change", event => {
+  authState.newInvestment.paymentDate = event.target.value;
+  renderNewInvestmentStep();
+});
+
+byId("new-investment-file")?.addEventListener("change", event => {
+  const file = event.target.files?.[0];
+  authState.newInvestment.fileName = file ? file.name : "";
+  renderNewInvestmentStep();
+});
+
+byId("new-investment-prev")?.addEventListener("click", () => {
+  if (authState.newInvestmentStep > 0) {
+    authState.newInvestmentStep -= 1;
+    renderNewInvestmentStep();
+  }
+});
+
+byId("new-investment-next")?.addEventListener("click", () => {
+  const error = validateNewInvestmentStep(authState.newInvestmentStep);
+  if (error) {
+    setStatus("new-investment-status", "error", error);
+    return;
+  }
+  if (authState.newInvestmentStep < 3) {
+    authState.newInvestmentStep += 1;
+    if (authState.newInvestmentStep === 3) {
+      byId("new-investment-result-id").textContent = `INV-${new Date().getFullYear()}-${String(Date.now()).slice(-3)}`;
+      setStatus("new-investment-status", "success", "Inversión registrada correctamente en el mock.");
+    } else {
+      setStatus("new-investment-status", "", "");
+    }
+    renderNewInvestmentStep();
+  }
+});
+
+byId("new-investment-go-detail")?.addEventListener("click", () => {
+  showView("fund-detail");
+});
+
+byId("new-investment-go-movements")?.addEventListener("click", () => {
+  byId("movements-account-filter").value = authState.newInvestment.account;
+  byId("movements-fund-filter").value = authState.newInvestment.fund;
+  showView("movements");
+});
+
+byId("redemption-back")?.addEventListener("click", () => {
+  showView("fund-detail");
+});
+
+byId("redemption-account")?.addEventListener("change", event => {
+  authState.redemption.account = event.target.value;
+  const firstFund = getRedeemableFundsByAccount(authState.redemption.account)[0]?.[0];
+  if (firstFund) authState.redemption.fund = firstFund;
+  renderRedemptionStep();
+});
+
+byId("redemption-fund")?.addEventListener("change", event => {
+  authState.redemption.fund = event.target.value;
+  const fund = getCurrentRedemptionFund();
+  authState.redemption.amount = parseMoney(fund.available).toFixed(2);
+  renderRedemptionStep();
+});
+
+byId("redemption-amount")?.addEventListener("input", event => {
+  authState.redemption.amount = event.target.value;
+  renderRedemptionStep();
+});
+
+byId("redemption-request-type")?.addEventListener("change", event => {
+  authState.redemption.requestType = event.target.value;
+  if (event.target.value === "total") {
+    const fund = getCurrentRedemptionFund();
+    authState.redemption.amount = parseMoney(fund.available).toFixed(2);
+  }
+  renderRedemptionStep();
+});
+
+byId("redemption-destination-bank")?.addEventListener("change", event => {
+  authState.redemption.destinationBank = event.target.value;
+  renderRedemptionStep();
+});
+
+byId("redemption-prev")?.addEventListener("click", () => {
+  if (authState.redemptionStep > 0) {
+    authState.redemptionStep -= 1;
+    renderRedemptionStep();
+  }
+});
+
+byId("redemption-next")?.addEventListener("click", () => {
+  const error = validateRedemptionStep(authState.redemptionStep);
+  if (error) {
+    setStatus("redemption-status", "error", error);
+    return;
+  }
+  if (authState.redemptionStep < 2) {
+    authState.redemptionStep += 1;
+    if (authState.redemptionStep === 2) {
+      byId("redemption-result-id").textContent = `RED-${new Date().getFullYear()}-${String(Date.now()).slice(-3)}`;
+      setStatus("redemption-status", "success", "Solicitud de recompra registrada correctamente en el mock.");
+    } else {
+      setStatus("redemption-status", "", "");
+    }
+    renderRedemptionStep();
+  }
+});
+
+byId("redemption-go-detail")?.addEventListener("click", () => {
+  showView("fund-detail");
+});
+
+byId("redemption-go-movements")?.addEventListener("click", () => {
+  byId("movements-account-filter").value = authState.redemption.account;
+  byId("movements-fund-filter").value = authState.redemption.fund;
+  showView("movements");
 });
 
 document.querySelectorAll("[data-new-fund-product]").forEach(button => {
