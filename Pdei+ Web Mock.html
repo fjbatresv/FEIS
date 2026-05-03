@@ -1812,19 +1812,30 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   </section>
 
   <section class="view" id="view-signatories" data-title="Otros Firmantes">
-    <div class="page-head">
+    <div class="page-head subflow-head">
       <div>
-        <div class="page-title">Otros Firmantes</div>
-        <div class="page-sub">RF12 · No son titulares, pero pueden tener autorización específica sobre el fondo o producto.</div>
+        <button class="btn btn-outline subflow-back" type="button" id="signatories-back">Volver al detalle</button>
+        <div class="page-sub" id="signatories-sub">RF12 · No son titulares, pero pueden tener autorización específica sobre el fondo o producto.</div>
       </div>
-      <button class="btn btn-primary" type="button" id="signatories-add-trigger">Agregar firmante</button>
     </div>
     <div class="auth-status" id="signatories-status"></div>
-    <div class="stack">
-      <div class="person"><div class="person-avatar">LF</div><div><div class="person-name">Luis Fernando Méndez</div><div class="person-meta">Firmante autorizado · DPI 5544 33221 0303 · No PEP · No CPE</div></div><div class="person-tail"><span class="pill pill-info" id="signatories-main-pill">Activo</span></div></div>
-      <div class="alert alert-warning"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>Si país de nacimiento y residencia son ambos distintos a Guatemala, el flujo no debe continuar.</div></div>
-      <div class="btn-row"><button class="btn btn-outline" type="button" id="signatories-revoke">Revocar autorización</button><button class="btn btn-primary" type="button" id="signatories-save">Guardar cambios</button></div>
+    <div class="stack" id="signatories-list"></div>
+    <div class="alert alert-warning" style="margin-top:20px"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div>Si país de nacimiento y residencia son ambos distintos a Guatemala, el flujo no debe continuar.</div></div>
+    <div class="card" style="margin-top:20px">
+      <div class="card-title" id="signatories-form-title">Nuevo firmante</div>
+      <div class="field-grid-3">
+        <div class="field"><label class="label" for="signatory-doc-type">Tipo de documento</label><select class="select" id="signatory-doc-type"><option>DPI</option><option>Pasaporte</option></select></div>
+        <div class="field"><label class="label" for="signatory-doc-number">Número de documento</label><input class="input" id="signatory-doc-number" placeholder="1234 56789 0101"></div>
+        <div class="field"><label class="label" for="signatory-role">Tipo de autorización</label><select class="select" id="signatory-role"><option>Firmante autorizado</option><option>Firmante operativo</option></select></div>
+        <div class="field"><label class="label" for="signatory-first-name">Primer nombre</label><input class="input" id="signatory-first-name"></div>
+        <div class="field"><label class="label" for="signatory-last-name">Primer apellido</label><input class="input" id="signatory-last-name"></div>
+        <div class="field"><label class="label" for="signatory-status">Estado</label><select class="select" id="signatory-status"><option>Activo</option><option>Revocado</option></select></div>
+        <div class="field"><label class="label" for="signatory-birth-country">País de nacimiento</label><select class="select" id="signatory-birth-country"><option>Guatemala</option><option>Estados Unidos</option><option>El Salvador</option><option>Costa Rica</option><option>México</option></select></div>
+        <div class="field"><label class="label" for="signatory-residence-country">País de residencia</label><select class="select" id="signatory-residence-country"><option>Guatemala</option><option>Estados Unidos</option><option>El Salvador</option><option>Costa Rica</option><option>México</option></select></div>
+      </div>
+      <div class="btn-row" style="margin-top:18px"><button class="btn btn-outline" type="button" id="signatories-cancel">Limpiar</button><button class="btn btn-primary" type="button" id="signatories-save-item">Guardar firmante</button></div>
     </div>
+    <div class="btn-row" style="margin-top:18px"><button class="btn btn-primary" type="button" id="signatories-save">Guardar cambios</button></div>
   </section>
 
   <section class="view" id="view-holders" data-title="Titulares">
@@ -2223,6 +2234,7 @@ const authState = {
     reviewAccepted:false
   },
   beneficiaryEditIndex:-1,
+  signatoryEditIndex:-1,
   redemptionStep:0,
   redemption:{
     account:"001",
@@ -2458,6 +2470,19 @@ const beneficiariesByFund = {
     { firstName:"Ana María", lastName:"García López", relationship:"Hija", documentType:"DPI", documentNumber:"2847 63491 0101", share:100, pep:false, cpe:false }
   ]
 };
+const signatoriesByFund = {
+  "bursatil-gtq": [
+    { firstName:"Luis Fernando", lastName:"Méndez", role:"Firmante autorizado", documentType:"DPI", documentNumber:"5544 33221 0303", birthCountry:"Guatemala", residenceCountry:"Guatemala", pep:false, cpe:false, status:"Activo" }
+  ],
+  "plazo-gtq": [],
+  "bursatil-usd": [
+    { firstName:"Cristina", lastName:"Ramos", role:"Firmante autorizado", documentType:"Pasaporte", documentNumber:"US 998812", birthCountry:"Estados Unidos", residenceCountry:"Guatemala", pep:false, cpe:false, status:"Activo" }
+  ],
+  "crecimiento-gtq": [],
+  "estrategico-gtq": [
+    { firstName:"Luis Fernando", lastName:"Méndez", role:"Firmante autorizado", documentType:"DPI", documentNumber:"5544 33221 0303", birthCountry:"Guatemala", residenceCountry:"Guatemala", pep:false, cpe:false, status:"Activo" }
+  ]
+};
 const newFundAccounts = {
   "001": {
     label:"Cuenta 001",
@@ -2555,6 +2580,28 @@ function getBeneficiaryMeta(beneficiary, includeShare = false) {
 
 function getBeneficiariesTotal(fundId = authState.selectedFund) {
   return (beneficiariesByFund[fundId] || []).reduce((sum, item) => sum + Number(item.share || 0), 0);
+}
+
+function getSignatoriesForSelectedFund() {
+  if (!signatoriesByFund[authState.selectedFund]) signatoriesByFund[authState.selectedFund] = [];
+  return signatoriesByFund[authState.selectedFund];
+}
+
+function getSignatoryFullName(signatory) {
+  return `${signatory.firstName} ${signatory.lastName}`.trim();
+}
+
+function getSignatoryInitials(signatory) {
+  return getSignatoryFullName(signatory).split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join("").toUpperCase() || "--";
+}
+
+function getSignatoryMeta(signatory) {
+  return [
+    signatory.role,
+    `${signatory.documentType} ${signatory.documentNumber}`,
+    signatory.pep ? "Sí PEP" : "No PEP",
+    signatory.cpe ? "Sí CPE" : "No CPE"
+  ].join(" · ");
 }
 
 function getBeneficiariesForSelectedFund() {
@@ -2789,6 +2836,8 @@ function renderFundDetail() {
   const beneficiaries = getBeneficiariesForSelectedFund();
   const beneficiariesTotal = getBeneficiariesTotal();
   const beneficiariesComplete = beneficiaries.length > 0 && Math.abs(beneficiariesTotal - 100) < 0.001;
+  const signatories = getSignatoriesForSelectedFund();
+  const activeSignatories = signatories.filter(item => item.status === "Activo").length;
   const allowInvest = fund.canInvest && authState.dashboardState === "active";
   const allowRedeem = fund.canRedeem && authState.dashboardState === "active";
   const allowConfirmDeposit = fund.canConfirmDeposit && authState.dashboardState !== "update";
@@ -2815,13 +2864,13 @@ function renderFundDetail() {
       <div class="person-tail"><span class="pill ${beneficiariesComplete ? "pill-success" : "pill-warning"}">${Number(beneficiary.share).toFixed(2).replace(/\.00$/, "")}%</span></div>
     </div>
   `).join("") : `<div class="alert alert-warning"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m10.29 3.86-7.54 13.1A2 2 0 0 0 4.48 20h15.04a2 2 0 0 0 1.73-3.03l-7.54-13.1a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg></span><div>Aún no hay beneficiarios registrados para este producto.</div></div>`;
-  byId("fund-detail-signatories-list").innerHTML = fund.signatories.map(([avatar, name, meta, status, kind]) => `
+  byId("fund-detail-signatories-list").innerHTML = signatories.length ? signatories.map(signatory => `
     <div class="person">
-      <div class="person-avatar">${avatar}</div>
-      <div><div class="person-name">${name}</div><div class="person-meta">${meta}</div></div>
-      <div class="person-tail"><span class="pill ${getPillClass(kind)}">${status}</span></div>
+      <div class="person-avatar">${getSignatoryInitials(signatory)}</div>
+      <div><div class="person-name">${getSignatoryFullName(signatory)}</div><div class="person-meta">${getSignatoryMeta(signatory)}</div></div>
+      <div class="person-tail"><span class="pill ${signatory.status === "Activo" ? "pill-info" : "pill-warning"}">${signatory.status}</span></div>
     </div>
-  `).join("");
+  `).join("") : `<div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span><div>No hay otros firmantes registrados para este producto.</div></div>`;
   byId("fund-detail-movements-list").innerHTML = fund.movements.map(([date, description, status, amount]) => `
     <div class="history-row">
       <div class="history-copy"><div class="history-title">${description}</div><div class="history-meta">${date} · ${status}</div></div>
@@ -2831,6 +2880,7 @@ function renderFundDetail() {
   const dynamicStatus = [
     [fund.stateKind, fund.actionNote],
     [beneficiariesComplete ? "success" : "warning", beneficiariesComplete ? "Beneficiarios completos y distribución al 100%." : `Beneficiarios incompletos. Distribución actual: ${beneficiariesTotal.toFixed(2).replace(/\.00$/, "")}%.`],
+    [activeSignatories ? "info" : "warning", activeSignatories ? `Firmantes autorizados activos: ${activeSignatories}.` : "No hay firmantes adicionales activos registrados."],
     ...fund.status.slice(1)
   ];
   byId("fund-detail-status-list").innerHTML = dynamicStatus.map(([kind, copy]) => `
@@ -2842,6 +2892,67 @@ function renderFundDetail() {
   byId("fund-detail-redeem").disabled = !allowRedeem;
   byId("fund-detail-confirm-deposit").disabled = !allowConfirmDeposit;
   byId("fund-detail-confirm-deposit").classList.toggle("auth-hidden", !fund.canConfirmDeposit);
+}
+
+function resetSignatoryForm() {
+  authState.signatoryEditIndex = -1;
+  byId("signatory-doc-type").value = "DPI";
+  byId("signatory-doc-number").value = "";
+  byId("signatory-role").value = "Firmante autorizado";
+  byId("signatory-first-name").value = "";
+  byId("signatory-last-name").value = "";
+  byId("signatory-status").value = "Activo";
+  byId("signatory-birth-country").value = "Guatemala";
+  byId("signatory-residence-country").value = "Guatemala";
+  byId("signatories-form-title").textContent = "Nuevo firmante";
+}
+
+function loadSignatoryIntoForm(index) {
+  const signatory = getSignatoriesForSelectedFund()[index];
+  if (!signatory) return;
+  authState.signatoryEditIndex = index;
+  byId("signatory-doc-type").value = signatory.documentType;
+  byId("signatory-doc-number").value = signatory.documentNumber;
+  byId("signatory-role").value = signatory.role;
+  byId("signatory-first-name").value = signatory.firstName;
+  byId("signatory-last-name").value = signatory.lastName;
+  byId("signatory-status").value = signatory.status;
+  byId("signatory-birth-country").value = signatory.birthCountry;
+  byId("signatory-residence-country").value = signatory.residenceCountry;
+  byId("signatories-form-title").textContent = "Editar firmante";
+}
+
+function renderSignatories() {
+  const fund = fundDetailData[authState.selectedFund] || fundDetailData["bursatil-gtq"];
+  const signatories = getSignatoriesForSelectedFund();
+  byId("signatories-sub").textContent = `RF12 · ${fund.title} · Gestión de autorizaciones específicas para el producto seleccionado.`;
+  byId("signatories-list").innerHTML = signatories.length ? signatories.map((signatory, index) => `
+    <div class="person">
+      <div class="person-avatar">${getSignatoryInitials(signatory)}</div>
+      <div><div class="person-name">${getSignatoryFullName(signatory)}</div><div class="person-meta">${getSignatoryMeta(signatory)}</div></div>
+      <div class="person-tail stack-end">
+        <span class="pill ${signatory.status === "Activo" ? "pill-info" : "pill-warning"}">${signatory.status}</span>
+        <div class="person-actions">
+          <button class="icon-btn" type="button" data-signatory-edit="${index}" aria-label="Editar firmante"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"></path></svg></span></button>
+          <button class="icon-btn" type="button" data-signatory-delete="${index}" aria-label="Eliminar firmante"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path></svg></span></button>
+        </div>
+      </div>
+    </div>
+  `).join("") : `<div class="alert alert-info"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span><div>No hay otros firmantes registrados para este producto.</div></div>`;
+}
+
+function validateSignatoryForm() {
+  const firstName = byId("signatory-first-name").value.trim();
+  const lastName = byId("signatory-last-name").value.trim();
+  const documentNumber = byId("signatory-doc-number").value.trim();
+  const birthCountry = byId("signatory-birth-country").value;
+  const residenceCountry = byId("signatory-residence-country").value;
+  if (!firstName || !lastName) return "Completa nombre y apellido del firmante.";
+  if (!documentNumber) return "Completa el número de documento del firmante.";
+  if (birthCountry !== "Guatemala" && residenceCountry !== "Guatemala") {
+    return "RF12 no permite continuar si país de nacimiento y residencia son ambos distintos a Guatemala.";
+  }
+  return "";
 }
 
 function resetBeneficiaryForm() {
@@ -3431,6 +3542,7 @@ function showView(name) {
   if (name === "redemption") renderRedemptionStep();
   if (name === "movements") renderMovements();
   if (name === "beneficiaries") renderBeneficiaries();
+  if (name === "signatories") renderSignatories();
   if (name === "profile") renderProfileState();
   setQueryState();
 }
@@ -4204,20 +4316,66 @@ byId("beneficiaries-save")?.addEventListener("click", () => {
   setStatus("beneficiaries-status", "success", "Distribución de beneficiarios guardada correctamente al 100%.");
 });
 
-byId("signatories-add-trigger")?.addEventListener("click", () => {
-  setStatus("signatories-status", "info", "Se habilitó el alta simulada de un nuevo firmante autorizado.");
+byId("signatories-back")?.addEventListener("click", () => {
+  showView("fund-detail");
+});
+
+byId("signatories-cancel")?.addEventListener("click", () => {
+  resetSignatoryForm();
+  setStatus("signatories-status", "", "");
+});
+
+byId("signatories-save-item")?.addEventListener("click", () => {
+  const error = validateSignatoryForm();
+  if (error) {
+    setStatus("signatories-status", "error", error);
+    return;
+  }
+  const record = {
+    firstName: byId("signatory-first-name").value.trim(),
+    lastName: byId("signatory-last-name").value.trim(),
+    role: byId("signatory-role").value,
+    documentType: byId("signatory-doc-type").value,
+    documentNumber: byId("signatory-doc-number").value.trim(),
+    birthCountry: byId("signatory-birth-country").value,
+    residenceCountry: byId("signatory-residence-country").value,
+    pep: false,
+    cpe: false,
+    status: byId("signatory-status").value
+  };
+  const signatories = getSignatoriesForSelectedFund();
+  if (authState.signatoryEditIndex >= 0) signatories[authState.signatoryEditIndex] = record;
+  else signatories.push(record);
+  resetSignatoryForm();
+  renderSignatories();
+  renderFundDetail();
+  setStatus("signatories-status", "success", "Firmante guardado correctamente en el mock.");
+});
+
+byId("signatories-list")?.addEventListener("click", event => {
+  const editButton = event.target.closest("[data-signatory-edit]");
+  if (editButton) {
+    loadSignatoryIntoForm(Number(editButton.getAttribute("data-signatory-edit")));
+    setStatus("signatories-status", "info", "Edita los datos y guarda nuevamente para actualizar el firmante.");
+    return;
+  }
+  const deleteButton = event.target.closest("[data-signatory-delete]");
+  if (deleteButton) {
+    const index = Number(deleteButton.getAttribute("data-signatory-delete"));
+    const signatories = getSignatoriesForSelectedFund();
+    signatories.splice(index, 1);
+    if (authState.signatoryEditIndex === index) resetSignatoryForm();
+    else if (authState.signatoryEditIndex > index) authState.signatoryEditIndex -= 1;
+    renderSignatories();
+    renderFundDetail();
+    setStatus("signatories-status", "info", "Firmante eliminado del mock.");
+  }
 });
 
 byId("signatories-save")?.addEventListener("click", () => {
-  byId("signatories-main-pill").className = "pill pill-info";
-  byId("signatories-main-pill").textContent = "Activo";
+  renderSignatories();
+  renderFundDetail();
   setStatus("signatories-status", "success", "Autorizaciones de firmantes guardadas correctamente en el mock.");
-});
-
-byId("signatories-revoke")?.addEventListener("click", () => {
-  byId("signatories-main-pill").className = "pill pill-warning";
-  byId("signatories-main-pill").textContent = "Revocado";
-  setStatus("signatories-status", "info", "La autorización del firmante quedó revocada en el mock.");
 });
 
 const initialParams = new URLSearchParams(window.location.search);
