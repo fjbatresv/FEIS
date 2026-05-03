@@ -1480,25 +1480,26 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <div class="auth-status" id="new-investment-status"></div>
     <div class="card">
       <div class="step-bar" id="new-investment-steps">
-        <div class="step-item active"><div class="step-dot">1</div><div class="step-lbl">Producto</div></div>
+        <div class="step-item active"><div class="step-dot">1</div><div class="step-lbl">Contexto</div></div>
         <div class="step-item"><div class="step-dot">2</div><div class="step-lbl">Monto</div></div>
-        <div class="step-item"><div class="step-dot">3</div><div class="step-lbl">Fondos</div></div>
+        <div class="step-item"><div class="step-dot">3</div><div class="step-lbl">Confirmación</div></div>
         <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Resultado</div></div>
       </div>
       <div class="wizard-pane active" data-new-investment-pane="0">
         <div class="dual">
           <div class="stack">
             <div class="field-grid">
-              <div class="field"><label class="label" for="new-investment-account">Cuenta</label><select class="select" id="new-investment-account"><option value="001">Cuenta 001</option><option value="002">Cuenta 002</option></select></div>
-              <div class="field"><label class="label" for="new-investment-fund">Fondo / producto activo</label><select class="select" id="new-investment-fund"></select></div>
+              <div class="field"><label class="label" for="new-investment-account">Cuenta</label><input class="input" id="new-investment-account" readonly></div>
+              <div class="field"><label class="label" for="new-investment-fund">Fondo / producto activo</label><input class="input" id="new-investment-fund" readonly></div>
             </div>
+            <div class="wizard-summary" id="new-investment-context-summary"></div>
             <div class="wizard-card">
               <div class="wizard-card-title">Condición de inversión</div>
               <div class="wizard-card-copy" id="new-investment-eligibility-copy">Solo productos vigentes pueden recibir nuevas inversiones según RF15.</div>
             </div>
           </div>
           <div class="card" style="padding:20px">
-            <div class="card-title">Compras registradas</div>
+            <div class="card-title">Compras recientes</div>
             <div class="history-list" id="new-investment-history"></div>
           </div>
         </div>
@@ -1513,6 +1514,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                   <span class="input-prefix-label" id="new-investment-amount-prefix">Q</span>
                   <input class="input" id="new-investment-amount" type="number" step="0.01" min="0" value="25000.00">
                 </div>
+                <div class="hint" id="new-investment-amount-hint">Ingresa un monto igual o mayor al mínimo visible del producto.</div>
               </div>
               <div class="field"><label class="label" for="new-investment-yield-mode">Rendimientos</label><select class="select" id="new-investment-yield-mode"><option value="capitalizar">Capitalizar</option><option value="retirar">Retirar a cuenta</option></select></div>
             </div>
@@ -1534,12 +1536,17 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             <div class="field"><label class="label" for="new-investment-date">Fecha de inversión</label><input class="input" id="new-investment-date" type="date" value="2026-05-02"></div>
             <div class="field"><label class="label" for="new-investment-file">Boleta o comprobante</label><input class="input" id="new-investment-file" type="file" accept=".pdf,.png,.jpg,.jpeg"></div>
             <div class="field"><label class="label">Archivo seleccionado</label><input class="input" id="new-investment-file-name" value="Sin archivo cargado" readonly></div>
+            <label class="check-line" style="margin-top:4px">
+              <input type="checkbox" id="new-investment-review-check">
+              <span>Confirmo que revisé fondo, monto, cuenta de pago y comprobante antes de registrar la inversión.</span>
+            </label>
           </div>
           <div class="card" style="padding:20px">
-            <div class="card-title">Confirmación previa</div>
+            <div class="card-title">Checklist previo</div>
             <div class="history-list">
               <div class="history-row"><div class="history-copy"><div class="history-title">Fondo seleccionado</div><div class="history-meta" id="new-investment-confirm-fund">Fondo Bursátil GTQ</div></div><div class="history-amount money" id="new-investment-confirm-amount">Q 25,000.00</div></div>
-              <div class="history-row"><div class="history-copy"><div class="history-title">Fecha de confirmación</div><div class="history-meta" id="new-investment-confirm-date">02/05/2026</div></div><div class="history-amount" id="new-investment-confirm-bank">BI · 041-200851-7</div></div>
+              <div class="history-row"><div class="history-copy"><div class="history-title">Fecha y cuenta de pago</div><div class="history-meta" id="new-investment-confirm-date">02/05/2026</div></div><div class="history-amount" id="new-investment-confirm-bank">BI · 041-200851-7</div></div>
+              <div class="history-row"><div class="history-copy"><div class="history-title">Comprobante adjunto</div><div class="history-meta" id="new-investment-confirm-file">Pendiente de adjuntar</div></div><div class="history-amount"><span class="pill pill-warning" id="new-investment-confirm-file-pill">Pendiente</span></div></div>
             </div>
           </div>
         </div>
@@ -2213,7 +2220,8 @@ const authState = {
     yieldMode:"capitalizar",
     bank:"bi-gtq",
     paymentDate:"2026-05-02",
-    fileName:""
+    fileName:"",
+    reviewAccepted:false
   },
   redemptionStep:0,
   redemption:{
@@ -3093,9 +3101,6 @@ function validateNewFundStep(step) {
 function renderNewInvestmentStep() {
   const blocked = authState.dashboardState !== "active";
   const activeFunds = getActiveFundsByAccount(authState.newInvestment.account);
-  const fundSelect = byId("new-investment-fund");
-  fundSelect.innerHTML = activeFunds.map(([id, fund]) => `<option value="${id}">${fund.title}</option>`).join("");
-  fundSelect.value = authState.newInvestment.fund;
   const fund = getCurrentInvestmentFund();
   const account = authState.newInvestment.account;
   const product = newFundProducts[authState.newInvestment.fund] || newFundProducts["bursatil-gtq"];
@@ -3106,15 +3111,19 @@ function renderNewInvestmentStep() {
   if (!paymentOptions.some(option => option.id === authState.newInvestment.bank)) {
     authState.newInvestment.bank = paymentOptions[0]?.id || "";
   }
-  byId("new-investment-account").value = account;
+  const accountLabel = newFundAccounts[account]?.label || `Cuenta ${account}`;
+  byId("new-investment-account").value = accountLabel;
+  byId("new-investment-fund").value = fund.title;
   byId("new-investment-amount-prefix").textContent = product.currency;
   byId("new-investment-amount").value = authState.newInvestment.amount;
   byId("new-investment-amount").min = product.min;
+  byId("new-investment-amount-hint").textContent = `Monto mínimo visible del mock para este producto: ${formatMoney(product.currency, product.min)}.`;
   byId("new-investment-yield-mode").value = authState.newInvestment.yieldMode;
   byId("new-investment-bank").innerHTML = paymentOptions.map(option => `<option value="${option.id}">${option.label}</option>`).join("");
   byId("new-investment-bank").value = authState.newInvestment.bank;
   byId("new-investment-date").value = authState.newInvestment.paymentDate;
   byId("new-investment-file-name").value = authState.newInvestment.fileName || "Sin archivo cargado";
+  byId("new-investment-review-check").checked = authState.newInvestment.reviewAccepted;
   document.querySelectorAll("[data-new-investment-pane]").forEach((pane, index) => {
     pane.classList.toggle("active", index === authState.newInvestmentStep);
   });
@@ -3125,13 +3134,22 @@ function renderNewInvestmentStep() {
   byId("new-investment-prev").classList.toggle("auth-hidden", authState.newInvestmentStep === 0 || authState.newInvestmentStep === 3);
   byId("new-investment-next").classList.toggle("auth-hidden", authState.newInvestmentStep === 3);
   byId("new-investment-next").disabled = blocked;
+  byId("new-investment-next").textContent = ["Continuar","Revisar","Registrar inversión","Continuar"][authState.newInvestmentStep] || "Continuar";
   byId("new-investment-eligibility-copy").textContent = blocked
     ? "Las nuevas inversiones solo se habilitan cuando la cuenta está activa y validada."
-    : `${fund.title} está vigente y puede recibir nuevas compras sobre ${newFundAccounts[account].label}.`;
+    : `${fund.title} está vigente y puede recibir nuevas compras sobre ${accountLabel}.`;
+  byId("new-investment-context-summary").innerHTML = `
+    <div class="summary-kv-row"><div class="summary-kv-label">Fondo seleccionado</div><div class="summary-kv-value">${fund.title}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Cuenta relacionada</div><div class="summary-kv-value">${accountLabel}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Saldo actual</div><div class="summary-kv-value money">${fund.balance}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Mínimo visible del mock</div><div class="summary-kv-value money">${formatMoney(product.currency, product.min)}</div></div>
+    <div class="summary-kv-row"><div class="summary-kv-label">Estado operativo</div><div class="summary-kv-value">${fund.state}</div></div>
+  `;
   byId("new-investment-limit-copy").innerHTML = `
     <div class="wizard-card-copy">Saldo actual del producto: <strong>${fund.balance}</strong>.</div>
     <div class="wizard-card-copy">Exposición acumulada visible del mock para ${product.currency === "$" ? "USD" : "GTQ"}: <strong>${formatMoney(product.currency, exposure)}</strong>.</div>
     <div class="wizard-card-copy">Límite FEIS visible del mock: <strong>${formatMoney(product.currency, product.limit)}</strong>. Si capitalizas rendimientos se agrega una reserva visible de <strong>${formatMoney(product.currency, reserve)}</strong>.</div>
+    <div class="wizard-card-copy">Monto mínimo de compra para este producto: <strong>${formatMoney(product.currency, product.min)}</strong>.</div>
   `;
   byId("new-investment-summary").innerHTML = `
     <div class="summary-kv-row"><div class="summary-kv-label">Fondo</div><div class="summary-kv-value">${fund.title}</div></div>
@@ -3144,6 +3162,9 @@ function renderNewInvestmentStep() {
   byId("new-investment-confirm-amount").textContent = formatMoney(product.currency, amount);
   byId("new-investment-confirm-date").textContent = formatDateDisplay(authState.newInvestment.paymentDate);
   byId("new-investment-confirm-bank").textContent = paymentOptions.find(option => option.id === authState.newInvestment.bank)?.label || "-";
+  byId("new-investment-confirm-file").textContent = authState.newInvestment.fileName || "Pendiente de adjuntar";
+  byId("new-investment-confirm-file-pill").textContent = authState.newInvestment.fileName ? "Adjunto" : "Pendiente";
+  byId("new-investment-confirm-file-pill").className = `pill ${authState.newInvestment.fileName ? "pill-success" : "pill-warning"}`;
   const historyRows = movementsData
     .filter(item => item.fund === authState.newInvestment.fund && item.credit)
     .slice(0, 4)
@@ -3175,7 +3196,9 @@ function validateNewInvestmentStep(step) {
   }
   if (step === 2) {
     if (!authState.newInvestment.bank) return "Selecciona una cuenta o medio de pago para continuar.";
+    if (!authState.newInvestment.paymentDate) return "Selecciona la fecha de inversión antes de continuar.";
     if (!authState.newInvestment.fileName) return "Adjunta una imagen o documento de confirmación de fondos antes de continuar.";
+    if (!authState.newInvestment.reviewAccepted) return "Confirma la revisión del detalle antes de registrar la inversión.";
   }
   return "";
 }
@@ -3315,6 +3338,7 @@ document.querySelectorAll("[data-view-target]").forEach(button => {
       authState.newInvestment.bank = "";
       authState.newInvestment.paymentDate = "2026-05-02";
       authState.newInvestment.fileName = "";
+      authState.newInvestment.reviewAccepted = false;
       authState.newInvestmentStep = 0;
     }
     if (button.getAttribute("data-view-target") === "confirm-deposit" && sourceRow?.dataset.account && sourceRow?.dataset.fundId) {
@@ -3559,6 +3583,7 @@ byId("fund-detail-invest")?.addEventListener("click", () => {
   authState.newInvestment.paymentDate = "2026-05-02";
   authState.newInvestmentStep = 0;
   authState.newInvestment.fileName = "";
+  authState.newInvestment.reviewAccepted = false;
   showView("new-investment");
 });
 
@@ -3606,18 +3631,6 @@ byId("new-investment-back")?.addEventListener("click", () => {
   showView("fund-detail");
 });
 
-byId("new-investment-account")?.addEventListener("change", event => {
-  authState.newInvestment.account = event.target.value;
-  const firstFund = getActiveFundsByAccount(authState.newInvestment.account)[0]?.[0];
-  if (firstFund) authState.newInvestment.fund = firstFund;
-  renderNewInvestmentStep();
-});
-
-byId("new-investment-fund")?.addEventListener("change", event => {
-  authState.newInvestment.fund = event.target.value;
-  renderNewInvestmentStep();
-});
-
 byId("new-investment-amount")?.addEventListener("input", event => {
   authState.newInvestment.amount = event.target.value;
   renderNewInvestmentStep();
@@ -3641,6 +3654,11 @@ byId("new-investment-date")?.addEventListener("change", event => {
 byId("new-investment-file")?.addEventListener("change", event => {
   const file = event.target.files?.[0];
   authState.newInvestment.fileName = file ? file.name : "";
+  renderNewInvestmentStep();
+});
+
+byId("new-investment-review-check")?.addEventListener("change", event => {
+  authState.newInvestment.reviewAccepted = event.target.checked;
   renderNewInvestmentStep();
 });
 
