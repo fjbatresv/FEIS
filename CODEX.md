@@ -74,6 +74,20 @@ Cuando exista duda entre diseño y comportamiento:
   - signatories
   - new account
 
+### TODO futuro: librería UI interna
+
+Evaluar la creación de una mini librería interna `Pdei+ UI` para el equipo de desarrollo, inspirada en Tailwind pero acotada al sistema visual del proyecto.
+
+Alcance sugerido:
+
+- `pdei-tokens.css`: variables de color, tipografía, radios, sombras, spacing y tamaños base.
+- `pdei-utilities.css`: utilidades limitadas para layout, espaciado, color, texto, grid/flex y estados.
+- `pdei-components.css`: clases semánticas para botones, inputs, prefijos, tooltips, KPIs, badges, alerts, step bars, modales, tablas y navegación.
+- `pdei-ui.js`: comportamientos reutilizables para tooltips, chips, toggles, modales, OTP, password toggle y estados activos.
+- Usar `Pdei+ Componentes.html` como catálogo vivo que consuma la librería real, evitando estilos duplicados o inline cuando se pase a implementación.
+
+Objetivo: permitir consistencia tipo Tailwind sin adoptar un framework utilitario completo ni perder los patrones propios de Pdei+.
+
 ### Estado recomendado
 
 Separar al menos estas entidades:
