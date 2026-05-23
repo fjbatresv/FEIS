@@ -27,8 +27,6 @@ Pdei+ es el portal digital de gestión de inversiones (FEIS) de Guatemala. El si
 | Token CSS | Hex | Uso |
 |-----------|-----|-----|
 | `--navy` | `#2B2B5E` | Sidebar, botón primario sobre fondos claros, encabezados de tabla, paso activo |
-| `--navy-dark` | `#1e1e45` | Hover de navy, fondo de gradiente oscuro en KPI card |
-| `--navy-mid` | `#35356e` | Variante intermedia para fondos de sección navy |
 | `--aqua` | `#00CDE5` | CTA principal (web), acento interactivo, progreso completado, montos positivos |
 | `--dark-aqua` | `#00798E` | Hover de aqua, texto aqua sobre fondos claros (mayor contraste) |
 
@@ -36,11 +34,10 @@ Pdei+ es el portal digital de gestión de inversiones (FEIS) de Guatemala. El si
 
 | Token CSS | Hex | Uso |
 |-----------|-----|-----|
-| `--bg` | `#F4F6F9` | Fondo de pantallas autenticadas, hover de filas de tabla |
+| `--bg` | `#FFFFFF` | Fondo de pantallas autenticadas y superficies principales |
 | `--bg-card` | `#FFFFFF` | Fondo de cards, modales, inputs |
-| `--gray-lt` | `#EEF0F5` | Fondos alternos, inputs disabled |
 | `--border` | `#DDE2EC` | Bordes de inputs, cards, separadores, step pendiente |
-| `--text` | `#1a1a2e` | Texto principal (cuerpo, títulos) |
+| `--text` | `#000000` | Texto principal (cuerpo, títulos) |
 | `--text-sec` | `#5a6478` | Texto secundario medio (subtítulos, labels) |
 | `--text-lt` | `#8892A4` | Texto terciario (placeholders, etiquetas inactivas, step labels) |
 | `--white` | `#FFFFFF` | Texto sobre navy, iconos en sidebar |
@@ -64,7 +61,7 @@ Pdei+ es el portal digital de gestión de inversiones (FEIS) de Guatemala. El si
 | Cuerpo | `#B71C1C` |
 
 #### Uso contextual
-Las pantallas de **acceso** (landing, login, 2FA, recuperar contraseña) usan `--navy` como fondo con texto blanco. Las pantallas **autenticadas** usan `--bg` con cards `--bg-card` blancas. Esta distinción actúa como indicador visual inmediato del estado de sesión.
+Las pantallas de **acceso** (landing, login, 2FA, recuperar contraseña) usan `--navy` como fondo con texto blanco. Las pantallas **autenticadas** usan fondo blanco con cards blancas separadas por borde y sombra. Esta distinción actúa como indicador visual inmediato del estado de sesión.
 
 ---
 
@@ -74,9 +71,9 @@ Las pantallas de **acceso** (landing, login, 2FA, recuperar contraseña) usan `-
 
 | Token CSS | Familia | Fallback | Rol |
 |-----------|---------|----------|-----|
-| `--font-main` | NeulisSans Regular/Medium | Segoe UI, sans-serif | Cuerpo, etiquetas, UI general |
-| `--font-secondary` | FuturaPT | Segoe UI, sans-serif | Subtítulos, texto de soporte |
-| `--font-brand` | TTNorms Pro Condensed Black Italic | Impact, sans-serif | Logotipo, cifras financieras destacadas |
+| `--font-main` | NeulisSans Regular y NeulisSans Bold | sans-serif | Cuerpo, etiquetas, UI general |
+| `--font-secondary` | FuturaPT Medium | NeulisSans, sans-serif | Subtítulos, texto de soporte |
+| `--font-brand` | TTNorms Pro Condensed Black Italic | NeulisSans, sans-serif | Acentos de marca |
 
 #### Escala
 
@@ -153,26 +150,24 @@ El `#main` tiene `margin-left: var(--sidebar-w)` y `margin-top: var(--header-h)`
 
 ### Opción A — Isotipo + símbolo plus
 
-Combina el **isotipo "ip"** (marca gráfica de Portafolio de Inversiones, PNG blanco) con el símbolo **"+"** en `--aqua` tipografiado a continuación. Se usa en el sidebar y en contextos sobre fondos oscuros navy.
+Usa el isotipo compacto oficial **P+**. Se usa en sidebar compacto, favicon e icono de app.
 
 ```
-[ip]  Pdei+
- ↑ isotipo PNG blanco   ↑ "+" en aqua
+P+
+↑ isotipo PNG oficial
 ```
 
-- Isotipo: `LOGO_PORTAFOLIO DE INVERSIONES 1 BLANCO.png` (fondo transparente, mark puro sin texto)
-- Símbolo "+": `font-size: 22px`, `font-weight: 800`, `color: var(--aqua)`
-- Gap: `6px` entre isotipo y símbolo
-- Usar sobre fondos `--navy` únicamente
+- Fondo blanco: `Logos/P+ Blanco.png`
+- Fondo navy: `Logos/P+ Azul.png`
+- No reconstruir el isotipo con texto, símbolos ni valores hex
 
 ### Opción B — Wordmark "Pdei+"
 
-El nombre completo **Pdei+** como wordmark tipográfico, donde el "+" puede ir en `--aqua` para mantener el acento de marca.
+Usa el wordmark oficial **Pdei+** como archivo de imagen, siempre haciendo match con el color de fondo.
 
-- Fuente: `var(--font-main)`, `font-weight: 800`
-- "Pdei": `color: var(--navy)` (sobre fondos claros) o `#fff` (sobre navy)
-- "+": `color: var(--aqua)`
-- Usar preferentemente sobre fondos blancos o claros
+- Fondo blanco o claro: `Logos/Pdei+ Blanco.png`
+- Fondo navy: `Logos/Pdei+ Azul.png`
+- No reconstruir el wordmark con texto, símbolos ni valores hex
 
 ---
 
@@ -199,7 +194,7 @@ Clase base `.btn` compartida por todas las variantes:
 | Clase | Fondo | Texto | Borde | Hover |
 |-------|-------|-------|-------|-------|
 | `.btn-primary` | `--aqua` | `--navy` | — | `--dark-aqua` bg, texto blanco |
-| `.btn-navy` | `--navy` | `#fff` | — | `--navy-dark` bg |
+| `.btn-navy` | `--navy` | `#fff` | — | `--navy` bg |
 | `.btn-outline` | transparente | `--navy` | `2px solid --navy` | `--navy` bg, texto blanco |
 | `.btn-outline-aqua` | transparente | `--dark-aqua` | `2px solid --aqua` | `--aqua` bg, texto `--navy` |
 | `.btn-ghost` | transparente | `--dark-aqua` | ninguno | `rgba(0,205,229,.1)` bg |
@@ -257,7 +252,7 @@ Estructura base:
 | Focus | `--aqua` | `0 0 0 3px rgba(0,205,229,.12)` |
 | `.error` | `--danger` | `0 0 0 3px rgba(239,68,68,.12)` |
 | `.success` | `--success` | — |
-| Disabled | `--border` | — (fondo `--gray-lt`, opacity) |
+| Disabled | `--border` | — (fondo blanco, opacity) |
 
 Mensaje de error: `.input-error-msg` — `12px`, color `--danger`, con ícono prefijo.
 Mensaje de éxito: `.input-success-msg` — `12px`, color `--success`.
@@ -280,7 +275,7 @@ El ícono está contenido dentro del input — no desborda el borde. Usar `posit
 
 `.input-prefix` — wrapper que combina una etiqueta fija (ej. "Q") con el input:
 - El wrapper tiene el estilo de borde/fondo del input
-- La etiqueta prefijo (`.input-prefix-label`) tiene fondo `--gray-lt`, separador derecho
+- La etiqueta prefijo (`.input-prefix-label`) tiene fondo blanco y separador derecho
 - El input interno no tiene borde propio; el focus se aplica al wrapper vía `:focus-within`
 
 #### Select / Dropdown
@@ -350,7 +345,7 @@ Card de portada para el saldo principal del portafolio.
 
 ```css
 .kpi-card-dark {
-  background: linear-gradient(135deg, var(--navy) 0%, #1a1a45 100%);
+  background: var(--navy);
   border-radius: var(--radius-lg);
   padding: 28px 28px 24px;
   color: #fff;
@@ -533,7 +528,7 @@ Clase base `.badge`: `padding: 4px 10px`, `border-radius: var(--radius-pill)`, `
 | `.badge-success` | `rgba(34,197,94,.15)` | `#166534` |
 | `.badge-warning` | `rgba(245,158,11,.15)` | `#92400e` |
 | `.badge-danger` | `rgba(239,68,68,.15)` | `#991b1b` |
-| `.badge-neutral` | `--gray-lt` | `--text-sec` |
+| `.badge-neutral` | `--white` | `--text-sec` |
 
 ---
 
@@ -583,7 +578,7 @@ Clase base `.badge`: `padding: 4px 10px`, `border-radius: var(--radius-pill)`, `
 
 - Tamaño: 160×160px
 - Borde: `2px dashed var(--border)`, border-radius 12px
-- Fondo: patrón cuadriculado en grises (simula el patrón QR)
+- Fondo: patrón de alto contraste (simula el patrón QR)
 - Centrado horizontalmente
 
 ---
@@ -713,7 +708,7 @@ Para acciones irreversibles o de alto impacto (confirmar inversión, desinvertir
 |-------------|-------|--------|
 | Texto blanco sobre `--navy` (#2B2B5E) | ~10.5:1 | ✅ |
 | Texto `--navy` sobre `--aqua` (#00CDE5) | ~4.8:1 | ✅ (≥18px bold) |
-| Texto `--text` (#1a1a2e) sobre blanco | ~17:1 | ✅ |
+| Texto `--text` (#000000) sobre blanco | ~21:1 | ✅ |
 | Texto `--text-sec` (#5a6478) sobre blanco | ~5.5:1 | ✅ |
 | Texto `--text-lt` (#8892A4) sobre blanco | ~3.8:1 | ⚠️ Solo texto secundario ≥14px |
 
@@ -741,16 +736,13 @@ Para acciones irreversibles o de alto impacto (confirmar inversión, desinvertir
 :root {
   /* Brand */
   --navy:      #2B2B5E;
-  --navy-dark: #1e1e45;
-  --navy-mid:  #35356e;
   --aqua:      #00CDE5;
   --dark-aqua: #00798E;
 
   /* Neutrales */
-  --bg:        #F4F6F9;
+  --bg:        #FFFFFF;
   --bg-card:   #FFFFFF;
-  --gray-lt:   #EEF0F5;
-  --text:      #1a1a2e;
+  --text:      #000000;
   --text-sec:  #5a6478;
   --text-lt:   #8892A4;
   --border:    #DDE2EC;
@@ -763,9 +755,9 @@ Para acciones irreversibles o de alto impacto (confirmar inversión, desinvertir
   --info:    #3B82F6;
 
   /* Tipografía */
-  --font-main:      'NeulisSans', 'Segoe UI', sans-serif;
-  --font-secondary: 'FuturaPT', 'Segoe UI', sans-serif;
-  --font-brand:     'TTNorms Pro Condensed Black Italic', Impact, sans-serif;
+  --font-main:      'NeulisSans', sans-serif;
+  --font-secondary: 'FuturaPT', 'NeulisSans', sans-serif;
+  --font-brand:     'TTNorms Pro Condensed Black Italic', 'NeulisSans', sans-serif;
 
   /* Radios */
   --radius-sm:   8px;

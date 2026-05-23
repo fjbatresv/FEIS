@@ -63,7 +63,7 @@
 /* QR code placeholder */
 .qr-placeholder { width:160px; height:160px; margin:0 auto 16px; border:2px dashed var(--border);
   border-radius:12px; display:flex; align-items:center; justify-content:center;
-  background: repeating-linear-gradient(45deg,#f8f9fa,#f8f9fa 3px,#e9ecef 3px,#e9ecef 6px); }
+  background: repeating-linear-gradient(45deg,#ffffff,#ffffff 3px,#DDE2EC 3px,#DDE2EC 6px); }
 /* 2FA digit boxes */
 .digit-grid { display:flex; gap:8px; justify-content:center; margin:24px 0; }
 .digit-box { width:44px; height:56px; border:2px solid var(--border); border-radius:10px;
@@ -106,25 +106,25 @@
   --dark-aqua: #00798E;
   --white: #FFFFFF;
   --black: #000000;
-  --gray-bg: #f4f6f9;
-  --gray-light: #eef0f5;
+  --gray-bg: #ffffff;
+  --gray-light: #ffffff;
   --gray: #8892a4;
   --border: #dde2ec;
   --success: #22c55e;
   --warning: #f59e0b;
   --danger: #ef4444;
-  --font-main: 'NeulisSans', 'Segoe UI', sans-serif;
-  --font-secondary: 'FuturaPT', 'Segoe UI', sans-serif;
-  --font-brand: 'TTNorms', 'Impact', sans-serif;
+  --font-main: 'NeulisSans', sans-serif;
+  --font-secondary: 'FuturaPT', 'NeulisSans', sans-serif;
+  --font-brand: 'TTNorms', 'NeulisSans', sans-serif;
   /* ── missing vars used across screens ── */
   --ok-green: #22c55e;
-  --bg-light: #f4f6f9;
+  --bg-light: #ffffff;
   --text-light: #8892a4;
-  --text: #333333;
+  --text: #000000;
   --navyL: rgba(0,205,229,.55);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-main); background: #1a1a2e; color: #333; }
+body { font-family: var(--font-main); background: #fff; color: var(--text); }
 
 /* ── NAV BAR ── */
 #app-nav {
@@ -166,7 +166,7 @@ body { font-family: var(--font-main); background: #1a1a2e; color: #333; }
   display:none;
   justify-content:center;
   align-items:flex-start;
-  background:#1a1a2e;
+  background:#000000;
   min-height:calc(100vh - 52px);
   padding:30px 20px;
 }
@@ -174,7 +174,7 @@ body { font-family: var(--font-main); background: #1a1a2e; color: #333; }
 /* ── MOBILE PHONE FRAME ── */
 .phone-wrap {
   display:flex; justify-content:center; align-items:flex-start;
-  padding: 30px 20px; background: #1a1a2e; min-height: calc(100vh - 52px);
+  padding: 30px 20px; background:#fff; min-height: calc(100vh - 52px);
 }
 .phone-frame {
   width: 390px; background:#fff; border-radius:44px;
@@ -745,7 +745,7 @@ body { font-family: var(--font-main); background: #1a1a2e; color: #333; }
 
 <style>
 /* ── MOBILE STYLES ── */
-.mob {font-family:var(--font-main); background:#f4f6f9; min-height:844px; position:relative;}
+.mob {font-family:var(--font-main); background:#fff; min-height:844px; position:relative;}
 .mob-status { height:44px; background:var(--navy); display:flex; align-items:center; justify-content:space-between; padding:0 20px; padding-top:10px; }
 .mob-status-time { color:#fff; font-size:15px; font-weight:700; }
 .mob-status-icons { display:flex; gap:6px; align-items:center; }
@@ -2725,7 +2725,7 @@ select.form-control {
         </div>
         <div style="padding:16px;overflow-y:auto;max-height:680px;">
           <div style="font-size:12px;color:var(--text);line-height:1.8;margin-bottom:16px;background:var(--bg-light);border-radius:8px;padding:12px;">1. Descarga Google/Microsoft Authenticator<br>2. Agrega cuenta → Escanear QR<br>3. Apunta la cámara al código QR<br>4. Ingresa el código de 6 dígitos</div>
-          <div style="width:140px;height:140px;margin:0 auto 16px;border:2px dashed var(--border);border-radius:10px;background:repeating-linear-gradient(45deg,#f8f9fa,#f8f9fa 3px,#e9ecef 3px,#e9ecef 6px);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text-light);text-align:center;">[QR Code]</div>
+          <div style="width:140px;height:140px;margin:0 auto 16px;border:2px dashed var(--border);border-radius:10px;background:repeating-linear-gradient(45deg,#ffffff,#ffffff 3px,#DDE2EC 3px,#DDE2EC 6px);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text-light);text-align:center;">[QR Code]</div>
           <div style="font-size:12px;color:var(--text-light);text-align:center;margin-bottom:12px;">Código para ana@correo.com</div>
           <div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px;">
             <div style="width:40px;height:52px;border:2px solid var(--aqua);border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--navy);">4</div>

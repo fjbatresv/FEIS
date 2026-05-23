@@ -22,17 +22,14 @@ Pdei+ es el portal web de gestión de inversiones FEIS para Guatemala. Permite a
 :root {
   /* Marca */
   --navy:       #2B2B5E;
-  --navy-dark:  #1e1e45;
-  --navy-mid:   #35356e;
   --aqua:       #00CDE5;
   --dark-aqua:  #00798E;
 
   /* Neutrales */
-  --bg:         #F4F6F9;
+  --bg:         #FFFFFF;
   --bg-card:    #FFFFFF;
-  --gray-lt:    #EEF0F5;
   --border:     #DDE2EC;
-  --text:       #1a1a2e;
+  --text:       #000000;
   --text-sec:   #5a6478;
   --text-lt:    #8892A4;
   --white:      #FFFFFF;
@@ -109,7 +106,7 @@ Pdei+ es el portal web de gestión de inversiones FEIS para Guatemala. Permite a
 #sidebar {
   position: fixed; top: 0; left: 0; bottom: 0;
   width: var(--sidebar-w);                          /* 210px */
-  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-dark) 100%);
+  background: var(--navy);
   display: flex; flex-direction: column;
   overflow-y: auto; z-index: 20;
 }
@@ -251,7 +248,7 @@ cursor: pointer; transition: background .15s, color .15s;
 | Variante | Fondo | Texto | Borde | Hover |
 |----------|-------|-------|-------|-------|
 | `.btn-primary` | `--aqua` | `--navy` | — | bg `--dark-aqua`, texto `#fff` |
-| `.btn-navy` | `--navy` | `#fff` | — | bg `--navy-dark` |
+| `.btn-navy` | `--navy` | `#fff` | — | bg `--navy` |
 | `.btn-outline` | `#fff` | `--text` | `#c5ccda` | bg `--navy`, texto `#fff` |
 | `.btn-outline-aqua` | `#fff` | `--dark-aqua` | `--aqua` | — |
 | `.btn-danger` | `--danger` | `#fff` | — | bg `#dc2626` |
@@ -368,7 +365,7 @@ padding: 24px;
 
 **Card KPI hero (`.metric-hero`):**
 ```css
-background: linear-gradient(135deg, var(--navy) 0%, #1a1a45 100%);
+background: var(--navy);
 color: #fff;
 min-height: 184px;
 display: flex; flex-direction: column; justify-content: space-between;

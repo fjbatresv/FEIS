@@ -7,29 +7,31 @@
 <style>
 @font-face{font-family:"NeulisSans";src:url("Línea Gráfica/FONTS/Neulis Sans Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"NeulisSans";src:url("Línea Gráfica/FONTS/Neulis Sans Bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"NeulisSans";src:url("Línea Gráfica/FONTS/Neulis Sans Bold.ttf") format("truetype");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"NeulisSans";src:url("Línea Gráfica/FONTS/Neulis Sans Bold.ttf") format("truetype");font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:"NeulisSans";src:url("Línea Gráfica/FONTS/Neulis Sans Bold.ttf") format("truetype");font-weight:900;font-style:normal;font-display:swap}
 @font-face{font-family:"NeulisSans";src:url("Línea Gráfica/FONTS/Neulis Sans Semi Bold Italic.ttf") format("truetype");font-weight:600;font-style:italic;font-display:swap}
 @font-face{font-family:"FuturaPT";src:url("Línea Gráfica/FONTS/Futura PT Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
 @font-face{font-family:"TTNormsPro";src:url("Línea Gráfica/FONTS/TT Norms Pro Trial Condensed Black Italic.ttf") format("truetype");font-weight:900;font-style:italic;font-display:swap}
 /* ─── RESET ─────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-main);background:#F4F6F9;color:#1a1a2e;line-height:1.5}
+body{font-family:var(--font-main);background:#fff;color:var(--text);line-height:1.5}
 a{text-decoration:none;color:inherit}
 
 /* ─── TOKENS ─────────────────────────────────────────── */
 :root{
   --navy:      #2B2B5E;
-  --font-main:"NeulisSans", Arial, sans-serif;
-  --font-secondary:"FuturaPT", Arial, sans-serif;
-  --font-brand:"TTNormsPro", "NeulisSans", Arial, sans-serif;
-  --navy-mid:  #35356e;
+  --font-main:"NeulisSans", sans-serif;
+  --font-secondary:"FuturaPT", "NeulisSans", sans-serif;
+  --font-brand:"TTNormsPro", "NeulisSans", sans-serif;
   --aqua:      #00CDE5;
   --dark-aqua: #00798E;
   --white:     #FFFFFF;
-  --bg:        #F4F6F9;
+  --bg:#FFFFFF;
   --bg-card:   #FFFFFF;
-  --gray-lt:   #EEF0F5;
+  --gray-lt:#FFFFFF;
   --border:    #DDE2EC;
-  --text:      #1a1a2e;
+  --text:#000000;
   --text-sec:  #5a6478;
   --text-lt:   #8892A4;
   --success:   #22C55E;
@@ -239,7 +241,7 @@ a{text-decoration:none;color:inherit}
 .input-field.error{border-color:var(--danger);}
 .input-field.error:focus{box-shadow:0 0 0 3px rgba(239,68,68,.12);}
 .input-field.success{border-color:var(--success);}
-.input-field:disabled{background:var(--gray-lt);color:var(--text-lt);cursor:not-allowed;}
+.input-field:disabled{background:#fff;color:var(--text-lt);cursor:not-allowed;}
 .input-hint{font-size:12px;color:var(--text-lt);}
 .input-error-msg{font-size:12px;color:var(--danger);display:flex;align-items:center;gap:4px;}
 .input-success-msg{font-size:12px;color:var(--success);}
@@ -257,7 +259,7 @@ a{text-decoration:none;color:inherit}
   border:1.5px solid var(--border);border-radius:var(--radius-md);overflow:hidden;
 }
 .input-prefix-label{
-  padding:13px 14px;background:var(--gray-lt);
+  padding:13px 14px;background:#fff;
   border-right:1.5px solid var(--border);
   font-size:14px;color:var(--text-sec);white-space:nowrap;
 }
@@ -278,7 +280,7 @@ a{text-decoration:none;color:inherit}
 .help-icon:hover::after,.help-icon:focus::after{
   content:attr(data-help);position:absolute;left:50%;bottom:calc(100% + 8px);
   transform:translateX(-50%);width:max-content;max-width:220px;padding:7px 10px;
-  border-radius:8px;background:#111827;color:#fff;font-size:11px;font-weight:500;
+  border-radius:8px;background:#000;color:#fff;font-size:11px;font-weight:500;
   line-height:1.35;z-index:50;white-space:normal;pointer-events:none
 }
 .label{font-size:13px;font-weight:600;color:var(--text-sec);display:flex;align-items:center;gap:2px;margin-bottom:6px}
@@ -450,7 +452,7 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
 .badge-success{background:rgba(34,197,94,.15);color:#166534;}
 .badge-warning{background:rgba(245,158,11,.15);color:#92400e;}
 .badge-danger{background:rgba(239,68,68,.15);color:#991b1b;}
-.badge-neutral{background:var(--gray-lt);color:var(--text-sec);}
+.badge-neutral{background:#fff;color:var(--text-sec);}
 .status-badge{
   display:inline-flex;align-items:center;gap:6px;
   padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;
@@ -510,7 +512,7 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
 .mov-table th:first-child{border-radius:10px 0 0 0;}
 .mov-table th:last-child{border-radius:0 10px 0 0;}
 .mov-table td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
-.mov-table tbody tr:hover td{background:var(--bg);}
+.mov-table tbody tr:hover td{background:#fff;}
 .mov-credit{color:var(--success);font-weight:600;}
 .mov-debit{color:var(--danger);font-weight:600;}
 /* ─── MODAL ──────────────────────────────────────────── */
@@ -534,7 +536,7 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
   width:160px;height:160px;border-radius:12px;
   border:2px dashed var(--border);
   display:flex;align-items:center;justify-content:center;
-  background:repeating-conic-gradient(#eef0f5 0% 25%, #fff 0% 50%) 0 0/10px 10px;
+  background:repeating-conic-gradient(#DDE2EC 0% 25%, #fff 0% 50%) 0 0/10px 10px;
   color:var(--text-lt);font-size:12px;font-weight:600;
 }
 
@@ -728,15 +730,11 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     <div style="display:flex;flex-wrap:wrap;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--border)">
       <div style="flex:1;min-width:260px;padding:40px 32px;background:#fff;display:flex;flex-direction:column;align-items:center;gap:12px">
         <img src="Logos/Pdei+ Blanco.png" alt="Logo oficial sobre fondo blanco" style="max-width:180px;object-fit:contain">
-        <span style="font-size:11px;color:var(--text-lt)">Blanco · fondo blanco/claro</span>
+        <span style="font-size:11px;color:var(--text-lt)">Blanco · fondo blanco</span>
       </div>
       <div style="flex:1;min-width:260px;padding:40px 32px;background:var(--navy);display:flex;flex-direction:column;align-items:center;gap:12px">
         <img src="Logos/Pdei+ Azul.png" alt="Logo oficial sobre fondo navy" style="max-width:180px;object-fit:contain">
-        <span style="font-size:11px;color:rgba(255,255,255,.4)">Azul · fondo navy/oscuro</span>
-      </div>
-      <div style="flex:1;min-width:260px;padding:40px 32px;background:var(--bg);display:flex;flex-direction:column;align-items:center;gap:12px">
-        <img src="Logos/Pdei+ Azul.png" alt="Logo oficial gris" style="max-width:180px;object-fit:contain">
-        <span style="font-size:11px;color:var(--text-lt)">Color · fondo gris/bg</span>
+        <span style="font-size:11px;color:rgba(255,255,255,.4)">Azul · fondo navy</span>
       </div>
     </div>
   </div>
@@ -746,16 +744,12 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     <div class="comp-label">Isotipo — uso compacto (sidebar, favicon, icono de app)</div>
     <div style="display:flex;flex-wrap:wrap;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--border)">
       <div style="flex:1;min-width:180px;padding:40px 28px;background:#fff;display:flex;flex-direction:column;align-items:center;gap:12px">
-        <img src="Logos/P+ Azul.png" alt="Isotipo azul" style="width:64px;height:64px;object-fit:contain">
-        <span style="font-size:11px;color:var(--text-lt)">Color · fondo claro</span>
+        <img src="Logos/P+ Blanco.png" alt="Isotipo P+ blanco" style="width:64px;height:64px;object-fit:contain">
+        <span style="font-size:11px;color:var(--text-lt)">P+ Blanco · fondo blanco</span>
       </div>
       <div style="flex:1;min-width:180px;padding:40px 28px;background:var(--navy);display:flex;flex-direction:column;align-items:center;gap:12px">
-        <img src="Logos/Pdei+ Azul.png" alt="Logo compacto sobre fondo navy" style="width:118px;height:auto;object-fit:contain">
-        <span style="font-size:11px;color:rgba(255,255,255,.4)">Azul · fondo navy</span>
-      </div>
-      <div style="flex:1;min-width:180px;padding:40px 28px;background:var(--bg);display:flex;flex-direction:column;align-items:center;gap:12px">
-        <img src="Logos/P+ Azul.png" alt="Isotipo gris" style="width:64px;height:64px;object-fit:contain">
-        <span style="font-size:11px;color:var(--text-lt)">Color · fondo gris</span>
+        <img src="Logos/P+ Azul.png" alt="Isotipo P+ azul" style="width:64px;height:64px;object-fit:contain">
+        <span style="font-size:11px;color:rgba(255,255,255,.4)">P+ Azul · fondo navy</span>
       </div>
     </div>
   </div>
@@ -763,10 +757,10 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
   <!-- TAMAÑOS DE REFERENCIA -->
   <div class="comp-card">
     <div class="comp-label">Tamaños de referencia por contexto</div>
-    <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:flex-end;padding:24px;background:var(--bg);border-radius:10px">
+    <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:flex-end;padding:24px;background:#fff;border:1px solid var(--border);border-radius:10px">
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
-        <img src="Logos/Pdei+ Azul.png" alt="Logo" style="width:200px;height:auto;object-fit:contain">
-        <span style="font-size:11px;color:var(--text-lt)">200px · Login / Landing</span>
+        <img src="Logos/Pdei+ Blanco.png" alt="Logo" style="width:200px;height:auto;object-fit:contain">
+        <span style="font-size:11px;color:var(--text-lt)">200px · Fondo blanco</span>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
         <div style="background:var(--navy);padding:8px;border-radius:6px;display:flex;align-items:center;justify-content:center">
@@ -775,18 +769,18 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
         <span style="font-size:11px;color:var(--text-lt)">130px · Sidebar (navy)</span>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
-        <img src="Logos/P+ Azul.png" alt="Isotipo sidebar" style="width:32px;height:32px;object-fit:contain">
-        <span style="font-size:11px;color:var(--text-lt)">32px · Isotipo sidebar</span>
+        <img src="Logos/P+ Blanco.png" alt="Isotipo compacto P+ blanco" style="width:32px;height:32px;object-fit:contain">
+        <span style="font-size:11px;color:var(--text-lt)">32px · P+ Blanco</span>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
         <div style="width:72px;height:32px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center">
-          <img src="Logos/Pdei+ Azul.png" alt="Logo compacto navy" style="width:58px;height:auto;object-fit:contain">
+          <img src="Logos/P+ Azul.png" alt="Isotipo compacto P+ azul" style="width:32px;height:32px;object-fit:contain">
         </div>
-        <span style="font-size:11px;color:var(--text-lt)">58px · Compacto navy</span>
+        <span style="font-size:11px;color:var(--text-lt)">32px · P+ Azul navy</span>
       </div>
     </div>
     <p style="font-size:11px;color:var(--text-lt);margin-top:14px;line-height:1.5">
-      <strong>Regla crítica:</strong> el logo nunca lleva fondo gris. Mostrar siempre sobre el fondo natural del contexto (blanco, navy o bg). Nunca usar color hex ni texto como sustituto de los archivos PNG/SVG oficiales.
+      <strong>Regla crítica:</strong> el logo nunca lleva fondo gris. Para isotipo compacto usar únicamente <code>P+ Blanco.png</code> sobre blanco y <code>P+ Azul.png</code> sobre navy. Nunca usar color hex ni texto como sustituto de los archivos PNG/SVG oficiales.
     </p>
   </div>
 </section>
@@ -817,14 +811,9 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     <div class="comp-label" style="margin-top:24px">Neutrales</div>
     <div class="color-grid">
       <div class="color-swatch">
-        <div class="color-block" style="background:#F4F6F9;border:1px solid #DDE2EC"></div>
-        <div class="color-name">BG</div>
-        <div class="color-hex">--bg · #F4F6F9</div>
-      </div>
-      <div class="color-swatch">
-        <div class="color-block" style="background:#EEF0F5;border:1px solid #DDE2EC"></div>
-        <div class="color-name">Gray Light</div>
-        <div class="color-hex">--gray-lt · #EEF0F5</div>
+        <div class="color-block" style="background:#FFFFFF;border:1px solid #DDE2EC"></div>
+        <div class="color-name">White / BG</div>
+        <div class="color-hex">--bg · #FFFFFF</div>
       </div>
       <div class="color-swatch">
         <div class="color-block" style="background:#DDE2EC"></div>
@@ -842,9 +831,9 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
         <div class="color-hex">--text-sec · #5A6478</div>
       </div>
       <div class="color-swatch">
-        <div class="color-block" style="background:#1a1a2e"></div>
-        <div class="color-name">Text</div>
-        <div class="color-hex">--text · #1A1A2E</div>
+        <div class="color-block" style="background:#000000"></div>
+        <div class="color-name">Black Text</div>
+        <div class="color-hex">--text · #000000</div>
       </div>
     </div>
     <div class="comp-label" style="margin-top:24px">Semánticos</div>
@@ -876,35 +865,35 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
 <!-- ════════════════ TIPOGRAFÍA ════════════════ -->
 <section class="comp-section" id="tipografia">
   <h2>Tipografía</h2>
-  <p class="comp-desc">Familia principal: <strong>NeulisSans</strong>. Secundaria: <strong>FuturaPT</strong>. Acento/cifras: <strong>TTNorms Pro Condensed Black Italic</strong>.</p>
+  <p class="comp-desc">Textos en Neulis Sans Regular y Neulis Sans Bold. Texto de soporte en Futura PT Medium. TT Norms Pro Condensed Black Italic queda reservado para acentos de marca.</p>
   <div class="comp-card">
     <div class="type-row">
-      <div class="type-meta">Hero · 40px · 800 · NeulisSans</div>
-      <div style="font-size:40px;font-weight:800;color:var(--text)">Q 142,580<span style="color:var(--aqua)">.45</span></div>
+      <div class="type-meta">Hero · 40px · Bold · Neulis Sans Bold</div>
+      <div style="font-size:40px;font-weight:700;color:var(--text)">Q 142,580<span style="color:var(--aqua)">.45</span></div>
     </div>
     <div class="type-row">
-      <div class="type-meta">H1 · 28px · 700</div>
+      <div class="type-meta">H1 · 28px · Bold · Neulis Sans Bold</div>
       <div style="font-size:28px;font-weight:700;color:var(--text)">Portal de Inversiones Plus</div>
     </div>
     <div class="type-row">
-      <div class="type-meta">H2 · 22px · 700</div>
+      <div class="type-meta">H2 · 22px · Bold · Neulis Sans Bold</div>
       <div style="font-size:22px;font-weight:700;color:var(--text)">Mi Portafolio</div>
     </div>
     <div class="type-row">
-      <div class="type-meta">H3 · 18px · 600</div>
-      <div style="font-size:18px;font-weight:600;color:var(--text)">Fondo Bursátil — Detalles</div>
+      <div class="type-meta">H3 · 18px · Bold · Neulis Sans Bold</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text)">Fondo Bursátil — Detalles</div>
     </div>
     <div class="type-row">
-      <div class="type-meta">Card title · 16px · 600</div>
-      <div style="font-size:16px;font-weight:600;color:var(--text)">Bursátil $</div>
+      <div class="type-meta">Card title · 16px · Bold · Neulis Sans Bold</div>
+      <div style="font-size:16px;font-weight:700;color:var(--text)">Bursátil $</div>
     </div>
     <div class="type-row">
-      <div class="type-meta">Body · 14px · 400</div>
+      <div class="type-meta">Body · 14px · Regular · Neulis Sans Regular</div>
       <div style="font-size:14px;color:var(--text);max-width:520px">El sistema Pdei+ permite gestionar inversiones de forma segura y transparente, cumpliendo con todas las regulaciones vigentes de la Superintendencia de Bancos de Guatemala.</div>
     </div>
     <div class="type-row">
-      <div class="type-meta">Small / label · 13px · 500 · color text-sec</div>
-      <div style="font-size:13px;font-weight:500;color:var(--text-sec)">Etiqueta de campo</div>
+      <div class="type-meta">Small / label · 13px · Medium · Futura PT Medium</div>
+      <div style="font-family:var(--font-secondary);font-size:13px;font-weight:500;color:var(--text-sec)">Etiqueta de campo</div>
     </div>
     <div class="type-row">
       <div class="type-meta">Caption · 12px · 400 · color text-lt</div>
@@ -916,7 +905,7 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     </div>
     <div class="type-row" style="border-bottom:none">
       <div class="type-meta">Monospace (tokens/código)</div>
-      <div style="font-size:13px;font-family:monospace;color:var(--navy);background:var(--bg);padding:8px 12px;border-radius:6px;display:inline-block">--navy: #2B2B5E</div>
+      <div style="font-size:13px;font-family:monospace;color:var(--navy);background:#fff;padding:8px 12px;border-radius:6px;display:inline-block">--navy: #2B2B5E</div>
     </div>
   </div>
 </section>
@@ -959,7 +948,7 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
 <!-- ════════════════ BOTONES ════════════════ -->
 <section class="comp-section" id="botones">
   <h2>Botones</h2>
-  <p class="comp-desc">Variantes, tamaños y estados. El botón primario CTA usa <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px">--aqua</code> sobre pantallas claras y <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px">--navy</code> en pantallas de acceso.</p>
+  <p class="comp-desc">Variantes, tamaños y estados. El botón primario CTA usa <code style="background:#fff;padding:2px 6px;border-radius:4px;font-size:12px">--aqua</code> sobre pantallas claras y <code style="background:#fff;padding:2px 6px;border-radius:4px;font-size:12px">--navy</code> en pantallas de acceso.</p>
   <div class="comp-card">
     <div class="comp-label">Tipos</div>
     <div class="comp-row">
@@ -1176,7 +1165,7 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
       <div style="max-width:280px">
         <p style="font-size:14px;color:var(--text-sec);margin-bottom:12px">Escanea el código QR con <strong>Google Authenticator</strong> o <strong>Microsoft Authenticator</strong> para configurar tu segundo factor.</p>
         <p style="font-size:12px;color:var(--text-lt)">Si no puedes escanear, ingresa el código manualmente:</p>
-        <div style="background:var(--bg);border-radius:8px;padding:8px 12px;margin-top:8px;font-family:monospace;font-size:13px;letter-spacing:2px;color:var(--navy)">JBSWY3DPEHPK3PXP</div>
+        <div style="background:#fff;border-radius:8px;padding:8px 12px;margin-top:8px;font-family:monospace;font-size:13px;letter-spacing:2px;color:var(--navy)">JBSWY3DPEHPK3PXP</div>
       </div>
     </div>
   </div>
@@ -1226,11 +1215,11 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
         <div class="person-pct">30%</div>
       </div>
       <div class="person-card">
-        <div class="person-avatar" style="background:var(--navy-mid)">AG</div>
+        <div class="person-avatar" style="background:var(--navy)">AG</div>
         <div><div class="person-name">Ana García López</div><div class="person-meta">DPI: 1122 33445 5667 · Hija</div></div>
         <div class="person-pct">20%</div>
       </div>
-      <div style="background:var(--bg);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
+      <div style="background:#fff;border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px">
         <div style="flex:1">
           <span style="font-size:13px;font-weight:600;color:var(--text-sec)">Total asignado</span>
         </div>
@@ -1694,7 +1683,7 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     <div style="height:1px;background:var(--border);margin:28px 0"></div>
 
     <div class="comp-label">Estructura HTML</div>
-    <pre style="background:var(--bg);border-radius:10px;padding:18px 20px;font-size:12px;line-height:1.65;overflow-x:auto;color:var(--text);border:1px solid var(--border)"><code>&lt;div class="field"&gt;
+    <pre style="background:#fff;border-radius:10px;padding:18px 20px;font-size:12px;line-height:1.65;overflow-x:auto;color:var(--text);border:1px solid var(--border)"><code>&lt;div class="field"&gt;
   &lt;label class="label"&gt;
     Nombre del campo
     &lt;span class="help-icon" tabindex="0" data-help="Texto de ayuda aquí"&gt;i&lt;/span&gt;

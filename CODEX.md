@@ -201,15 +201,12 @@ Ejemplo conceptual:
 ### Colores
 
 - `--navy: #2B2B5E`
-- `--navy-dark: #1e1e45`
-- `--navy-mid: #35356e`
 - `--aqua: #00CDE5`
 - `--dark-aqua: #00798E`
-- `--bg: #F4F6F9`
+- `--bg: #FFFFFF`
 - `--bg-card: #FFFFFF`
-- `--gray-lt: #EEF0F5`
 - `--border: #DDE2EC`
-- `--text: #1a1a2e`
+- `--text: #000000`
 - `--text-sec: #5a6478`
 - `--text-lt: #8892A4`
 - `--success: #22C55E`
