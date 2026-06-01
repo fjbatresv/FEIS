@@ -1,48 +1,20 @@
 <claude-mem-context>
 # Memory Context
 
-# [FEIS] recent context, 2026-05-15 7:21pm CST
+# [FEIS] recent context, 2026-06-01 4:36pm CST
 
 Legend: 🎯session 🔴bugfix 🟣feature 🔄refactor ✅change 🔵discovery ⚖️decision 🚨security_alert 🔐security_note
 Format: ID TIME TYPE TITLE
 Fetch details: get_observations([IDs]) | Search: mem-search skill
 
-Stats: 50 obs (23,132t read) | 3,584,169t work | 99% savings
+Stats: 50 obs (23,036t read) | 646,032t work | 96% savings
 
 ### Apr 30, 2026
 S2 FEIS Pdei+ Pantallas.html — UX/UI audit and fix of incomplete/broken screens against DERCAS documentation (Apr 30 at 10:47 PM)
 S1 UI/UX unification pass on Pdei+ financial investment platform HTML prototype — fix wizard flow, sidebar layout, broken pages, auth pages, input consistency, typography, and mobile layout (Apr 30 at 10:47 PM)
-S3 Sidebar layout redesign: logo to footer, user pinned at top, logout option added (Apr 30 at 11:46 PM)
-### May 2, 2026
-153 10:19a 🔵 Profile section JS syntax verified clean after all patches applied
-154 10:20a 🔴 Bank account "Principal" pill moved from person-tail to inline content in Mi Perfil
-155 " ⚖️ Mi Perfil UX redesign: remove top-level account management hub, move actions to per-account detail flow
-156 " 🔄 Mi Perfil UX restructured: account management hub removed, per-account action buttons added inline to bank account entries
-157 " 🔄 Bank account list UX refined: inline action buttons replaced with "Ver detalle" per-row CTA; add button changed to icon-only
-158 10:27a 🟣 Mi Perfil — inline edit mode with simulated data persistence
-159 " ⚖️ UX distinction: "Editar datos" vs "Solicitar actualización" in Mi Perfil
-160 10:35a ✅ Residencia card button renamed from "Solicitar actualización" to "Solicitar ratificación"
-161 10:36a ✅ Committed profile management refactor to main — commit 8aa4249
-162 10:38a ✅ Sidebar IA simplified — Operaciones group removed, sub-views pruned from navigation
-163 10:39a ✅ viewGroupMap updated — operations views remapped to "main" group for sidebar highlight
-164 10:40a ✅ Sidebar final state confirmed — 3 groups with clean nav items
-165 " 🔵 AGENTS.md modified and FLOWS.md created — documentation files in FEIS project
-166 10:41a 🔵 Full JS architecture snapshot — showView, authState, viewGroupMap, render functions confirmed
-167 10:42a 🔄 Sidebar fully flattened — sb-group/toggle/collapse removed, replaced with flat &lt;nav&gt; element
-168 " 🔄 Sidebar flat nav refactor verified clean — zero sb-group references remain, JS syntax OK
-169 10:45a ⚖️ Next task: Nuevo Fondo sub-flow with DERCAS steps and validations
-170 " 🔵 FEIS project file inventory — DERCAS PDF and supporting docs confirmed present
-171 10:46a 🔵 view-new-fund current state — stub with step bar but no JS, direct jump to confirm-deposit
-172 " 🔵 RF9 (Nuevo Fondo) full requirements extracted from DERCAS PDF via pdfminer
-173 10:47a 🟣 Nuevo Fondo RF9 – Complete 5-Step Wizard Implemented
-174 " 🟣 Confirmar Depósito RF13 – Dynamic Content and File Upload
-175 " 🔴 Case Step Icons Deformed – Replaced person-avatar with case-step-index
-176 " 🔴 Beneficiary Distribution Validation and Add-Beneficiary Button Fixed
-177 " 🔄 Sidebar Navigation Simplified – Groups Removed, Flat Nav Added
+S3 Sidebar layout redesign: logo to footer, user pinned at top, logout option added (Apr 30 at 11:26 PM)
 ### May 9, 2026
-183 8:58p ✅ Pdei+ Web Mock — 24-Point Design Correction Specification from Client
-184 8:59p 🔵 Pre-Implementation Audit of Pdei+ Web Mock — Full Scope of Corrections Mapped
-185 " 🔵 Deep Audit Phase 2 — Additional Correction Targets Located in JS and Secondary Views
+185 8:59p 🔵 Deep Audit Phase 2 — Additional Correction Targets Located in JS and Secondary Views
 186 9:00p ✅ Batch Perl Substitution Applied — 15 Global Corrections in Both HTML Files
 187 9:01p 🟣 CSS Foundation Patches Applied to Web Mock — Fonts, Status Dots, New UI Components
 188 " ✅ Remaining CSS Utility Classes Added After Anchor Line Fix
@@ -65,6 +37,35 @@ S3 Sidebar layout redesign: logo to footer, user pinned at top, logout option ad
 205 " 🔵 Complex Perl One-Liner Failed on Componentes.html — Special Characters Broke Regex Compilation
 206 9:06p ✅ Componentes.html Updated — Fonts, Logo, Footer, and Navy-Dark Swatch Corrected
 207 " ✅ Final Componentes.html Cleanup — Remaining Base64 PNGs Replaced with ISOTIPO SVG
+### Jun 1, 2026
+290 12:38p 🔵 Floating Status Texts Found Outside Status-Badge Pattern in Web Mock
+291 " 🔵 CSS Architecture for fund-row Status Display Fully Mapped
+292 12:39p 🔴 Floating Status Texts Converted to Status-Badge Pills in Featured Funds Section
+293 " 🔵 Playwright Not Available for Browser Screenshot Verification in FEIS Project
+294 " ⚖️ Scenario Switcher Chip "Pendiente activación" Intentionally Left as Plain Button
+295 " ⚖️ New Design Request: Consolidate Fund Status to Single Right-Column Pill
+S16 Consolidate fund status pills — remove right-column secondary labels and move the left-column primary state badge to the right column instead (Jun 1 at 12:46 PM)
+296 12:47p 🔄 Featured Funds Status Badges Consolidated to Right Column Across All Three Fund Rows
+298 " ✅ Featured Fund Status Layout Fix Committed to Git
+299 " 🔵 Session Began Investigating "Pérdida neta del periodo" Metric Card as Potential Next Change
+297 12:48p 🔄 Final Git Diff Confirms Clean Consolidation of All Fund Status Badges to Right Column
+301 " 🔵 Session Began Investigating Sidebar and Header Structure for Potential Next Change
+300 12:50p ✅ Dashboard Third Metric Card Renamed from "Pérdida neta" to "Desinversión neta del periodo"
+302 12:51p ✅ Sidebar Brand Logo Enlarged and Padding Adjusted in CSS
+303 12:52p ⚖️ Session Plan Established for UI Audit and Documentation Update
+304 " 🔵 Cross-File Audit Reveals Logo Size Inconsistency Between Componentes.html and Web Mock Sidebar
+305 " 🔵 Deep Doc Audit Finds Handoff.md Fund-Row Spec Now Stale After Web Mock Grid Changes
+306 12:53p 🔵 Spec Inconsistency: .down CSS Uses --warning (Amber) in Web Mock, But Handoff Docs Say --danger (Red)
+307 " 🔄 Componentes.html Updated to Match Web Mock fund-row Grid Layout and Status-Badge Pattern
+308 " ✅ Design System v1.2 Published — Sidebar Logo Spec and Fund-Row Grid Pattern Documented
+309 12:54p ✅ Developer Handoff v1.1 Published — Sidebar Brand, Fund-Row Variants, and Metric Card KPIs Documented
+310 " ✅ Session Plan Progress: Audit Complete, Now Applying UI Adjustments (Step 3)
+311 " ⚖️ Componentes.html Sidebar Logo Reverted to 132px — UI Kit Identity Kept Separate from Web Mock
+312 " 🔵 Final Cross-File Verification Confirms All Docs Consistent With New Design Patterns
+313 12:55p ⚖️ Design System and Handoff Docs Corrected to Document 132px as Canonical Sidebar Logo Base
+314 " ✅ Visual Alignment Status Table Added to Handoff and Dashboard Design Notes Added to FLOWS.md
+315 12:56p ✅ Full Session Scope Confirmed — 6 Files, 153 Insertions Across UI Kit, Design System, Handoff, Flows and Mock
+316 " ✅ Session Complete — All 5 Plan Steps Verified and Marked Completed
 
-Access 3584k tokens of past work via get_observations([IDs]) or mem-search skill.
+Access 646k tokens of past work via get_observations([IDs]) or mem-search skill.
 </claude-mem-context>

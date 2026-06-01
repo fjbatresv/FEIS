@@ -1,6 +1,6 @@
 # Developer Handoff — Pdei+ Web Portal
 **Portal Portafolio de Inversiones Plus (FEIS)**
-Versión 1.0 · Mayo 2026
+Versión 1.1 · Junio 2026
 
 ---
 
@@ -11,6 +11,23 @@ Pdei+ es el portal web de gestión de inversiones FEIS para Guatemala. Permite a
 **Referencia de diseño:** `Pdei+ Web Mock.html` (prototipo interactivo con 20 vistas y datos estáticos)
 **Librería de componentes:** `Pdei+ Componentes.html`
 **Design System:** `Pdei+ Design System.md`
+
+---
+
+## 1.1 Estado de alineación visual — 1 de junio de 2026
+
+La revisión actual deja sincronizados los puntos de diseño que habían quedado divergentes entre el mock y el UI kit:
+
+| Área | Estado | Decisión documentada |
+|------|--------|----------------------|
+| Sidebar del UI kit | Alineado | Mantener logo compacto de 132px en `Pdei+ Componentes.html` |
+| Sidebar del mock | Variante vigente | El mock conserva logo grande de 188px como decisión de composición de pantalla |
+| Fondos destacados | Alineado | Estado operativo único en columna derecha mediante `status-badge` |
+| Botón de detalle de fondo | Alineado | Columna fija de 44px para evitar solapamiento con estados largos |
+| KPI de retiro mensual | Alineado | Usar “Desinversión neta del periodo”, monto negro y helper informativo |
+| Textos flotantes de estado | Resuelto | No usar estados sueltos a la derecha; usar pills/badges del sistema |
+
+Pendiente antes de implementación productiva: decidir si el sidebar del mock debe volver al tamaño compacto del UI kit o si se formaliza una variante de producto con logo grande.
 
 ---
 
@@ -133,6 +150,22 @@ Pdei+ es el portal web de gestión de inversiones FEIS para Guatemala. Permite a
 ```
 
 ### 3.3 Sidebar — ítems de navegación
+
+**Marca del sidebar en UI kit:**
+```css
+.sb-logo {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  display: flex; align-items: center; gap: 6px;
+}
+
+.sb-logo img {
+  width: 132px;
+  height: auto;
+  object-fit: contain;
+}
+```
+Usar `Logos/Pdei+ Azul.png` sobre `--navy`. Esta es la referencia del componente visual. El mock de producto puede mantener una variante de marca más grande por composición de pantalla, pero debe documentarse como variante del mock y no como base del sistema.
 
 **Ítem inactivo:**
 ```css
@@ -382,7 +415,8 @@ gap: 8px; min-height: 108px; padding-top: 18px; padding-bottom: 18px;
 ```
 - `.metric-small-label`: `12px; color: var(--text-lt)`
 - `.metric-small-value`: `26px; font-weight: 700; line-height: 1.15` — usar `white-space: nowrap`
-- `.metric-small-change`: `12px; font-weight: 600` — `.up` en `--success`, `.down` en `--danger`
+- `.metric-small-change`: `12px; font-weight: 600` — `.up` en `--success`; usar color estándar cuando el indicador sea informativo y no variación positiva/negativa.
+- Desinversión mensual: etiqueta `Desinversión neta del periodo`, valor en `--text`/negro y helper `Total retirado este mes`. No usar “pérdida”, flecha ni monto negativo para este KPI.
 
 **Card fondo — `.fund-row`:**
 ```css
@@ -394,6 +428,20 @@ padding: 16px 0; border-bottom: 1px solid var(--border);
 Columnas: [ícono 42px] [nombre+descripción] [monto+%] [acciones]
 
 Estado muted (fondo pendiente/bloqueado): `opacity: .68`
+
+**Fondos destacados — variante compacta de dashboard:**
+```css
+.featured-funds .fund-row {
+  grid-template-columns: 42px minmax(0,1fr) 168px 44px;
+}
+.featured-funds .fund-right {
+  display: grid; justify-items: end; gap: 6px;
+}
+.featured-funds .fund-actions {
+  width: 44px;
+}
+```
+En esta variante debe existir un solo estado operativo por fila, ubicado en la columna derecha debajo del monto mediante `status-badge`. No duplicar el estado en la columna de texto principal ni usar textos flotantes como “Pendiente activación” o “Bloqueado temporalmente”. El botón de detalle siempre ocupa su columna fija de 44px.
 
 **Person card (`.person`):**
 ```css
@@ -421,6 +469,9 @@ font-size: 12px; font-weight: 600; line-height: 1; white-space: nowrap;
 | `.pill-danger` | `rgba(239,68,68,.14)` | `#991b1b` |
 | `.pill-info` | `rgba(59,130,246,.12)` | `#1d4ed8` |
 | `.pill-neutral` | `--gray-lt` | `--text-sec` |
+
+**Estados operativos (`.status-badge`):**
+Usar `status-badge` con `status-dot` para estados de fondos, movimientos, expediente y acciones pendientes. Reservar `.pill` para indicadores no operativos o chips de apoyo.
 
 ---
 
@@ -625,6 +676,7 @@ Un único breakpoint en `max-width: 1180px`:
 | `.dual` | `2fr 1fr` | `1fr` |
 | `.field-grid`, `.field-grid-3` | multi-columna | `1fr` |
 | `.fund-row` | grid 4 columnas | flex wrap |
+| `.featured-funds .fund-row` | grid compacto 42px / 1fr / 168px / 44px | conserva grid compacto para proteger la columna del botón |
 | `.portfolio-filters`, `.movements-filters` | 3 columnas | `1fr` |
 | `.auth-shell` | split panel | panel único (marca oculta) |
 | `.auth-brand` | visible, 56px padding | padding reducido a 36px 28px |
