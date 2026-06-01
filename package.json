@@ -7,12 +7,13 @@
     "build": "node scripts/build.js",
     "docs": "node scripts/build.js --docs-only",
     "zip": "node scripts/build.js --zip-only",
-    "test": "npm run test:html && npm run test:assets && npm run test:icons && npm run test:bundle && npm run test:responsive",
+    "test": "npm run test:html && npm run test:assets && npm run test:icons && npm run test:bundle && npm run test:js && npm run test:responsive",
     "test:html": "html-validate src/docs/index.html site/index.html",
     "test:assets": "node scripts/check-assets.js",
     "test:icons": "node scripts/check-icons.js",
     "test:bundle": "node scripts/check-bundle-smoke.js",
-    "test:responsive": "playwright test"
+    "test:js": "playwright test tests/pdei-js.spec.js",
+    "test:responsive": "playwright test tests/responsive.spec.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
