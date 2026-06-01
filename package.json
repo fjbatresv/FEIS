@@ -1,0 +1,14 @@
+{
+  "name": "pdei-ui-library",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pdei+ vanilla UI library bundle and static documentation site.",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "docs": "node scripts/build.js --docs-only",
+    "zip": "node scripts/build.js --zip-only"
+  },
+  "devDependencies": {
+    "lucide-static": "^1.17.0"
+  }
+}
