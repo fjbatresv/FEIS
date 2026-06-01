@@ -314,8 +314,9 @@ body.auth-mode{background:linear-gradient(180deg,var(--navy) 0%,var(--navy) 100%
 .segmented-copy{display:flex;flex-wrap:wrap;gap:4px 0}
 .segmented-copy .segment{white-space:nowrap}
 .segmented-copy .divider{padding:0 6px;color:var(--text-lt)}
-.featured-funds .fund-row{grid-template-columns:42px minmax(220px,1fr) 112px 44px}
+.featured-funds .fund-row{grid-template-columns:42px minmax(0,1fr) 168px 44px}
 .featured-funds .fund-main,.featured-funds .fund-right,.featured-funds .fund-actions{min-width:0}
+.featured-funds .fund-right{display:grid;justify-items:end;gap:6px}
 .featured-funds .fund-actions{width:44px}
 .portfolio-toolbar{
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end;margin:20px 0
@@ -665,8 +666,8 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   .page-head{flex-direction:column}
   .product-grid{grid-template-columns:1fr}
   .fund-row{display:flex;align-items:flex-start;flex-wrap:wrap}
-  .featured-funds .fund-row{display:flex}
-  .featured-funds .fund-actions{display:grid;width:100%;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .featured-funds .fund-row{display:grid;grid-template-columns:42px minmax(0,1fr) 168px 44px}
+  .featured-funds .fund-actions{display:flex;width:44px}
   .more-menu{width:100%}
   .more-menu-toggle{width:100%}
   .more-menu-panel{left:0;right:auto;min-width:100%}
@@ -1214,11 +1215,10 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <div class="fund-desc fund-desc-lines">
                   <div class="fund-desc-line">Cuenta 001 · Capitalización mensual</div>
                 </div>
-                <span class="status-badge status-active" style="margin-top:6px"><span class="status-dot"></span>Vigente</span>
               </div>
               <div class="fund-right">
                 <div class="fund-amount money">Q 84,320.00</div>
-                <div class="fund-pct">+6.1%</div>
+                <span class="status-badge status-active"><span class="status-dot"></span>Vigente</span>
               </div>
               <div class="fund-actions">
                 <button class="icon-btn" type="button" data-view-target="fund-detail" data-action-kind="always" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button>
@@ -1231,11 +1231,10 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <div class="fund-desc fund-desc-lines">
                   <div class="fund-desc-line">Cuenta 002 · Comprobante por validar</div>
                 </div>
-                <span class="status-badge status-pending" style="margin-top:6px"><span class="status-dot"></span>Pendiente de fondos</span>
               </div>
               <div class="fund-right">
                 <div class="fund-amount money">$ 1,600.00</div>
-                <div class="fund-pct">Pendiente activación</div>
+                <span class="status-badge status-pending"><span class="status-dot"></span>Pendiente de fondos</span>
               </div>
               <div class="fund-actions">
                 <button class="icon-btn" type="button" data-view-target="fund-detail" data-action-kind="always" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button>
@@ -1248,11 +1247,10 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <div class="fund-desc fund-desc-lines">
                   <div class="fund-desc-line">Cuenta 001 · Acciones restringidas</div>
                 </div>
-                <span class="status-badge status-review" style="margin-top:6px"><span class="status-dot"></span>En revisión</span>
               </div>
               <div class="fund-right">
                 <div class="fund-amount money">Q 30,000.00</div>
-                <div class="fund-pct">Bloqueado temporalmente</div>
+                <span class="status-badge status-review"><span class="status-dot"></span>En revisión</span>
               </div>
               <div class="fund-actions">
                 <button class="icon-btn" type="button" data-view-target="fund-detail" data-action-kind="always" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button>
