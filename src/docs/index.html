@@ -87,7 +87,7 @@
 El frontend productivo consume archivos estáticos desde /lib.</code></pre>
         </div>
         <div class="example-preview compact">
-          <button class="btn btn-primary"><i class="pdei-icon pdei-icon-plus"></i>Nueva inversión</button>
+          <button type="button" class="btn btn-primary"><i class="pdei-icon pdei-icon-plus"></i>Nueva inversión</button>
           <span class="status-badge status-active"><span class="status-dot"></span>Bundle cargado</span>
         </div>
       </article>
@@ -135,12 +135,12 @@ El frontend productivo consume archivos estáticos desde /lib.</code></pre>
           <div class="docs-form-grid">
             <div class="input-group">
               <label class="input-label">Monto de inversión <span class="help-icon" tabindex="0" data-help="Ingresa el monto mínimo requerido por el producto.">i</span></label>
-              <div class="input-prefix"><span class="input-prefix-label">Q</span><input class="input-field" placeholder="0.00"></div>
+              <div class="input-prefix"><span class="input-prefix-label">Q</span><input type="text" class="input-field" placeholder="0.00"></div>
               <span class="input-hint">Monto mínimo Q 1,000.00</span>
             </div>
             <div class="input-group">
               <label class="input-label">DPI</label>
-              <input class="input-field error" value="123">
+              <input type="text" class="input-field error" value="123">
               <span class="input-error-msg"><i class="pdei-icon pdei-icon-circle-alert"></i>Ingresa 13 dígitos.</span>
             </div>
             <div class="input-group">
@@ -182,11 +182,11 @@ data-pdei-password-toggle: alterna type password/text</code></pre>
         </div>
         <div class="example-preview">
           <div class="docs-form-grid">
-            <div class="input-group"><label class="input-label">Input simple</label><input class="input-field" placeholder="Nombre completo"></div>
-            <div class="input-group"><label class="input-label">Input exitoso</label><input class="input-field success" value="Cuenta validada"><span class="input-success-msg">Registro disponible.</span></div>
-            <div class="input-group"><label class="input-label">Input fallido</label><input class="input-field error" value="123"><span class="input-error-msg"><i class="pdei-icon pdei-icon-circle-alert"></i>Formato inválido.</span></div>
-            <div class="input-group"><label class="input-label">Campo desactivado</label><input class="input-field" value="No editable" disabled></div>
-            <div class="input-group"><label class="input-label">Password</label><div class="input-wrap"><input id="docs-password" class="input-field" type="password" value="MiClave123"><button class="input-icon-right" type="button" data-pdei-password-toggle="#docs-password" aria-label="Mostrar u ocultar contraseña"><i class="pdei-icon pdei-icon-eye"></i></button></div></div>
+            <div class="input-group"><label class="input-label">Input simple</label><input type="text" class="input-field" placeholder="Nombre completo"></div>
+            <div class="input-group"><label class="input-label">Input exitoso</label><input type="text" class="input-field success" value="Cuenta validada"><span class="input-success-msg">Registro disponible.</span></div>
+            <div class="input-group"><label class="input-label">Input fallido</label><input type="text" class="input-field error" value="123"><span class="input-error-msg"><i class="pdei-icon pdei-icon-circle-alert"></i>Formato inválido.</span></div>
+            <div class="input-group"><label class="input-label">Campo desactivado</label><input type="text" class="input-field" value="No editable" disabled></div>
+            <div class="input-group"><label class="input-label">Password</label><div class="input-wrap"><input id="docs-password" class="input-field" type="password" value="MiClave123" autocomplete="current-password"><button class="input-icon-right" type="button" data-pdei-password-toggle="#docs-password" aria-label="Mostrar u ocultar contraseña"><i class="pdei-icon pdei-icon-eye"></i></button></div></div>
             <div class="input-group"><label class="input-label">Textarea</label><textarea class="input-field" placeholder="Instrucciones especiales..."></textarea></div>
           </div>
         </div>
@@ -424,17 +424,17 @@ btn-loading: oculta el texto y muestra spinner.</code></pre>
         </div>
         <div class="example-preview">
           <div class="docs-button-grid">
-            <button class="btn btn-primary"><i class="pdei-icon pdei-icon-plus"></i>Nueva inversión</button>
-            <button class="btn btn-navy">Continuar</button>
-            <button class="btn btn-outline">Cancelar</button>
-            <button class="btn btn-outline-aqua">Ver detalle</button>
-            <button class="btn btn-ghost">Editar</button>
-            <button class="btn btn-danger"><i class="pdei-icon pdei-icon-trash-2"></i>Eliminar</button>
-            <button class="btn btn-primary btn-sm">Pequeño</button>
-            <button class="btn btn-navy btn-lg">Grande</button>
-            <button class="btn btn-primary btn-icon-only" aria-label="Agregar"><i class="pdei-icon pdei-icon-plus"></i></button>
-            <button class="btn btn-primary" disabled>Desactivado</button>
-            <button class="btn btn-primary btn-loading">Cargando</button>
+            <button type="button" class="btn btn-primary"><i class="pdei-icon pdei-icon-plus"></i>Nueva inversión</button>
+            <button type="button" class="btn btn-navy">Continuar</button>
+            <button type="button" class="btn btn-outline">Cancelar</button>
+            <button type="button" class="btn btn-outline-aqua">Ver detalle</button>
+            <button type="button" class="btn btn-ghost">Editar</button>
+            <button type="button" class="btn btn-danger"><i class="pdei-icon pdei-icon-trash-2"></i>Eliminar</button>
+            <button type="button" class="btn btn-primary btn-sm">Pequeño</button>
+            <button type="button" class="btn btn-navy btn-lg">Grande</button>
+            <button type="button" class="btn btn-primary btn-icon-only" aria-label="Agregar"><i class="pdei-icon pdei-icon-plus"></i></button>
+            <button type="button" class="btn btn-primary" disabled>Desactivado</button>
+            <button type="button" class="btn btn-primary btn-loading">Cargando</button>
           </div>
         </div>
       </article>
@@ -455,11 +455,11 @@ btn-loading: oculta el texto y muestra spinner.</code></pre>
 &lt;button class="btn-action-card"&gt;&lt;i class="pdei-icon pdei-icon-upload"&gt;&lt;/i&gt;Subir comprobante&lt;/button&gt;</code></pre>
         </div>
         <div class="example-preview compact">
-          <button class="icon-btn" aria-label="Editar"><i class="pdei-icon pdei-icon-pencil"></i></button>
-          <button class="icon-btn" aria-label="Descargar"><i class="pdei-icon pdei-icon-download"></i></button>
-          <button class="icon-btn" aria-label="Ver detalle"><i class="pdei-icon pdei-icon-chevron-right"></i></button>
-          <button class="btn-action-card"><i class="pdei-icon pdei-icon-plus"></i>Agregar beneficiario</button>
-          <button class="btn-action-card"><i class="pdei-icon pdei-icon-upload"></i>Subir comprobante</button>
+          <button type="button" class="icon-btn" aria-label="Editar"><i class="pdei-icon pdei-icon-pencil"></i></button>
+          <button type="button" class="icon-btn" aria-label="Descargar"><i class="pdei-icon pdei-icon-download"></i></button>
+          <button type="button" class="icon-btn" aria-label="Ver detalle"><i class="pdei-icon pdei-icon-chevron-right"></i></button>
+          <button type="button" class="btn-action-card"><i class="pdei-icon pdei-icon-plus"></i>Agregar beneficiario</button>
+          <button type="button" class="btn-action-card"><i class="pdei-icon pdei-icon-upload"></i>Subir comprobante</button>
         </div>
       </article>
     </section>
@@ -495,12 +495,12 @@ btn-loading: oculta el texto y muestra spinner.</code></pre>
           <div class="security-grid">
             <div>
               <div class="otp-group">
-                <input class="otp-box active" maxlength="1" inputmode="numeric" aria-label="Dígito 1" data-otp-input>
-                <input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 2" data-otp-input>
-                <input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 3" data-otp-input>
-                <input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 4" data-otp-input>
-                <input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 5" data-otp-input>
-                <input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 6" data-otp-input>
+                <input type="text" class="otp-box active" maxlength="1" inputmode="numeric" aria-label="Dígito 1" data-otp-input>
+                <input type="text" class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 2" data-otp-input>
+                <input type="text" class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 3" data-otp-input>
+                <input type="text" class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 4" data-otp-input>
+                <input type="text" class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 5" data-otp-input>
+                <input type="text" class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 6" data-otp-input>
               </div>
               <div class="progress-wrap u-mt-lg"><div class="progress-fill" style="width:55%"></div></div>
             </div>
@@ -585,11 +585,11 @@ alert-info</code></pre>
 Pdei.closeModal(document.getElementById("confirm-modal"));</code></pre>
         </div>
         <div class="example-preview compact">
-          <button class="btn btn-primary" data-pdei-open-modal="docs-confirm-modal">Ver modal interactivo</button>
+          <button type="button" class="btn btn-primary" data-pdei-open-modal="docs-confirm-modal">Ver modal interactivo</button>
           <div class="modal-box docs-inline-modal">
             <div class="modal-title">Eliminar beneficiario</div>
             <div class="modal-body">¿Confirmas que deseas eliminar este beneficiario? Esta acción es permanente.</div>
-            <div class="modal-actions"><button class="btn btn-ghost btn-sm">Cancelar</button><button class="btn btn-danger btn-sm">Eliminar</button></div>
+            <div class="modal-actions"><button type="button" class="btn btn-ghost btn-sm">Cancelar</button><button type="button" class="btn btn-danger btn-sm">Eliminar</button></div>
           </div>
         </div>
       </article>
@@ -636,8 +636,8 @@ Pdei.showToast("Guardado.", { position: "bottom-center" });</code></pre>
               <div class="alerts-panel open">
                 <div class="alerts-panel-head"><div class="alerts-panel-title">Notificaciones</div><span class="badge badge-aqua">2</span></div>
                 <div class="alerts-list">
-                  <button class="alert-item"><span class="alert-item-title">Depósito pendiente</span><span class="alert-item-copy">Completa el comprobante asociado al fondo.</span></button>
-                  <button class="alert-item"><span class="alert-item-title">DPI por vencer</span><span class="alert-item-copy">Actualiza tu documento antes de continuar.</span></button>
+                  <button type="button" class="alert-item"><span class="alert-item-title">Depósito pendiente</span><span class="alert-item-copy">Completa el comprobante asociado al fondo.</span></button>
+                  <button type="button" class="alert-item"><span class="alert-item-title">DPI por vencer</span><span class="alert-item-copy">Actualiza tu documento antes de continuar.</span></button>
                 </div>
               </div>
             </div>
@@ -826,13 +826,13 @@ minmax(0,1fr) información
                   <div class="fund-icon"><i class="pdei-icon pdei-icon-chart-column"></i></div>
                   <div class="fund-main"><div class="fund-name">Fondo Bursátil GTQ</div><div class="fund-desc">Renta variable local</div></div>
                   <div class="fund-right"><div class="fund-amount">Q 58,200.00</div><span class="status-badge status-active"><span class="status-dot"></span>Activo</span></div>
-                  <div class="fund-actions"><button class="icon-btn" aria-label="Ver"><i class="pdei-icon pdei-icon-chevron-right"></i></button></div>
+                  <div class="fund-actions"><button type="button" class="icon-btn" aria-label="Ver"><i class="pdei-icon pdei-icon-chevron-right"></i></button></div>
                 </div>
                 <div class="fund-row">
                   <div class="fund-icon"><i class="pdei-icon pdei-icon-wallet"></i></div>
                   <div class="fund-main"><div class="fund-name">Fondo Crecimiento</div><div class="fund-desc">Pendiente de depósito</div></div>
                   <div class="fund-right"><div class="fund-amount">Q 15,000.00</div><span class="status-badge status-pending"><span class="status-dot"></span>Pendiente</span></div>
-                  <div class="fund-actions"><button class="icon-btn" aria-label="Ver"><i class="pdei-icon pdei-icon-chevron-right"></i></button></div>
+                  <div class="fund-actions"><button type="button" class="icon-btn" aria-label="Ver"><i class="pdei-icon pdei-icon-chevron-right"></i></button></div>
                 </div>
               </div>
             </div>
@@ -958,7 +958,7 @@ minmax(0,1fr) información
               <span><i class="pdei-icon pdei-icon-file-text"></i>Documentos</span>
             </div>
             <div class="mini-content">
-              <div class="mini-header"><strong>Mi Portafolio</strong><button class="icon-btn"><i class="pdei-icon pdei-icon-bell"></i></button></div>
+              <div class="mini-header"><strong>Mi Portafolio</strong><button type="button" class="icon-btn"><i class="pdei-icon pdei-icon-bell"></i></button></div>
               <div class="mini-panel">
                 <div class="kpi-small"><div class="kpi-small-label">Rendimiento</div><div class="kpi-small-value">Q 4,820</div><div class="kpi-small-change up">+3.2%</div></div>
                 <div class="kpi-small"><div class="kpi-small-label">Fondos activos</div><div class="kpi-small-value">3</div><div class="kpi-small-change">Actualizado hoy</div></div>

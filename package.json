@@ -6,9 +6,17 @@
   "scripts": {
     "build": "node scripts/build.js",
     "docs": "node scripts/build.js --docs-only",
-    "zip": "node scripts/build.js --zip-only"
+    "zip": "node scripts/build.js --zip-only",
+    "test": "npm run test:html && npm run test:assets && npm run test:icons && npm run test:bundle && npm run test:responsive",
+    "test:html": "html-validate src/docs/index.html site/index.html",
+    "test:assets": "node scripts/check-assets.js",
+    "test:icons": "node scripts/check-icons.js",
+    "test:bundle": "node scripts/check-bundle-smoke.js",
+    "test:responsive": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "html-validate": "^11.4.0",
     "lucide-static": "^1.17.0"
   }
 }
