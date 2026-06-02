@@ -111,6 +111,41 @@ test("opens and closes modals from data attributes and public methods", async ({
   await expect(modal).not.toHaveClass(/show/);
 });
 
+test("toggles sidebar state on desktop and mobile", async ({ page }) => {
+  await loadPdei(page, `
+    <div class="pdei-shell" id="app-shell">
+      <aside class="pdei-sidebar">
+        <a class="sb-item active" href="#"><i class="pdei-icon pdei-icon-home sb-icon"></i><span class="sb-item-text">Dashboard</span></a>
+      </aside>
+      <div class="sidebar-backdrop" data-pdei-sidebar-close></div>
+      <header class="pdei-header">
+        <button class="icon-btn" type="button" data-pdei-sidebar-toggle="#app-shell">
+          <i class="pdei-icon pdei-icon-sidebar-close"></i>
+        </button>
+      </header>
+    </div>
+  `);
+
+  const shell = page.locator("#app-shell");
+  const toggle = page.locator("[data-pdei-sidebar-toggle]");
+  const isMobile = await page.evaluate(() => window.matchMedia("(max-width: 900px)").matches);
+
+  await expect(toggle).toHaveAttribute("aria-expanded", isMobile ? "false" : "true");
+  await toggle.click();
+
+  if (isMobile) {
+    await expect(shell).toHaveClass(/sidebar-open/);
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await page.locator("[data-pdei-sidebar-close]").click();
+    await expect(shell).not.toHaveClass(/sidebar-open/);
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  } else {
+    await expect(shell).toHaveClass(/sidebar-collapsed/);
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await expect(toggle.locator(".pdei-icon")).toHaveClass(/pdei-icon-sidebar-open/);
+  }
+});
+
 test("dismisses the closest matching component", async ({ page }) => {
   await loadPdei(page, `
     <div class="alert" id="alert-a">

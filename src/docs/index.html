@@ -135,19 +135,19 @@ El frontend productivo consume archivos estáticos desde /lib.</code></pre>
           <div class="docs-form-grid">
             <div class="input-group">
               <label class="input-label">Monto de inversión <span class="help-icon" tabindex="0" data-help="Ingresa el monto mínimo requerido por el producto.">i</span></label>
-              <div class="input-prefix"><span class="input-prefix-label">Q</span><input type="text" class="input-field" placeholder="0.00"></div>
+              <div class="input-prefix"><span class="input-prefix-label">Q</span><input type="text" class="input-field" placeholder="0.00" aria-label="Monto de inversión"></div>
               <span class="input-hint">Monto mínimo Q 1,000.00</span>
             </div>
             <div class="input-group">
               <label class="input-label">DPI</label>
-              <input type="text" class="input-field error" value="123">
+              <input type="text" class="input-field error" value="123" aria-label="DPI">
               <span class="input-error-msg"><i class="pdei-icon pdei-icon-circle-alert"></i>Ingresa 13 dígitos.</span>
             </div>
             <div class="input-group">
               <label class="input-label">Producto</label>
-              <select class="select-field"><option>Fondo Bursátil GTQ</option><option>Fondo Bursátil USD</option></select>
+              <select class="select-field" aria-label="Producto"><option>Fondo Bursátil GTQ</option><option>Fondo Bursátil USD</option></select>
             </div>
-            <label class="toggle-wrap"><span class="toggle on" data-pdei-toggle></span><span>Reinversión automática</span></label>
+            <label class="toggle-wrap"><span class="toggle on" data-pdei-toggle role="switch" aria-checked="true" tabindex="0" aria-label="Reinversión automática"></span><span>Reinversión automática</span></label>
           </div>
         </div>
       </article>
@@ -182,12 +182,12 @@ data-pdei-password-toggle: alterna type password/text</code></pre>
         </div>
         <div class="example-preview">
           <div class="docs-form-grid">
-            <div class="input-group"><label class="input-label">Input simple</label><input type="text" class="input-field" placeholder="Nombre completo"></div>
-            <div class="input-group"><label class="input-label">Input exitoso</label><input type="text" class="input-field success" value="Cuenta validada"><span class="input-success-msg">Registro disponible.</span></div>
-            <div class="input-group"><label class="input-label">Input fallido</label><input type="text" class="input-field error" value="123"><span class="input-error-msg"><i class="pdei-icon pdei-icon-circle-alert"></i>Formato inválido.</span></div>
-            <div class="input-group"><label class="input-label">Campo desactivado</label><input type="text" class="input-field" value="No editable" disabled></div>
-            <div class="input-group"><label class="input-label">Password</label><div class="input-wrap"><input id="docs-password" class="input-field" type="password" value="MiClave123" autocomplete="current-password"><button class="input-icon-right" type="button" data-pdei-password-toggle="#docs-password" aria-label="Mostrar u ocultar contraseña"><i class="pdei-icon pdei-icon-eye"></i></button></div></div>
-            <div class="input-group"><label class="input-label">Textarea</label><textarea class="input-field" placeholder="Instrucciones especiales..."></textarea></div>
+            <div class="input-group"><label class="input-label">Input simple</label><input type="text" class="input-field" placeholder="Nombre completo" aria-label="Input simple"></div>
+            <div class="input-group"><label class="input-label">Input exitoso</label><input type="text" class="input-field success" value="Cuenta validada" aria-label="Input exitoso"><span class="input-success-msg">Registro disponible.</span></div>
+            <div class="input-group"><label class="input-label">Input fallido</label><input type="text" class="input-field error" value="123" aria-label="Input fallido"><span class="input-error-msg"><i class="pdei-icon pdei-icon-circle-alert"></i>Formato inválido.</span></div>
+            <div class="input-group"><label class="input-label">Campo desactivado</label><input type="text" class="input-field" value="No editable" disabled aria-label="Campo desactivado"></div>
+            <div class="input-group"><label class="input-label">Password</label><div class="input-wrap"><input id="docs-password" class="input-field" type="password" value="MiClave123" autocomplete="current-password" aria-label="Password"><button class="input-icon-right" type="button" data-pdei-password-toggle="#docs-password" aria-label="Mostrar u ocultar contraseña"><i class="pdei-icon pdei-icon-eye"></i></button></div></div>
+            <div class="input-group"><label class="input-label">Textarea</label><textarea class="input-field" placeholder="Instrucciones especiales..." aria-label="Textarea"></textarea></div>
           </div>
         </div>
       </article>
@@ -213,7 +213,7 @@ data-pdei-password-toggle: alterna type password/text</code></pre>
           <label class="check-group"><input type="checkbox" class="check-input"><span class="check-label">Recibir alertas</span></label>
           <label class="check-group"><input type="radio" class="radio-input" name="docs-account-type" checked><span class="check-label">Individual</span></label>
           <label class="check-group"><input type="radio" class="radio-input" name="docs-account-type"><span class="check-label">Mancomunada</span></label>
-          <label class="toggle-wrap"><span class="toggle on" data-pdei-toggle></span><span>Notificaciones activas</span></label>
+          <label class="toggle-wrap"><span class="toggle on" data-pdei-toggle role="switch" aria-checked="true" tabindex="0" aria-label="Notificaciones activas"></span><span>Notificaciones activas</span></label>
         </div>
       </article>
     </section>
@@ -941,24 +941,39 @@ minmax(0,1fr) información
           <button type="button" data-example-tab="css">CSS</button>
         </div>
         <div class="example-code">
-          <pre class="active" data-example-panel="html"><code>&lt;aside class="pdei-sidebar"&gt;...&lt;/aside&gt;
-&lt;header class="pdei-header"&gt;...&lt;/header&gt;
-&lt;main class="pdei-main"&gt;...&lt;/main&gt;</code></pre>
+          <pre class="active" data-example-panel="html"><code>&lt;div class="pdei-shell" id="app-shell"&gt;
+  &lt;aside class="pdei-sidebar"&gt;
+    &lt;div class="sb-logo"&gt;&lt;span class="pdei-logo logo-white logo-lg" role="img" aria-label="Pdei+"&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;a class="sb-item active" href="#"&gt;&lt;i class="pdei-icon pdei-icon-home sb-icon"&gt;&lt;/i&gt;&lt;span class="sb-item-text"&gt;Dashboard&lt;/span&gt;&lt;/a&gt;
+  &lt;/aside&gt;
+  &lt;div class="sidebar-backdrop" data-pdei-sidebar-close&gt;&lt;/div&gt;
+  &lt;header class="pdei-header"&gt;
+    &lt;button class="icon-btn sidebar-toggle" type="button" data-pdei-sidebar-toggle="#app-shell"&gt;
+      &lt;i class="pdei-icon pdei-icon-sidebar-close"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+    &lt;div class="hdr-title"&gt;Mi Portafolio&lt;/div&gt;
+  &lt;/header&gt;
+  &lt;main class="pdei-main"&gt;...&lt;/main&gt;
+&lt;/div&gt;</code></pre>
           <pre data-example-panel="css"><code>:root {
   --sidebar-w: 210px;
   --header-h: 64px;
 }</code></pre>
         </div>
         <div class="example-preview no-padding">
-            <div class="docs-shell-demo">
+            <div class="docs-shell-demo" id="docs-shell-demo">
               <div class="mini-sidebar">
               <span class="pdei-logo logo-navy logo-lg" role="img" aria-label="Pdei+"></span>
-              <span class="active"><i class="pdei-icon pdei-icon-home"></i>Dashboard</span>
-              <span><i class="pdei-icon pdei-icon-wallet"></i>Mis fondos</span>
-              <span><i class="pdei-icon pdei-icon-file-text"></i>Documentos</span>
+              <span class="active"><i class="pdei-icon pdei-icon-home"></i><span class="sb-item-text">Dashboard</span></span>
+              <span><i class="pdei-icon pdei-icon-wallet"></i><span class="sb-item-text">Mis fondos</span></span>
+              <span><i class="pdei-icon pdei-icon-file-text"></i><span class="sb-item-text">Documentos</span></span>
             </div>
             <div class="mini-content">
-              <div class="mini-header"><strong>Mi Portafolio</strong><button type="button" class="icon-btn"><i class="pdei-icon pdei-icon-bell"></i></button></div>
+              <div class="mini-header">
+                <button type="button" class="icon-btn sidebar-toggle" data-pdei-sidebar-toggle="#docs-shell-demo"><i class="pdei-icon pdei-icon-sidebar-close"></i></button>
+                <strong>Mi Portafolio</strong>
+                <button type="button" class="icon-btn" aria-label="Ver notificaciones"><i class="pdei-icon pdei-icon-bell"></i></button>
+              </div>
               <div class="mini-panel">
                 <div class="kpi-small"><div class="kpi-small-label">Rendimiento</div><div class="kpi-small-value">Q 4,820</div><div class="kpi-small-change up">+3.2%</div></div>
                 <div class="kpi-small"><div class="kpi-small-label">Fondos activos</div><div class="kpi-small-value">3</div><div class="kpi-small-change">Actualizado hoy</div></div>

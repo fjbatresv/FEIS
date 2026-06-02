@@ -17,6 +17,14 @@
     }, 1600);
   }
 
+  document.querySelectorAll(".example-tabs[role='tablist']").forEach(function(group) {
+    group.removeAttribute("role");
+  });
+
+  document.querySelectorAll(".example-code pre").forEach(function(block) {
+    block.setAttribute("tabindex", "0");
+  });
+
   document.addEventListener("click", function(event) {
     var tab = event.target.closest("[data-example-tab]");
     if (tab) {

@@ -49,6 +49,31 @@
     return toast;
   }
 
+  function isMobileShell() {
+    return window.matchMedia && window.matchMedia("(max-width: 900px)").matches;
+  }
+
+  function getSidebarShell(trigger) {
+    var selector = trigger.getAttribute("data-pdei-sidebar-toggle");
+    return selector ? document.querySelector(selector) : closest(trigger, ".pdei-shell");
+  }
+
+  function setSidebarButtonState(button, shell) {
+    var expanded = isMobileShell() ? shell.classList.contains("sidebar-open") : !shell.classList.contains("sidebar-collapsed");
+    button.setAttribute("aria-expanded", expanded ? "true" : "false");
+    button.setAttribute("aria-label", expanded ? "Ocultar menú" : "Mostrar menú");
+    var icon = button.querySelector(".pdei-icon");
+    if (icon) icon.className = expanded ? "pdei-icon pdei-icon-sidebar-close" : "pdei-icon pdei-icon-sidebar-open";
+  }
+
+  function closeSidebar(shell) {
+    if (!shell) return;
+    shell.classList.remove("sidebar-open");
+    each(shell, "[data-pdei-sidebar-toggle]", function(button) {
+      setSidebarButtonState(button, shell);
+    });
+  }
+
   function init(root) {
     root = root || document;
 
@@ -145,6 +170,49 @@
         target.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
+
+    each(root, "[data-pdei-sidebar-toggle]", function(trigger) {
+      if (trigger.dataset.pdeiReady) return;
+      trigger.dataset.pdeiReady = "true";
+      var shell = getSidebarShell(trigger);
+      if (!shell) return;
+      var controlId = trigger.getAttribute("data-pdei-sidebar-toggle").replace(/^#/, "") || shell.id;
+      if (controlId) trigger.setAttribute("aria-controls", controlId);
+      setSidebarButtonState(trigger, shell);
+      trigger.addEventListener("click", function() {
+        if (isMobileShell()) {
+          shell.classList.toggle("sidebar-open");
+        } else {
+          shell.classList.toggle("sidebar-collapsed");
+        }
+        setSidebarButtonState(trigger, shell);
+      });
+      if (window.matchMedia) {
+        var media = window.matchMedia("(max-width: 900px)");
+        var onChange = function() {
+          closeSidebar(shell);
+          setSidebarButtonState(trigger, shell);
+        };
+        if (media.addEventListener) media.addEventListener("change", onChange);
+        else if (media.addListener) media.addListener(onChange);
+      }
+    });
+
+    each(root, "[data-pdei-sidebar-close]", function(trigger) {
+      if (trigger.dataset.pdeiReady) return;
+      trigger.dataset.pdeiReady = "true";
+      trigger.addEventListener("click", function() {
+        closeSidebar(closest(trigger, ".pdei-shell") || document.querySelector(".pdei-shell"));
+      });
+    });
+
+    if (!document.documentElement.dataset.pdeiSidebarEscapeReady) {
+      document.documentElement.dataset.pdeiSidebarEscapeReady = "true";
+      document.addEventListener("keydown", function(event) {
+        if (event.key !== "Escape") return;
+        each(document, ".pdei-shell.sidebar-open", closeSidebar);
+      });
+    }
   }
 
   window.Pdei = {
