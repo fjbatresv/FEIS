@@ -136,7 +136,8 @@ test("toggles sidebar state on desktop and mobile", async ({ page }) => {
   if (isMobile) {
     await expect(shell).toHaveClass(/sidebar-open/);
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
-    await page.locator("[data-pdei-sidebar-close]").click();
+    const viewport = page.viewportSize();
+    await page.mouse.click((viewport?.width || 390) - 12, Math.floor((viewport?.height || 844) / 2));
     await expect(shell).not.toHaveClass(/sidebar-open/);
     await expect(toggle).toHaveAttribute("aria-expanded", "false");
   } else {
