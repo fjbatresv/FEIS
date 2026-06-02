@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pdei+ UI Library</title>
+  <link rel="stylesheet" href="lib/pdei.min.css">
+  <link rel="stylesheet" href="lib/icons/pdei-icons.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+  <aside class="docs-sidebar">
+    <div class="docs-brand">
+      <span class="pdei-logo logo-navy logo-lg" role="img" aria-label="Pdei+"></span>
+      <span>UI Library</span>
+    </div>
+    <nav class="docs-nav" aria-label="Componentes">
+      <a href="#overview" data-pdei-scroll><i class="pdei-icon pdei-icon-book-open"></i>Inicio</a>
+      <a href="#install" data-pdei-scroll><i class="pdei-icon pdei-icon-terminal"></i>Instalación</a>
+      <a href="#foundations" data-pdei-scroll><i class="pdei-icon pdei-icon-ruler"></i>Fundamentos</a>
+      <a href="#colors" data-pdei-scroll><i class="pdei-icon pdei-icon-palette"></i>Colores</a>
+      <a href="#typography" data-pdei-scroll><i class="pdei-icon pdei-icon-type"></i>Tipografía</a>
+      <a href="#inputs" data-pdei-scroll><i class="pdei-icon pdei-icon-square-pen"></i>Inputs</a>
+      <a href="#buttons" data-pdei-scroll><i class="pdei-icon pdei-icon-rectangle-horizontal"></i>Botones</a>
+      <a href="#security" data-pdei-scroll><i class="pdei-icon pdei-icon-shield-check"></i>2FA / progreso</a>
+      <a href="#alerts" data-pdei-scroll><i class="pdei-icon pdei-icon-alert-triangle"></i>Alertas</a>
+      <a href="#dialogs" data-pdei-scroll><i class="pdei-icon pdei-icon-panels-top-left"></i>Diálogos</a>
+      <a href="#feedback" data-pdei-scroll><i class="pdei-icon pdei-icon-message-square"></i>Toasts</a>
+      <a href="#badges" data-pdei-scroll><i class="pdei-icon pdei-icon-badge-check"></i>Badges</a>
+      <a href="#chips" data-pdei-scroll><i class="pdei-icon pdei-icon-tags"></i>Chips</a>
+      <a href="#kpis" data-pdei-scroll><i class="pdei-icon pdei-icon-layout-dashboard"></i>KPIs</a>
+      <a href="#lists" data-pdei-scroll><i class="pdei-icon pdei-icon-list"></i>Listas</a>
+      <a href="#tables" data-pdei-scroll><i class="pdei-icon pdei-icon-table"></i>Tablas</a>
+      <a href="#steppers" data-pdei-scroll><i class="pdei-icon pdei-icon-list-checks"></i>Step bar</a>
+      <a href="#shell" data-pdei-scroll><i class="pdei-icon pdei-icon-panel-left"></i>Shell</a>
+      <a href="#footer" data-pdei-scroll><i class="pdei-icon pdei-icon-panel-bottom"></i>Footer</a>
+      <a href="#logos" data-pdei-scroll><i class="pdei-icon pdei-icon-image"></i>Logos</a>
+      <a href="#icons" data-pdei-scroll><i class="pdei-icon pdei-icon-shapes"></i>Iconos</a>
+    </nav>
+  </aside>
+
+  <main class="docs-main">
+    <header class="docs-topbar">
+      <div>
+        <p class="docs-eyebrow">Pdei+ Vanilla Components</p>
+        <h1>Ejemplos de componentes</h1>
+      </div>
+    </header>
+
+    <section class="docs-intro" id="overview">
+      <div>
+        <h2>Construye pantallas del portal con clases listas para PHP y Livewire.</h2>
+        <p>Esta documentación usa el mismo `lib/` que se entrega al equipo. Cada ejemplo muestra variaciones, código HTML y estilos auxiliares cuando aplican.</p>
+      </div>
+      <div class="docs-version">
+        <span>Runtime</span>
+        <strong>CSS + JS vanilla</strong>
+        <small>Sin Node en producción</small>
+      </div>
+    </section>
+
+    <section class="docs-section" id="install">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Getting started</span>
+          <h2>Instalación</h2>
+        </div>
+        <p>Copia `lib/` en tu proyecto y carga los tres archivos base.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Imports mínimos</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="notes">Notas</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;link rel="stylesheet" href="/lib/pdei.min.css"&gt;
+&lt;link rel="stylesheet" href="/lib/icons/pdei-icons.css"&gt;
+&lt;script src="/lib/pdei.min.js" defer&gt;&lt;/script&gt;</code></pre>
+          <pre data-example-panel="notes"><code>Node/npm solo se usa para generar el bundle.
+El frontend productivo consume archivos estáticos desde /lib.</code></pre>
+        </div>
+        <div class="example-preview compact">
+          <button type="button" class="btn btn-primary"><i class="pdei-icon pdei-icon-plus"></i>Nueva inversión</button>
+          <span class="status-badge status-active"><span class="status-dot"></span>Bundle cargado</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="inputs">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Forms</span>
+          <h2>Inputs</h2>
+        </div>
+        <p>Campos con label superior, foco aqua, ayudas contextuales y estados de validación.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Input con prefijo, hint y validación</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+            <button class="example-icon-btn" type="button" data-expand-example title="Expandir"><i class="pdei-icon pdei-icon-maximize-2"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="css">CSS</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;div class="input-group"&gt;
+  &lt;label class="input-label"&gt;
+    Monto de inversión
+    &lt;span class="help-icon" tabindex="0" data-help="Ingresa el monto mínimo requerido por el producto."&gt;i&lt;/span&gt;
+  &lt;/label&gt;
+  &lt;div class="input-prefix"&gt;
+    &lt;span class="input-prefix-label"&gt;Q&lt;/span&gt;
+    &lt;input class="input-field" placeholder="0.00"&gt;
+  &lt;/div&gt;
+  &lt;span class="input-hint"&gt;Monto mínimo Q 1,000.00&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+          <pre data-example-panel="css"><code>.input-field:focus {
+  border-color: var(--aqua);
+  box-shadow: 0 0 0 3px rgba(0,205,229,.12);
+}</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="docs-form-grid">
+            <div class="input-group">
+              <label class="input-label">Monto de inversión <span class="help-icon" tabindex="0" data-help="Ingresa el monto mínimo requerido por el producto.">i</span></label>
+              <div class="input-prefix"><span class="input-prefix-label">Q</span><input type="text" class="input-field" placeholder="0.00" aria-label="Monto de inversión"></div>
+              <span class="input-hint">Monto mínimo Q 1,000.00</span>
+            </div>
+            <div class="input-group">
+              <label class="input-label">DPI</label>
+              <input type="text" class="input-field error" value="123" aria-label="DPI">
+              <span class="input-error-msg"><i class="pdei-icon pdei-icon-circle-alert"></i>Ingresa 13 dígitos.</span>
+            </div>
+            <div class="input-group">
+              <label class="input-label">Producto</label>
+              <select class="select-field" aria-label="Producto"><option>Fondo Bursátil GTQ</option><option>Fondo Bursátil USD</option></select>
+            </div>
+            <label class="toggle-wrap"><span class="toggle on" data-pdei-toggle role="switch" aria-checked="true" tabindex="0" aria-label="Reinversión automática"></span><span>Reinversión automática</span></label>
+          </div>
+        </div>
+      </article>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Estados y tipos de campo</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="notes">Uso</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;input class="input-field" placeholder="Texto simple"&gt;
+&lt;input class="input-field success" value="Validado"&gt;
+&lt;input class="input-field error" value="Dato inválido"&gt;
+&lt;input class="input-field" value="No editable" disabled&gt;
+
+&lt;div class="input-wrap"&gt;
+  &lt;input id="password-demo" class="input-field" type="password" value="MiClave123"&gt;
+  &lt;button class="input-icon-right" type="button" data-pdei-password-toggle="#password-demo" aria-label="Mostrar contraseña"&gt;
+    &lt;i class="pdei-icon pdei-icon-eye"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          <pre data-example-panel="notes"><code>success: validación correcta
+error: validación fallida
+disabled: campo no editable
+data-pdei-password-toggle: alterna type password/text</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="docs-form-grid">
+            <div class="input-group"><label class="input-label">Input simple</label><input type="text" class="input-field" placeholder="Nombre completo" aria-label="Input simple"></div>
+            <div class="input-group"><label class="input-label">Input exitoso</label><input type="text" class="input-field success" value="Cuenta validada" aria-label="Input exitoso"><span class="input-success-msg">Registro disponible.</span></div>
+            <div class="input-group"><label class="input-label">Input fallido</label><input type="text" class="input-field error" value="123" aria-label="Input fallido"><span class="input-error-msg"><i class="pdei-icon pdei-icon-circle-alert"></i>Formato inválido.</span></div>
+            <div class="input-group"><label class="input-label">Campo desactivado</label><input type="text" class="input-field" value="No editable" disabled aria-label="Campo desactivado"></div>
+            <div class="input-group"><label class="input-label">Password</label><div class="input-wrap"><input id="docs-password" class="input-field" type="password" value="MiClave123" autocomplete="current-password" aria-label="Password"><button class="input-icon-right" type="button" data-pdei-password-toggle="#docs-password" aria-label="Mostrar u ocultar contraseña"><i class="pdei-icon pdei-icon-eye"></i></button></div></div>
+            <div class="input-group"><label class="input-label">Textarea</label><textarea class="input-field" placeholder="Instrucciones especiales..." aria-label="Textarea"></textarea></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Checkboxes, radios, toggles y selects</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;label class="check-group"&gt;&lt;input type="checkbox" class="check-input" checked&gt;&lt;span class="check-label"&gt;Acepto términos&lt;/span&gt;&lt;/label&gt;
+&lt;label class="check-group"&gt;&lt;input type="radio" class="radio-input" name="tipo" checked&gt;&lt;span class="check-label"&gt;Cuenta individual&lt;/span&gt;&lt;/label&gt;
+&lt;span class="toggle on" data-pdei-toggle&gt;&lt;/span&gt;
+&lt;select class="select-field"&gt;&lt;option&gt;Fondo Bursátil GTQ&lt;/option&gt;&lt;/select&gt;</code></pre>
+        </div>
+        <div class="example-preview compact">
+          <label class="check-group"><input type="checkbox" class="check-input" checked><span class="check-label">Acepto términos</span></label>
+          <label class="check-group"><input type="checkbox" class="check-input"><span class="check-label">Recibir alertas</span></label>
+          <label class="check-group"><input type="radio" class="radio-input" name="docs-account-type" checked><span class="check-label">Individual</span></label>
+          <label class="check-group"><input type="radio" class="radio-input" name="docs-account-type"><span class="check-label">Mancomunada</span></label>
+          <label class="toggle-wrap"><span class="toggle on" data-pdei-toggle role="switch" aria-checked="true" tabindex="0" aria-label="Notificaciones activas"></span><span>Notificaciones activas</span></label>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="foundations">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Foundations</span>
+          <h2>Espacios, radios y sombras</h2>
+        </div>
+        <p>La composición usa múltiplos de 4px, radios controlados y sombras discretas para superficies financieras.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Tokens visuales</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="css">CSS</button>
+          <button type="button" data-example-tab="usage">Uso</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="css"><code>:root {
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-btn: 14px;
+  --radius-pill: 20px;
+  --shadow-card: 0 2px 16px rgba(0,0,0,.07);
+  --shadow-sm: 0 1px 4px rgba(0,0,0,.08);
+}</code></pre>
+          <pre data-example-panel="usage"><code>4px: detalle mínimo
+8px: chips / controles compactos
+16px: separación de campos
+24px: padding de cards
+32px: padding de pantalla</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="foundation-grid">
+            <div class="spacing-scale"><span style="width:4px;height:4px"></span><code>4</code></div>
+            <div class="spacing-scale"><span style="width:8px;height:8px"></span><code>8</code></div>
+            <div class="spacing-scale"><span style="width:16px;height:16px"></span><code>16</code></div>
+            <div class="spacing-scale"><span style="width:24px;height:24px"></span><code>24</code></div>
+            <div class="spacing-scale"><span style="width:32px;height:32px"></span><code>32</code></div>
+            <div class="radius-sample" style="border-radius:var(--radius-sm)">sm</div>
+            <div class="radius-sample" style="border-radius:var(--radius-md)">md</div>
+            <div class="radius-sample" style="border-radius:var(--radius-lg)">lg</div>
+            <div class="shadow-sample" style="box-shadow:var(--shadow-sm)">shadow-sm</div>
+            <div class="shadow-sample" style="box-shadow:var(--shadow-card)">shadow-card</div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="colors">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Foundations</span>
+          <h2>Colores</h2>
+        </div>
+        <p>Usa variables CSS para fondos, bordes y estados. Las utilidades `text-*` y `bg-*` cubren casos rápidos.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Paleta y nombres públicos</h3>
+          <div class="example-actions"><button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button></div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="css">CSS</button>
+          <button type="button" data-example-tab="html">HTML</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="css"><code>color: var(--navy);
+background: var(--aqua);
+border-color: var(--border);
+
+/* Utilidades */
+.text-success
+.text-warning
+.text-danger
+.bg-navy
+.bg-aqua</code></pre>
+          <pre data-example-panel="html"><code>&lt;span class="text-navy"&gt;Texto navy&lt;/span&gt;
+&lt;span class="text-success"&gt;Texto success&lt;/span&gt;
+&lt;span class="badge bg-aqua"&gt;Fondo aqua&lt;/span&gt;</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="color-grid">
+            <div class="color-swatch" style="--swatch:var(--navy)"><span></span><strong>--navy</strong><code>#2B2B5E</code></div>
+            <div class="color-swatch" style="--swatch:var(--aqua)"><span></span><strong>--aqua</strong><code>#00CDE5</code></div>
+            <div class="color-swatch" style="--swatch:var(--dark-aqua)"><span></span><strong>--dark-aqua</strong><code>#00798E</code></div>
+            <div class="color-swatch" style="--swatch:var(--success)"><span></span><strong>--success</strong><code>#22C55E</code></div>
+            <div class="color-swatch" style="--swatch:var(--warning)"><span></span><strong>--warning</strong><code>#F59E0B</code></div>
+            <div class="color-swatch" style="--swatch:var(--danger)"><span></span><strong>--danger</strong><code>#EF4444</code></div>
+            <div class="color-swatch" style="--swatch:var(--info)"><span></span><strong>--info</strong><code>#3B82F6</code></div>
+            <div class="color-swatch" style="--swatch:var(--border)"><span></span><strong>--border</strong><code>#DDE2EC</code></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="typography">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Foundations</span>
+          <h2>Tipografía</h2>
+        </div>
+        <p>La fuente principal es Neulis Sans. Futura PT y TT Norms Pro quedan disponibles como clases para casos específicos de marca.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Escala tipográfica</h3>
+          <div class="example-actions"><button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button></div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="classes">Clases</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;h1 class="type-display font-main"&gt;Saldo total&lt;/h1&gt;
+&lt;h2 class="type-page-title font-main"&gt;Mi Portafolio&lt;/h2&gt;
+&lt;p class="type-body font-main"&gt;Texto de lectura general.&lt;/p&gt;
+&lt;p class="type-body font-secondary"&gt;Texto secundario con Futura PT.&lt;/p&gt;
+&lt;p class="type-display font-brand text-italic"&gt;Pdei+&lt;/p&gt;
+&lt;span class="type-caption"&gt;Actualizado hoy&lt;/span&gt;
+&lt;strong class="text-bold"&gt;Negrilla&lt;/strong&gt;
+&lt;em class="text-italic"&gt;Itálica&lt;/em&gt;</code></pre>
+          <pre data-example-panel="classes"><code>Fuentes:
+font-main: Neulis Sans
+font-secondary: Futura PT
+font-brand: TT Norms Pro
+
+Tamaños:
+type-display: 40px / 800
+type-page-title: 28px / 700
+type-section-title: 20px / 700
+type-card-title: 18px / 700
+type-body: 14px / 400
+type-label: 13px / 600
+type-caption: 12px / 400
+
+Variantes:
+text-semibold
+text-bold
+text-italic</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="type-scale">
+            <div><span>Neulis Sans · 40px · 800</span><p class="type-display font-main">Q 142,580.45</p></div>
+            <div><span>Neulis Sans · 28px · 700</span><p class="type-page-title font-main">Mi Portafolio</p></div>
+            <div><span>Neulis Sans · 20px · 700</span><p class="type-section-title font-main">Fondos destacados</p></div>
+            <div><span>Neulis Sans · 18px · 700</span><p class="type-card-title font-main">Fondo Bursátil GTQ</p></div>
+            <div><span>Neulis Sans · 14px · 400</span><p class="type-body font-main">Texto de lectura para descripciones y contenido de formularios.</p></div>
+            <div><span>Futura PT · font-secondary</span><p class="type-body font-secondary">Texto secundario para detalles institucionales.</p></div>
+            <div><span>TT Norms Pro · font-brand</span><p class="type-display font-brand text-italic">Pdei+</p></div>
+            <div><span>Neulis Sans · 12px · 400</span><p class="type-caption">Actualizado el 01/06/2026</p></div>
+            <div><span>variantes</span><p class="type-body"><strong class="text-bold">Bold</strong> · <span class="text-semibold">Semibold</span> · <em class="text-italic">Itálica</em></p></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="buttons">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Actions</span>
+          <h2>Botones</h2>
+        </div>
+        <p>Variantes para acciones primarias, navegación, acciones secundarias y riesgo.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Variantes de botón</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="usage">Uso</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;button class="btn btn-primary"&gt;&lt;i class="pdei-icon pdei-icon-plus"&gt;&lt;/i&gt;Nueva inversión&lt;/button&gt;
+&lt;button class="btn btn-navy"&gt;Continuar&lt;/button&gt;
+&lt;button class="btn btn-outline"&gt;Cancelar&lt;/button&gt;
+&lt;button class="btn btn-outline-aqua"&gt;Ver detalle&lt;/button&gt;
+&lt;button class="btn btn-ghost"&gt;Editar&lt;/button&gt;
+&lt;button class="btn btn-danger"&gt;&lt;i class="pdei-icon pdei-icon-trash-2"&gt;&lt;/i&gt;Eliminar&lt;/button&gt;
+&lt;button class="btn btn-primary btn-sm"&gt;Pequeño&lt;/button&gt;
+&lt;button class="btn btn-navy btn-lg"&gt;Grande&lt;/button&gt;
+&lt;button class="btn btn-primary btn-icon-only" aria-label="Agregar"&gt;&lt;i class="pdei-icon pdei-icon-plus"&gt;&lt;/i&gt;&lt;/button&gt;
+&lt;button class="btn btn-primary" disabled&gt;Desactivado&lt;/button&gt;
+&lt;button class="btn btn-primary btn-loading"&gt;Cargando&lt;/button&gt;</code></pre>
+          <pre data-example-panel="usage"><code>btn-primary: CTA principal.
+btn-navy: continuidad del flujo sobre fondos claros.
+btn-outline / btn-ghost: acciones secundarias.
+btn-danger: acciones destructivas.
+btn-sm / btn-lg: tamaños.
+btn-icon-only: acción cuadrada solo con icono.
+disabled: estado no interactivo.
+btn-loading: oculta el texto y muestra spinner.</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="docs-button-grid">
+            <button type="button" class="btn btn-primary"><i class="pdei-icon pdei-icon-plus"></i>Nueva inversión</button>
+            <button type="button" class="btn btn-navy">Continuar</button>
+            <button type="button" class="btn btn-outline">Cancelar</button>
+            <button type="button" class="btn btn-outline-aqua">Ver detalle</button>
+            <button type="button" class="btn btn-ghost">Editar</button>
+            <button type="button" class="btn btn-danger"><i class="pdei-icon pdei-icon-trash-2"></i>Eliminar</button>
+            <button type="button" class="btn btn-primary btn-sm">Pequeño</button>
+            <button type="button" class="btn btn-navy btn-lg">Grande</button>
+            <button type="button" class="btn btn-primary btn-icon-only" aria-label="Agregar"><i class="pdei-icon pdei-icon-plus"></i></button>
+            <button type="button" class="btn btn-primary" disabled>Desactivado</button>
+            <button type="button" class="btn btn-primary btn-loading">Cargando</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Acciones rápidas e icon buttons</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist"><button class="active" type="button" data-example-tab="html">HTML</button></div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;button class="icon-btn" aria-label="Editar"&gt;&lt;i class="pdei-icon pdei-icon-pencil"&gt;&lt;/i&gt;&lt;/button&gt;
+&lt;button class="icon-btn" aria-label="Descargar"&gt;&lt;i class="pdei-icon pdei-icon-download"&gt;&lt;/i&gt;&lt;/button&gt;
+&lt;button class="icon-btn" aria-label="Ver detalle"&gt;&lt;i class="pdei-icon pdei-icon-chevron-right"&gt;&lt;/i&gt;&lt;/button&gt;
+&lt;button class="btn-action-card"&gt;&lt;i class="pdei-icon pdei-icon-plus"&gt;&lt;/i&gt;Agregar beneficiario&lt;/button&gt;
+&lt;button class="btn-action-card"&gt;&lt;i class="pdei-icon pdei-icon-upload"&gt;&lt;/i&gt;Subir comprobante&lt;/button&gt;</code></pre>
+        </div>
+        <div class="example-preview compact">
+          <button type="button" class="icon-btn" aria-label="Editar"><i class="pdei-icon pdei-icon-pencil"></i></button>
+          <button type="button" class="icon-btn" aria-label="Descargar"><i class="pdei-icon pdei-icon-download"></i></button>
+          <button type="button" class="icon-btn" aria-label="Ver detalle"><i class="pdei-icon pdei-icon-chevron-right"></i></button>
+          <button type="button" class="btn-action-card"><i class="pdei-icon pdei-icon-plus"></i>Agregar beneficiario</button>
+          <button type="button" class="btn-action-card"><i class="pdei-icon pdei-icon-upload"></i>Subir comprobante</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="security">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Security</span>
+          <h2>2FA, QR y progreso</h2>
+        </div>
+        <p>Patrones para códigos OTP, QR de autenticador y avance de configuración.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Configuración 2FA</h3>
+          <div class="example-actions"><button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button></div>
+        </header>
+        <div class="example-tabs" role="tablist"><button class="active" type="button" data-example-tab="html">HTML</button></div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;div class="otp-group"&gt;
+  &lt;input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 1"&gt;
+  &lt;input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 2"&gt;
+  &lt;input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 3"&gt;
+  &lt;input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 4"&gt;
+  &lt;input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 5"&gt;
+  &lt;input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 6"&gt;
+&lt;/div&gt;
+&lt;div class="qr-box"&gt;QR Code&lt;/div&gt;
+&lt;div class="progress-wrap"&gt;&lt;div class="progress-fill" style="width:55%"&gt;&lt;/div&gt;&lt;/div&gt;</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="security-grid">
+            <div>
+              <div class="otp-group">
+                <input type="text" class="otp-box active" maxlength="1" inputmode="numeric" aria-label="Dígito 1" data-otp-input>
+                <input type="text" class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 2" data-otp-input>
+                <input type="text" class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 3" data-otp-input>
+                <input type="text" class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 4" data-otp-input>
+                <input type="text" class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 5" data-otp-input>
+                <input type="text" class="otp-box" maxlength="1" inputmode="numeric" aria-label="Dígito 6" data-otp-input>
+              </div>
+              <div class="progress-wrap u-mt-lg"><div class="progress-fill" style="width:55%"></div></div>
+            </div>
+            <div class="qr-box">QR Code</div>
+            <div class="alert alert-info"><i class="pdei-icon pdei-icon-info alert-icon"></i><div><div class="alert-title">Authenticator</div><div class="alert-body">Escanea el código con Google Authenticator o Microsoft Authenticator.</div></div></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="alerts">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Feedback</span>
+          <h2>Alertas</h2>
+        </div>
+        <p>Mensajes inline con color semántico e iconografía consistente.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Estados semánticos</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="variations">Variaciones</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;div class="alert alert-warning"&gt;
+  &lt;i class="pdei-icon pdei-icon-alert-triangle alert-icon"&gt;&lt;/i&gt;
+  &lt;div&gt;
+    &lt;div class="alert-title"&gt;Documentación pendiente&lt;/div&gt;
+    &lt;div class="alert-body"&gt;Actualiza tu DPI antes de continuar.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          <pre data-example-panel="variations"><code>alert-success
+alert-warning / alert-warn
+alert-danger
+alert-info</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="docs-alert-stack">
+            <div class="alert alert-success"><i class="pdei-icon pdei-icon-check-circle alert-icon"></i><div><div class="alert-title">Inversión confirmada</div><div class="alert-body">La operación fue registrada correctamente.</div></div></div>
+            <div class="alert alert-warning"><i class="pdei-icon pdei-icon-alert-triangle alert-icon"></i><div><div class="alert-title">Documentación pendiente</div><div class="alert-body">Actualiza tu DPI antes de continuar.</div></div></div>
+            <div class="alert alert-danger"><i class="pdei-icon pdei-icon-circle-x alert-icon"></i><div><div class="alert-title">Error de validación</div><div class="alert-body">Revisa los campos marcados.</div></div></div>
+            <div class="alert alert-info"><i class="pdei-icon pdei-icon-info alert-icon"></i><div><div class="alert-title">Información</div><div class="alert-body">Esta cuenta tiene restricciones regulatorias.</div></div></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="dialogs">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Overlay</span>
+          <h2>Diálogos</h2>
+        </div>
+        <p>Modales de confirmación con overlay, cierre por backdrop y acciones alineadas a la derecha.</p>
+      </div>
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Modal de confirmación</h3>
+          <div class="example-actions"><button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button></div>
+        </header>
+        <div class="example-tabs" role="tablist"><button class="active" type="button" data-example-tab="html">HTML</button><button type="button" data-example-tab="js">JS</button></div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;button class="btn btn-primary" data-pdei-open-modal="confirm-modal"&gt;Ver modal&lt;/button&gt;
+&lt;div class="modal-overlay" id="confirm-modal"&gt;
+  &lt;div class="modal-box"&gt;
+    &lt;div class="modal-title"&gt;Confirmar inversión&lt;/div&gt;
+    &lt;div class="modal-body"&gt;Estás a punto de invertir Q 15,000.00.&lt;/div&gt;
+    &lt;div class="modal-actions"&gt;
+      &lt;button class="btn btn-ghost btn-sm" type="button" data-pdei-close-modal&gt;Cancelar&lt;/button&gt;
+      &lt;button class="btn btn-primary btn-sm" type="button" data-pdei-close-modal&gt;Confirmar&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          <pre data-example-panel="js"><code>Pdei.openModal("confirm-modal");
+Pdei.closeModal(document.getElementById("confirm-modal"));</code></pre>
+        </div>
+        <div class="example-preview compact">
+          <button type="button" class="btn btn-primary" data-pdei-open-modal="docs-confirm-modal">Ver modal interactivo</button>
+          <div class="modal-box docs-inline-modal">
+            <div class="modal-title">Eliminar beneficiario</div>
+            <div class="modal-body">¿Confirmas que deseas eliminar este beneficiario? Esta acción es permanente.</div>
+            <div class="modal-actions"><button type="button" class="btn btn-ghost btn-sm">Cancelar</button><button type="button" class="btn btn-danger btn-sm">Eliminar</button></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="feedback">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Feedback</span>
+          <h2>Toasts y notificaciones</h2>
+        </div>
+        <p>Mensajes temporales y panel de notificaciones desde el header.</p>
+      </div>
+      <article class="example-card">
+        <header class="example-header"><h3>Toasts y notification center</h3><div class="example-actions"><button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button></div></header>
+        <div class="example-tabs" role="tablist"><button class="active" type="button" data-example-tab="html">HTML</button><button type="button" data-example-tab="positions">Posiciones</button></div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;button class="btn btn-outline-aqua" type="button" onclick="Pdei.showToast('Operación completada.', { position: 'top-right' })"&gt;Mostrar toast&lt;/button&gt;
+&lt;div class="toast"&gt;&lt;i class="pdei-icon pdei-icon-check-circle"&gt;&lt;/i&gt;Operación completada&lt;/div&gt;
+&lt;div class="hdr-notifications"&gt;
+  &lt;button class="hdr-bell has-alerts" aria-label="Notificaciones con alertas"&gt;&lt;i class="pdei-icon pdei-icon-bell"&gt;&lt;/i&gt;&lt;/button&gt;
+  &lt;div class="alerts-panel open"&gt;...&lt;/div&gt;
+  &lt;button class="hdr-bell" aria-label="Notificaciones sin alertas"&gt;&lt;i class="pdei-icon pdei-icon-bell"&gt;&lt;/i&gt;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          <pre data-example-panel="positions"><code>Pdei.showToast("Guardado.", { position: "top-right" });
+Pdei.showToast("Guardado.", { position: "top-left" });
+Pdei.showToast("Guardado.", { position: "top-center" });
+Pdei.showToast("Guardado.", { position: "bottom-right" });
+Pdei.showToast("Guardado.", { position: "bottom-left" });
+Pdei.showToast("Guardado.", { position: "bottom-center" });</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="feedback-grid">
+            <div class="toast-stack">
+              <button class="btn btn-outline-aqua" type="button" data-docs-toast>Mostrar toast</button>
+              <div class="toast"><i class="pdei-icon pdei-icon-check-circle u-positive"></i>Inversión confirmada.</div>
+              <div class="toast"><i class="pdei-icon pdei-icon-alert-triangle" style="color:var(--warning)"></i>Documento por vencer.</div>
+            </div>
+            <div class="docs-notification-demo">
+              <div class="docs-bell-row">
+                <button class="hdr-bell has-alerts" type="button" aria-label="Notificaciones con alertas"><i class="pdei-icon pdei-icon-bell"></i></button>
+                <button class="hdr-bell" type="button" aria-label="Notificaciones sin alertas"><i class="pdei-icon pdei-icon-bell"></i></button>
+              </div>
+              <div class="alerts-panel open">
+                <div class="alerts-panel-head"><div class="alerts-panel-title">Notificaciones</div><span class="badge badge-aqua">2</span></div>
+                <div class="alerts-list">
+                  <button type="button" class="alert-item"><span class="alert-item-title">Depósito pendiente</span><span class="alert-item-copy">Completa el comprobante asociado al fondo.</span></button>
+                  <button type="button" class="alert-item"><span class="alert-item-title">DPI por vencer</span><span class="alert-item-copy">Actualiza tu documento antes de continuar.</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="badges">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Status</span>
+          <h2>Badges</h2>
+        </div>
+        <p>Usa badges para estados compactos, etiquetas y resultados de validación.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Estado operativo</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="variations">Variantes</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;span class="status-badge status-active"&gt;&lt;span class="status-dot"&gt;&lt;/span&gt;Activo&lt;/span&gt;
+&lt;span class="status-badge status-pending"&gt;&lt;span class="status-dot"&gt;&lt;/span&gt;Pendiente&lt;/span&gt;
+&lt;span class="badge badge-aqua"&gt;Nuevo&lt;/span&gt;
+&lt;span class="badge badge-neutral"&gt;Archivado&lt;/span&gt;</code></pre>
+          <pre data-example-panel="variations"><code>status-active
+status-pending
+status-review
+status-blocked
+status-neutral
+
+badge-navy
+badge-aqua
+badge-success
+badge-warning
+badge-danger
+badge-info
+badge-neutral</code></pre>
+        </div>
+        <div class="example-preview compact">
+          <span class="status-badge status-active"><span class="status-dot"></span>Activo</span>
+          <span class="status-badge status-pending"><span class="status-dot"></span>Pendiente</span>
+          <span class="status-badge status-review"><span class="status-dot"></span>En revisión</span>
+          <span class="status-badge status-blocked"><span class="status-dot"></span>Bloqueado</span>
+          <span class="badge badge-aqua">Nuevo</span>
+          <span class="badge badge-neutral">Archivado</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="chips">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Filters</span>
+          <h2>Chips</h2>
+        </div>
+        <p>Los chips son controles seleccionables para filtros rápidos. Pueden ser selección única o múltiple.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Filtros seleccionables</h3>
+          <div class="example-actions"><button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button></div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="js">JS</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;div class="chips-row" data-pdei-chip-group="multiple"&gt;
+  &lt;button class="chip active" type="button"&gt;Inversiones&lt;/button&gt;
+  &lt;button class="chip" type="button"&gt;Desinversiones&lt;/button&gt;
+  &lt;button class="chip" type="button"&gt;Rendimientos&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          <pre data-example-panel="js"><code>Pdei.init(document);
+// data-pdei-chip-group="multiple": varios activos.
+// data-pdei-chip-group="single": uno activo.</code></pre>
+        </div>
+        <div class="example-preview compact">
+          <div class="chips-row" data-pdei-chip-group="multiple">
+            <button class="chip active" type="button">Inversiones</button>
+            <button class="chip active" type="button">Desinversiones</button>
+            <button class="chip" type="button">Rendimientos</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="kpis">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Data display</span>
+          <h2>KPIs</h2>
+        </div>
+        <p>Tarjetas de métricas para saldos, rendimiento, fondos activos y movimientos del periodo.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Métricas principales y secundarias</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="usage">Uso</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;div class="kpi-card-dark"&gt;
+  &lt;div class="kpi-label"&gt;Saldo total&lt;/div&gt;
+  &lt;div class="kpi-amount"&gt;Q 142,580&lt;span&gt;.45&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="kpi-sub"&gt;Portafolio activo&lt;/div&gt;
+  &lt;span class="kpi-badge"&gt;+8.4% este mes&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+          <pre data-example-panel="usage"><code>kpi-card-dark: métrica principal de pantalla.
+kpi-small: métricas secundarias en grids.
+kpi-badge: variación positiva.
+kpi-badge down: variación negativa o advertencia.</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="docs-data-grid">
+            <div class="kpi-card-dark">
+              <div class="kpi-label">Saldo total</div>
+              <div class="kpi-amount">Q 142,580<span>.45</span></div>
+              <div class="kpi-sub">Portafolio activo</div>
+              <span class="kpi-badge">+8.4% este mes</span>
+            </div>
+            <div class="docs-kpi-grid">
+              <div class="kpi-small"><div class="kpi-small-label">Rendimiento</div><div class="kpi-small-value">Q 4,820</div><div class="kpi-small-change up">+3.2%</div></div>
+              <div class="kpi-small"><div class="kpi-small-label">Desinversión neta</div><div class="kpi-small-value">Q 12,400</div><div class="kpi-small-change down">-1.4%</div></div>
+              <div class="kpi-small"><div class="kpi-small-label">Fondos activos</div><div class="kpi-small-value">3</div><div class="kpi-small-change">Actualizado hoy</div></div>
+              <div class="kpi-small"><div class="kpi-small-label">Documentos</div><div class="kpi-small-value">8/10</div><div class="kpi-small-change down">2 pendientes</div></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="lists">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Data display</span>
+          <h2>Layout de listas</h2>
+        </div>
+        <p>Filas de fondos y tarjetas de personas con columnas estables para lectura repetida.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Fund rows y person cards</h3>
+          <div class="example-actions"><button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button></div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="layout">Layout</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;div class="fund-list"&gt;
+  &lt;div class="fund-row"&gt;
+    &lt;div class="fund-icon"&gt;&lt;i class="pdei-icon pdei-icon-wallet"&gt;&lt;/i&gt;&lt;/div&gt;
+    &lt;div class="fund-main"&gt;&lt;div class="fund-name"&gt;Fondo Crecimiento&lt;/div&gt;&lt;div class="fund-desc"&gt;Pendiente de depósito&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="fund-right"&gt;&lt;div class="fund-amount"&gt;Q 15,000.00&lt;/div&gt;&lt;span class="status-badge status-pending"&gt;&lt;span class="status-dot"&gt;&lt;/span&gt;Pendiente&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="fund-actions"&gt;&lt;button class="icon-btn" aria-label="Ver"&gt;&lt;i class="pdei-icon pdei-icon-chevron-right"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          <pre data-example-panel="layout"><code>.fund-row usa:
+42px icono
+minmax(0,1fr) información
+168px estado/monto
+44px acción</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="docs-data-grid">
+            <div class="card">
+              <div class="fund-list">
+                <div class="fund-row">
+                  <div class="fund-icon"><i class="pdei-icon pdei-icon-chart-column"></i></div>
+                  <div class="fund-main"><div class="fund-name">Fondo Bursátil GTQ</div><div class="fund-desc">Renta variable local</div></div>
+                  <div class="fund-right"><div class="fund-amount">Q 58,200.00</div><span class="status-badge status-active"><span class="status-dot"></span>Activo</span></div>
+                  <div class="fund-actions"><button type="button" class="icon-btn" aria-label="Ver"><i class="pdei-icon pdei-icon-chevron-right"></i></button></div>
+                </div>
+                <div class="fund-row">
+                  <div class="fund-icon"><i class="pdei-icon pdei-icon-wallet"></i></div>
+                  <div class="fund-main"><div class="fund-name">Fondo Crecimiento</div><div class="fund-desc">Pendiente de depósito</div></div>
+                  <div class="fund-right"><div class="fund-amount">Q 15,000.00</div><span class="status-badge status-pending"><span class="status-dot"></span>Pendiente</span></div>
+                  <div class="fund-actions"><button type="button" class="icon-btn" aria-label="Ver"><i class="pdei-icon pdei-icon-chevron-right"></i></button></div>
+                </div>
+              </div>
+            </div>
+            <div class="card stack">
+              <div class="person-card"><div class="person-avatar">AB</div><div><div class="person-name">Ana Batres</div><div class="person-meta">Beneficiaria principal</div></div><div class="person-pct">60%</div></div>
+              <div class="person-card"><div class="person-avatar">MG</div><div><div class="person-name">Marco Gómez</div><div class="person-meta">Beneficiario secundario</div></div><div class="person-pct">40%</div></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="tables">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Data</span>
+          <h2>Tablas</h2>
+        </div>
+        <p>Tabla de movimientos con encabezado navy, montos semánticos y hover discreto.</p>
+      </div>
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Tabla de movimientos</h3>
+          <div class="example-actions"><button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button></div>
+        </header>
+        <div class="example-tabs" role="tablist"><button class="active" type="button" data-example-tab="html">HTML</button></div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;table class="mov-table"&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Fecha&lt;/th&gt;&lt;th&gt;Tipo&lt;/th&gt;&lt;th&gt;Monto&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;01/06/2026&lt;/td&gt;&lt;td&gt;Inversión&lt;/td&gt;&lt;td class="mov-credit"&gt;+ Q 15,000.00&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+        </div>
+        <div class="example-preview">
+          <table class="mov-table">
+            <thead><tr><th>Fecha</th><th>Movimiento</th><th>Producto</th><th>Monto</th><th>Estado</th></tr></thead>
+            <tbody>
+              <tr><td>01/06/2026</td><td>Inversión</td><td>Fondo Bursátil GTQ</td><td class="mov-credit">+ Q 15,000.00</td><td><span class="status-badge status-active"><span class="status-dot"></span>Confirmado</span></td></tr>
+              <tr><td>28/05/2026</td><td>Desinversión</td><td>Fondo Crecimiento</td><td class="mov-debit">- Q 4,000.00</td><td><span class="status-badge status-review"><span class="status-dot"></span>En revisión</span></td></tr>
+              <tr><td>20/05/2026</td><td>Rendimiento</td><td>Fondo Bursátil USD</td><td class="mov-credit">+ $ 120.30</td><td><span class="status-badge status-active"><span class="status-dot"></span>Acreditado</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="steppers">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Flows</span>
+          <h2>Step bar</h2>
+        </div>
+        <p>Indicador de avance para registro, nuevo fondo y flujos multi-paso.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Progreso de registro</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;div class="step-bar"&gt;
+  &lt;div class="step-item done"&gt;&lt;div class="step-dot"&gt;✓&lt;/div&gt;&lt;div class="step-lbl"&gt;Términos&lt;/div&gt;&lt;/div&gt;
+  &lt;div class="step-item active"&gt;&lt;div class="step-dot"&gt;2&lt;/div&gt;&lt;div class="step-lbl"&gt;Documento&lt;/div&gt;&lt;/div&gt;
+  &lt;div class="step-item"&gt;&lt;div class="step-dot"&gt;3&lt;/div&gt;&lt;div class="step-lbl"&gt;Datos&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="step-demo-grid">
+            <div class="step-bar">
+              <div class="step-item done"><div class="step-dot"><i class="pdei-icon pdei-icon-check"></i></div><div class="step-lbl">Términos</div></div>
+              <div class="step-item done"><div class="step-dot"><i class="pdei-icon pdei-icon-check"></i></div><div class="step-lbl">Credenciales</div></div>
+              <div class="step-item active"><div class="step-dot">3</div><div class="step-lbl">Documento</div></div>
+              <div class="step-item"><div class="step-dot">4</div><div class="step-lbl">Datos</div></div>
+              <div class="step-item"><div class="step-dot">5</div><div class="step-lbl">Cuentas</div></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="shell">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Layout</span>
+          <h2>Shell autenticado</h2>
+        </div>
+        <p>Sidebar fijo de 210px, header fijo de 64px y contenido con padding amplio.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Sidebar + header</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="css">CSS</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;div class="pdei-shell" id="app-shell"&gt;
+  &lt;aside class="pdei-sidebar"&gt;
+    &lt;div class="sb-logo"&gt;&lt;span class="pdei-logo logo-white logo-lg" role="img" aria-label="Pdei+"&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;a class="sb-item active" href="#"&gt;&lt;i class="pdei-icon pdei-icon-home sb-icon"&gt;&lt;/i&gt;&lt;span class="sb-item-text"&gt;Dashboard&lt;/span&gt;&lt;/a&gt;
+  &lt;/aside&gt;
+  &lt;div class="sidebar-backdrop" data-pdei-sidebar-close&gt;&lt;/div&gt;
+  &lt;header class="pdei-header"&gt;
+    &lt;button class="icon-btn sidebar-toggle" type="button" data-pdei-sidebar-toggle="#app-shell"&gt;
+      &lt;i class="pdei-icon pdei-icon-sidebar-close"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+    &lt;div class="hdr-title"&gt;Mi Portafolio&lt;/div&gt;
+  &lt;/header&gt;
+  &lt;main class="pdei-main"&gt;...&lt;/main&gt;
+&lt;/div&gt;</code></pre>
+          <pre data-example-panel="css"><code>:root {
+  --sidebar-w: 210px;
+  --header-h: 64px;
+}</code></pre>
+        </div>
+        <div class="example-preview no-padding">
+            <div class="docs-shell-demo" id="docs-shell-demo">
+              <div class="mini-sidebar">
+              <span class="pdei-logo logo-navy logo-lg" role="img" aria-label="Pdei+"></span>
+              <span class="active"><i class="pdei-icon pdei-icon-home"></i><span class="sb-item-text">Dashboard</span></span>
+              <span><i class="pdei-icon pdei-icon-wallet"></i><span class="sb-item-text">Mis fondos</span></span>
+              <span><i class="pdei-icon pdei-icon-file-text"></i><span class="sb-item-text">Documentos</span></span>
+            </div>
+            <div class="mini-content">
+              <div class="mini-header">
+                <button type="button" class="icon-btn sidebar-toggle" data-pdei-sidebar-toggle="#docs-shell-demo"><i class="pdei-icon pdei-icon-sidebar-close"></i></button>
+                <strong>Mi Portafolio</strong>
+                <button type="button" class="icon-btn" aria-label="Ver notificaciones"><i class="pdei-icon pdei-icon-bell"></i></button>
+              </div>
+              <div class="mini-panel">
+                <div class="kpi-small"><div class="kpi-small-label">Rendimiento</div><div class="kpi-small-value">Q 4,820</div><div class="kpi-small-change up">+3.2%</div></div>
+                <div class="kpi-small"><div class="kpi-small-label">Fondos activos</div><div class="kpi-small-value">3</div><div class="kpi-small-change">Actualizado hoy</div></div>
+              </div>
+              <div class="docs-footer-wrap">
+                <footer class="pdei-footer">
+                  <div><div class="pdei-footer-company">Portafolio de Inversiones, S.A.</div></div>
+                  <div class="pdei-footer-legal"><div>Contratos de Fondos de Inversión Registrados en el Registro de Mercado de Valores y Mercancías</div><div class="pdei-footer-copy">© 2026 · Todos los derechos reservados</div></div>
+                  <div class="pdei-footer-links pdei-footer-links-stack"><a href="#">Términos y condiciones</a><a href="#">Política de privacidad</a><a href="#">Contacto</a></div>
+                </footer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="footer">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Layout</span>
+          <h2>Footer institucional</h2>
+        </div>
+        <p>Footer para pantallas autenticadas o páginas institucionales con texto legal y enlaces de soporte.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Contenido oficial</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="usage">Uso</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;footer class="pdei-footer"&gt;
+  &lt;div&gt;
+    &lt;div class="pdei-footer-company"&gt;Portafolio de Inversiones, S.A.&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="pdei-footer-legal"&gt;
+    &lt;div&gt;Contratos de Fondos de Inversión Registrados en el Registro de Mercado de Valores y Mercancías&lt;/div&gt;
+    &lt;div class="pdei-footer-copy"&gt;© 2026 · Todos los derechos reservados&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="pdei-footer-links pdei-footer-links-stack"&gt;
+    &lt;a href="#"&gt;Términos y condiciones&lt;/a&gt;
+    &lt;a href="#"&gt;Política de privacidad&lt;/a&gt;
+    &lt;a href="#"&gt;Contacto&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</code></pre>
+          <pre data-example-panel="usage"><code>pdei-footer: contenedor navy institucional.
+pdei-footer-company: nombre legal.
+pdei-footer-legal: texto regulatorio centrado.
+pdei-footer-copy: copyright.
+pdei-footer-links-stack: enlaces en columna.</code></pre>
+        </div>
+        <div class="example-preview">
+          <footer class="pdei-footer docs-footer-demo">
+            <div>
+              <div class="pdei-footer-company">Portafolio de Inversiones, S.A.</div>
+            </div>
+            <div class="pdei-footer-legal">
+              <div>Contratos de Fondos de Inversión Registrados en el Registro de Mercado de Valores y Mercancías</div>
+              <div class="pdei-footer-copy">© 2026 · Todos los derechos reservados</div>
+            </div>
+            <div class="pdei-footer-links pdei-footer-links-stack">
+              <a href="#">Términos y condiciones</a>
+              <a href="#">Política de privacidad</a>
+              <a href="#">Contacto</a>
+            </div>
+          </footer>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="logos">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Assets</span>
+          <h2>Logos</h2>
+        </div>
+        <p>El bundle incluye alias semánticos para usar logos sin depender de nombres de archivo con espacios.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Variantes de logo</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="paths">Rutas</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;span class="pdei-logo logo-white logo-lg" role="img" aria-label="Pdei+"&gt;&lt;/span&gt;
+&lt;span class="pdei-logo logo-navy logo-lg" role="img" aria-label="Pdei+"&gt;&lt;/span&gt;
+&lt;span class="pdei-logo isotype-white logo-sm" role="img" aria-label="Pdei+"&gt;&lt;/span&gt;
+&lt;span class="pdei-logo isotype-navy logo-lg" role="img" aria-label="Pdei+"&gt;&lt;/span&gt;</code></pre>
+          <pre data-example-panel="paths"><code>lib/logos/logo-white.png
+lib/logos/logo-navy.png
+lib/logos/isotype-white.png
+lib/logos/isotype-navy.png
+lib/logos/logo.svg</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="docs-assets-grid">
+            <div class="asset-tile"><span class="pdei-logo logo-white" role="img" aria-label="Pdei+ logo white"></span><span>.logo-white</span></div>
+            <div class="asset-tile navy"><span class="pdei-logo logo-navy" role="img" aria-label="Pdei+ logo navy"></span><span>.logo-navy</span></div>
+            <div class="asset-tile"><span class="pdei-logo isotype-white" role="img" aria-label="Pdei+ isotype white"></span><span>.isotype-white</span></div>
+            <div class="asset-tile navy"><span class="pdei-logo isotype-navy" role="img" aria-label="Pdei+ isotype navy"></span><span>.isotype-navy</span></div>
+          </div>
+          <div class="logo-size-grid u-mt-lg">
+            <div><span class="pdei-logo logo-white logo-sm" role="img" aria-label="Pdei+ sm"></span><code>.logo-sm</code></div>
+            <div><span class="pdei-logo logo-white logo-md" role="img" aria-label="Pdei+ md"></span><code>.logo-md</code></div>
+            <div><span class="pdei-logo logo-white logo-lg" role="img" aria-label="Pdei+ lg"></span><code>.logo-lg</code></div>
+            <div><span class="pdei-logo logo-white logo-xl" role="img" aria-label="Pdei+ xl"></span><code>.logo-xl</code></div>
+            <div><span class="pdei-logo isotype-white logo-sm" role="img" aria-label="Pdei+ isotype sm"></span><code>isotype .logo-sm</code></div>
+            <div><span class="pdei-logo isotype-white logo-md" role="img" aria-label="Pdei+ isotype md"></span><code>isotype .logo-md</code></div>
+            <div><span class="pdei-logo isotype-white logo-lg" role="img" aria-label="Pdei+ isotype lg"></span><code>isotype .logo-lg</code></div>
+            <div><span class="pdei-logo isotype-white logo-xl" role="img" aria-label="Pdei+ isotype xl"></span><code>isotype .logo-xl</code></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="docs-section" id="icons">
+      <div class="docs-section-head">
+        <div>
+          <span class="docs-label">Assets</span>
+          <h2>Iconos</h2>
+        </div>
+        <p>Los iconos del bundle usan Lucide como icon font local. Usa el nombre de Lucide en kebab-case con el prefijo `pdei-icon-`.</p>
+      </div>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Referencia de iconos</h3>
+          <div class="example-actions">
+            <a class="example-icon-btn" href="https://lucide.dev/icons" target="_blank" rel="noopener" title="Ver catálogo Lucide"><i class="pdei-icon pdei-icon-external-link"></i></a>
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="reference">Referencia</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;i class="pdei-icon pdei-icon-wallet"&gt;&lt;/i&gt;
+&lt;i class="pdei-icon pdei-icon-alert-triangle"&gt;&lt;/i&gt;
+&lt;i class="pdei-icon pdei-icon-chevron-right"&gt;&lt;/i&gt;</code></pre>
+          <pre data-example-panel="reference"><code>Convención:
+pdei-icon pdei-icon-{nombre-lucide-en-kebab-case}
+
+Catálogo visual:
+https://lucide.dev/icons
+
+Listado local:
+lib/icons/codepoints.json</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="asset-icons icon-reference-grid">
+            <span><i class="pdei-icon pdei-icon-home"></i> home</span>
+            <span><i class="pdei-icon pdei-icon-wallet"></i> wallet</span>
+            <span><i class="pdei-icon pdei-icon-chart-column"></i> chart-column</span>
+            <span><i class="pdei-icon pdei-icon-bell"></i> bell</span>
+            <span><i class="pdei-icon pdei-icon-file-text"></i> file-text</span>
+            <span><i class="pdei-icon pdei-icon-user"></i> user</span>
+            <span><i class="pdei-icon pdei-icon-alert-triangle"></i> alert-triangle</span>
+            <span><i class="pdei-icon pdei-icon-info"></i> info</span>
+            <span><i class="pdei-icon pdei-icon-check-circle"></i> check-circle</span>
+            <span><i class="pdei-icon pdei-icon-circle-x"></i> circle-x</span>
+            <span><i class="pdei-icon pdei-icon-plus"></i> plus</span>
+            <span><i class="pdei-icon pdei-icon-chevron-right"></i> chevron-right</span>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="docs-confirm-modal">
+    <div class="modal-box">
+      <div class="modal-title">Confirmar inversión</div>
+      <div class="modal-body">Estás a punto de invertir <strong>Q 15,000.00</strong> en el fondo seleccionado. Una vez confirmada, deberás completar el depósito asociado.</div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost btn-sm" type="button" data-pdei-close-modal>Cancelar</button>
+        <button class="btn btn-primary btn-sm" type="button" data-pdei-close-modal>Confirmar</button>
+      </div>
+    </div>
+  </div>
+  <div class="copy-toast" role="status" aria-live="polite">Código copiado</div>
+  <script src="lib/pdei.min.js" defer></script>
+  <script src="docs.js" defer></script>
+</body>
+</html>

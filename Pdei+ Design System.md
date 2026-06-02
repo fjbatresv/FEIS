@@ -1,6 +1,6 @@
 # Pdei+ Design System
 **Portal Portafolio de Inversiones Plus**
-Versión 1.1 — Mayo 2026
+Versión 1.2 — Junio 2026
 
 ---
 
@@ -168,6 +168,24 @@ Usa el wordmark oficial **Pdei+** como archivo de imagen, siempre haciendo match
 - Fondo blanco o claro: `Logos/Pdei+ Blanco.png`
 - Fondo navy: `Logos/Pdei+ Azul.png`
 - No reconstruir el wordmark con texto, símbolos ni valores hex
+
+### Sidebar del UI kit
+
+El sidebar documentado en `Pdei+ Componentes.html` usa el wordmark horizontal oficial `Logos/Pdei+ Azul.png` sobre fondo `--navy`, con proporción compacta para convivir con el rótulo del kit y la navegación.
+
+```css
+.sb-logo {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.sb-logo img {
+  width: 132px;
+  object-fit: contain;
+}
+```
+
+La marca debe quedar alineada hacia la izquierda del sidebar. No centrarla ni sustituirla por texto editable. El mock de producto puede usar una variante más grande si el layout de pantalla lo pide, pero esa variante debe tratarse como decisión de composición del mock, no como reemplazo del componente base.
 
 ---
 
@@ -370,8 +388,22 @@ Card métrica compacta para indicadores secundarios (rendimiento, plazo, etc.).
 
 Fila de lista de fondos dentro de un `.fund-list`. No es una card propia.
 
-- Flex row con gap 14px, padding 14px vertical, borde inferior `--border`
-- Ícono de fondo (40×40, border-radius 10px) + nombre/tipo + monto/rendimiento + botón acción
+- Grid de 4 columnas: ícono, contenido, monto/estado y acción.
+- Padding 16px vertical, `column-gap: 14px`, borde inferior `--border`.
+- Ícono de fondo 42×42, `border-radius: 12px`, fondo aqua suave.
+- La columna derecha muestra el monto y un único `status-badge` operativo. Evitar textos de estado sueltos como “Pendiente activación” o “Bloqueado temporalmente”.
+- El botón de detalle conserva una columna fija de 44px para evitar solapamientos con estados largos.
+
+```css
+.fund-row {
+  display: grid;
+  grid-template-columns: 42px minmax(0,1fr) 168px 44px;
+  align-items: center;
+  column-gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+```
 
 #### Person Card — `.person-card`
 
@@ -800,7 +832,7 @@ El prototipo HTML (`Pdei+ Pantallas.html`) cubre 30+ pantallas en los siguientes
 | Botones | Todas las variantes, tamaños y estados |
 | Inputs y formularios | Todos los tipos de campo y estados de validación |
 | OTP / 2FA | Digit boxes en reposo, activo y sobre fondo navy |
-| Cards | Base card, KPI dark, KPI small, fund row, person card |
+| Cards | Base card, KPI dark, KPI small, fund row con estado operativo derecho, person card |
 | KPIs y métricas | Tarjetas de indicadores financieros |
 | Alertas y mensajes | Success, warning, danger, info + error PEP/CPE |
 | Badges y etiquetas | 6 variantes semánticas |
@@ -812,4 +844,4 @@ El prototipo HTML (`Pdei+ Pantallas.html`) cubre 30+ pantallas en los siguientes
 
 ---
 
-*Documento sincronizado con `Pdei+ Componentes.html` v1.1. Para consultas sobre la línea gráfica, referirse a los archivos de marca en `Línea Gráfica/PNG/`.*
+*Documento sincronizado con `Pdei+ Componentes.html` v1.2. Para consultas sobre la línea gráfica, referirse a los archivos de marca en `Línea Gráfica/PNG/`.*
