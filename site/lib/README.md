@@ -4,7 +4,7 @@ Importa los archivos en tu plantilla HTML, PHP o Livewire:
 
 ```html
 <link rel="stylesheet" href="lib/pdei.min.css">
-<link rel="stylesheet" href="lib/icons/pdei-icons.css">
+<link rel="stylesheet" href="lib/icons/pdei-icons.min.css">
 <script src="lib/pdei.min.js" defer></script>
 ```
 

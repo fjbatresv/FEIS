@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { execFileSync } = require("child_process");
+const { execFileSync, spawnSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
 const src = path.join(root, "src");
@@ -140,7 +140,7 @@ Importa los archivos en tu plantilla HTML, PHP o Livewire:
 
 \`\`\`html
 <link rel="stylesheet" href="lib/pdei.min.css">
-<link rel="stylesheet" href="lib/icons/pdei-icons.css">
+<link rel="stylesheet" href="lib/icons/pdei-icons.min.css">
 <script src="lib/pdei.min.js" defer></script>
 \`\`\`
 
@@ -195,6 +195,11 @@ function buildSite() {
 function buildZip() {
   if (!fs.existsSync(lib)) buildLib();
   remove(zipPath);
+  const zipCheck = spawnSync("zip", ["-v"], { stdio: "ignore" });
+  if (zipCheck.error && zipCheck.error.code === "ENOENT") {
+    throw new Error("No se encontro la utilidad 'zip'. Instalela para generar pdei-ui-lib.zip.");
+  }
+  if (zipCheck.error) throw zipCheck.error;
   execFileSync("zip", ["-qr", zipPath, "lib"], { cwd: root, stdio: "inherit" });
 }
 

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pdei+ UI Library</title>
   <link rel="stylesheet" href="../../lib/pdei.min.css">
-  <link rel="stylesheet" href="../../lib/icons/pdei-icons.css">
+  <link rel="stylesheet" href="../../lib/icons/pdei-icons.min.css">
   <link rel="stylesheet" href="docs.css">
 </head>
 <body>
@@ -81,7 +81,7 @@
         </div>
         <div class="example-code">
           <pre class="active" data-example-panel="html"><code>&lt;link rel="stylesheet" href="/lib/pdei.min.css"&gt;
-&lt;link rel="stylesheet" href="/lib/icons/pdei-icons.css"&gt;
+&lt;link rel="stylesheet" href="/lib/icons/pdei-icons.min.css"&gt;
 &lt;script src="/lib/pdei.min.js" defer&gt;&lt;/script&gt;</code></pre>
           <pre data-example-panel="notes"><code>Node/npm solo se usa para generar el bundle.
 El frontend productivo consume archivos estáticos desde /lib.</code></pre>
@@ -188,6 +188,75 @@ data-pdei-password-toggle: alterna type password/text</code></pre>
             <div class="input-group"><label class="input-label">Campo desactivado</label><input type="text" class="input-field" value="No editable" disabled aria-label="Campo desactivado"></div>
             <div class="input-group"><label class="input-label">Password</label><div class="input-wrap"><input id="docs-password" class="input-field" type="password" value="MiClave123" autocomplete="current-password" aria-label="Password"><button class="input-icon-right" type="button" data-pdei-password-toggle="#docs-password" aria-label="Mostrar u ocultar contraseña"><i class="pdei-icon pdei-icon-eye"></i></button></div></div>
             <div class="input-group"><label class="input-label">Textarea</label><textarea class="input-field" placeholder="Instrucciones especiales..." aria-label="Textarea"></textarea></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="example-card">
+        <header class="example-header">
+          <h3>Formulario con grilla de 12 columnas</h3>
+          <div class="example-actions">
+            <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
+          </div>
+        </header>
+        <div class="example-tabs" role="tablist">
+          <button class="active" type="button" data-example-tab="html">HTML</button>
+          <button type="button" data-example-tab="usage">Uso</button>
+        </div>
+        <div class="example-code">
+          <pre class="active" data-example-panel="html"><code>&lt;div class="form-grid form-align-end"&gt;
+  &lt;div class="input-group form-col-4"&gt;
+    &lt;label class="input-label"&gt;Primer nombre&lt;/label&gt;
+    &lt;input class="input-field" placeholder="Alfredo"&gt;
+  &lt;/div&gt;
+  &lt;div class="input-group form-col-8"&gt;
+    &lt;label class="input-label"&gt;Dirección&lt;/label&gt;
+    &lt;input class="input-field" placeholder="Calle, avenida, número"&gt;
+  &lt;/div&gt;
+  &lt;div class="file-field form-col-4"&gt;
+    &lt;label class="input-label" for="dpi-file"&gt;Documento&lt;/label&gt;
+    &lt;input class="file-input" id="dpi-file" type="file" accept=".pdf,.png,.jpg,.jpeg"&gt;
+    &lt;label class="file-dropzone" for="dpi-file"&gt;
+      &lt;span&gt;
+        &lt;i class="pdei-icon pdei-icon-upload-cloud"&gt;&lt;/i&gt;
+        &lt;span class="file-title"&gt;Subir DPI o comprobante&lt;/span&gt;
+        &lt;span class="file-copy"&gt;PDF, JPG o PNG · máximo 10 MB&lt;/span&gt;
+      &lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="form-actions form-actions-between"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          <pre data-example-panel="usage"><code>form-grid: divide la fila en 12 columnas.
+form-col-3: ocupa 25% del ancho.
+form-col-4: ocupa 33.33% del ancho.
+form-col-6: ocupa 50% del ancho.
+form-col-8: ocupa 66.66% del ancho.
+form-col-12: ocupa ancho completo.
+
+form-actions-left | center | right | between: controla la alineación de acciones.
+En móvil, todos los form-col-* pasan a ancho completo.</code></pre>
+        </div>
+        <div class="example-preview">
+          <div class="form-grid form-align-end">
+            <div class="input-group form-col-4"><label class="input-label">Primer nombre</label><input class="input-field" type="text" placeholder="Alfredo" aria-label="Primer nombre"></div>
+            <div class="input-group form-col-4"><label class="input-label">Segundo nombre</label><input class="input-field" type="text" placeholder="José" aria-label="Segundo nombre"></div>
+            <div class="input-group form-col-4"><label class="input-label">Primer apellido</label><input class="input-field" type="text" placeholder="López" aria-label="Primer apellido"></div>
+            <div class="input-group form-col-3"><label class="input-label">Tipo documento</label><select class="select-field" aria-label="Tipo documento"><option>DPI</option><option>Pasaporte</option></select></div>
+            <div class="input-group form-col-5"><label class="input-label">Número de documento</label><input class="input-field" type="text" placeholder="1234 56789 0101" aria-label="Número de documento"></div>
+            <div class="input-group form-col-4"><label class="input-label">Fecha vencimiento</label><input class="input-field" type="date" aria-label="Fecha vencimiento"></div>
+            <div class="input-group form-col-6"><label class="input-label">Dirección</label><input class="input-field" type="text" placeholder="Calle, avenida, número de casa" aria-label="Dirección"></div>
+            <div class="input-group form-col-3"><label class="input-label">Departamento</label><input class="input-field" type="text" placeholder="Guatemala" aria-label="Departamento"></div>
+            <div class="input-group form-col-3"><label class="input-label">Municipio</label><input class="input-field" type="text" placeholder="Guatemala" aria-label="Municipio"></div>
+            <div class="input-group form-col-8"><label class="input-label">Comentarios</label><textarea class="input-field" placeholder="Observaciones para validación documental" aria-label="Comentarios"></textarea></div>
+            <div class="file-field form-col-4">
+              <label class="input-label" for="docs-file-upload">Documento o imagen</label>
+              <input class="file-input" id="docs-file-upload" type="file" accept=".pdf,.png,.jpg,.jpeg">
+              <label class="file-dropzone" for="docs-file-upload"><span><i class="pdei-icon pdei-icon-upload-cloud"></i><span class="file-title">Subir DPI o comprobante</span><span class="file-copy">PDF, JPG o PNG · máximo 10 MB</span></span></label>
+            </div>
+            <div class="form-actions form-actions-between">
+              <button class="btn btn-outline" type="button">Cancelar</button>
+              <div class="u-flex u-gap-sm"><button class="btn btn-ghost" type="button">Guardar borrador</button><button class="btn btn-primary" type="button">Continuar</button></div>
+            </div>
           </div>
         </div>
       </article>
@@ -776,7 +845,7 @@ kpi-badge down: variación negativa o advertencia.</code></pre>
             </div>
             <div class="docs-kpi-grid">
               <div class="kpi-small"><div class="kpi-small-label">Rendimiento</div><div class="kpi-small-value">Q 4,820</div><div class="kpi-small-change up">+3.2%</div></div>
-              <div class="kpi-small"><div class="kpi-small-label">Desinversión neta</div><div class="kpi-small-value">Q 12,400</div><div class="kpi-small-change down">-1.4%</div></div>
+              <div class="kpi-small"><div class="kpi-small-label">Desinversión neta</div><div class="kpi-small-value">Q 12,400</div><div class="kpi-small-change">Total retirado este mes</div></div>
               <div class="kpi-small"><div class="kpi-small-label">Fondos activos</div><div class="kpi-small-value">3</div><div class="kpi-small-change">Actualizado hoy</div></div>
               <div class="kpi-small"><div class="kpi-small-label">Documentos</div><div class="kpi-small-value">8/10</div><div class="kpi-small-change down">2 pendientes</div></div>
             </div>
@@ -1116,7 +1185,7 @@ lib/logos/logo.svg</code></pre>
         <header class="example-header">
           <h3>Referencia de iconos</h3>
           <div class="example-actions">
-            <a class="example-icon-btn" href="https://lucide.dev/icons" target="_blank" rel="noopener" title="Ver catálogo Lucide"><i class="pdei-icon pdei-icon-external-link"></i></a>
+            <a class="example-icon-btn" href="https://lucide.dev/icons" target="_blank" rel="noopener" title="Ver catálogo Lucide" aria-label="Ver catálogo Lucide"><i class="pdei-icon pdei-icon-external-link"></i></a>
             <button class="example-icon-btn" type="button" data-copy-active title="Copiar código"><i class="pdei-icon pdei-icon-copy"></i></button>
           </div>
         </header>
