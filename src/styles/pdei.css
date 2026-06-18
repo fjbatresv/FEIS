@@ -212,7 +212,7 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5}
 .form-actions{grid-column:1 / -1;display:flex;gap:12px;align-items:center;margin-top:4px}
 .form-actions-left{justify-content:flex-start}.form-actions-center{justify-content:center}.form-actions-right{justify-content:flex-end}.form-actions-between{justify-content:space-between}
 .file-field{position:relative;display:grid;gap:8px}
-.file-input{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.file-input{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .file-dropzone{min-height:118px;border:1.5px dashed var(--border);border-radius:var(--radius-md);background:#fff;display:grid;place-items:center;text-align:center;padding:20px;cursor:pointer;transition:border-color .15s,background .15s,box-shadow .15s}
 .file-dropzone:hover,.file-input:focus-visible + .file-dropzone{border-color:var(--aqua);background:rgba(0,205,229,.04);box-shadow:0 0 0 3px rgba(0,205,229,.1)}
 .file-dropzone i{font-size:24px;color:var(--dark-aqua);margin-bottom:8px}
@@ -283,7 +283,7 @@ input.otp-box::-webkit-outer-spin-button,input.otp-box::-webkit-inner-spin-butto
 .kpi-amount span{color:var(--aqua)}
 .kpi-sub{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:14px}
 .kpi-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;background:rgba(34,197,94,.15);color:var(--success);font-size:12px;font-weight:600}
-.kpi-badge.down{background:rgba(245,158,11,.16);color:var(--warning)}
+.kpi-badge.down{background:rgba(from var(--warning) r g b / .16);color:var(--warning)}
 .kpi-small{background:#fff;border-radius:var(--radius-lg);border:1px solid var(--border);padding:20px 22px;box-shadow:var(--shadow-card)}
 .kpi-small-label{font-size:12px;color:var(--text-lt);margin-bottom:4px}
 .kpi-small-value{font-size:26px;font-weight:700;color:var(--text)}
@@ -301,6 +301,7 @@ input.otp-box::-webkit-outer-spin-button,input.otp-box::-webkit-inner-spin-butto
 .fund-right{display:grid;justify-items:end;gap:6px;min-width:0;text-align:right}
 .fund-amount{font-size:15px;font-weight:700;color:var(--text)}
 .fund-pct{font-size:12px;font-weight:600;color:var(--success)}
+.fund-pct.down{color:var(--warning)}
 .fund-actions{display:flex;justify-content:flex-end;width:44px}
 .person-card,.person{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;display:flex;align-items:center;gap:14px}
 .person-avatar{width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -399,7 +400,7 @@ input.otp-box::-webkit-outer-spin-button,input.otp-box::-webkit-inner-spin-butto
   .auth-brand{display:none}
   .auth-panel{min-height:100vh}
   .fund-row{grid-template-columns:42px minmax(0,1fr) 44px}
-  .fund-right{grid-column:2 / 3;justify-items:start;text-align:left;margin-top:8px}
+  .fund-right{grid-column:3 / 4;justify-items:end;text-align:right;margin-top:8px}
   .pdei-footer{flex-direction:column;align-items:flex-start}
   .pdei-footer-legal{text-align:left}
   .pdei-footer-links-stack{text-align:left}

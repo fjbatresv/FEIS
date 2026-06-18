@@ -9,7 +9,7 @@ Wizard completo RF4, pasos, navegación adelante/atrás, estados intermedios, re
 Home / Dashboard
 KPIs, fondos destacados, acciones rápidas, actividad reciente, alertas, navegación y estados bloqueados.
 
-Notas de diseño vigentes:
+## Notas de diseño vigentes
 - El KPI de retiro mensual se etiqueta como “Desinversión neta del periodo”; representa el total retirado por el usuario durante el mes, no una pérdida.
 - En fondos destacados, cada fila debe mostrar un solo estado operativo en la columna derecha debajo del monto, usando `status-badge`.
 - El botón de detalle `>` conserva una columna fija para no montarse sobre fondos con nombres o estados largos.

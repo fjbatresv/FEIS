@@ -196,6 +196,7 @@ test("prevents default scroll links and calls scrollIntoView", async ({ page }) 
 
   await page.evaluate(() => {
     window.__scrolled = false;
+    window.__originalScrollIntoView = Element.prototype.scrollIntoView;
     Element.prototype.scrollIntoView = function(options) {
       window.__scrolled = { id: this.id, options };
     };
@@ -208,6 +209,11 @@ test("prevents default scroll links and calls scrollIntoView", async ({ page }) 
     options: { behavior: "smooth", block: "start" }
   });
   await expect(page).toHaveURL(/\/$/);
+
+  await page.evaluate(() => {
+    Element.prototype.scrollIntoView = window.__originalScrollIntoView;
+    delete window.__originalScrollIntoView;
+  });
 });
 
 test("shows positioned variant toasts and removes them after timeout", async ({ page }) => {

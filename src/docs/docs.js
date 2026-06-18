@@ -7,9 +7,10 @@
     return card.querySelector(".example-code pre.active code");
   }
 
-  function showToast() {
+  function showToast(message) {
     var toast = document.querySelector(".copy-toast");
     if (!toast) return;
+    if (message) toast.textContent = message;
     toast.classList.add("show");
     window.clearTimeout(showToast.timer);
     showToast.timer = window.setTimeout(function() {
@@ -43,7 +44,15 @@
     if (copy) {
       var code = getActiveCode(getCard(copy));
       if (!code) return;
-      navigator.clipboard.writeText(code.textContent).then(showToast, showToast);
+      if (!navigator.clipboard || !navigator.clipboard.writeText) {
+        showToast("No se pudo copiar en este contexto.");
+        return;
+      }
+      navigator.clipboard.writeText(code.textContent).then(function() {
+        showToast("Codigo copiado.");
+      }, function() {
+        showToast("No se pudo copiar.");
+      });
       return;
     }
 

@@ -2,7 +2,6 @@
   "extends": ["html-validate:recommended"],
   "rules": {
     "no-inline-style": "off",
-    "text-content": "off",
-    "wcag/h30": "off"
+    "text-content": "off"
   }
 }
