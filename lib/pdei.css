@@ -204,6 +204,20 @@ img{max-width:100%;display:block}
 .input-prefix:focus-within{border-color:var(--aqua);box-shadow:0 0 0 3px rgba(0,205,229,.12)}
 .select-field{padding-right:38px;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238892A4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
 textarea.input-field{resize:vertical;min-height:90px;line-height:1.5}
+.form-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;align-items:start}
+.form-grid > .input-group,.form-grid > .field,.form-grid > .file-field{min-width:0}
+.form-col-1{grid-column:span 1}.form-col-2{grid-column:span 2}.form-col-3{grid-column:span 3}.form-col-4{grid-column:span 4}.form-col-5{grid-column:span 5}.form-col-6{grid-column:span 6}.form-col-7{grid-column:span 7}.form-col-8{grid-column:span 8}.form-col-9{grid-column:span 9}.form-col-10{grid-column:span 10}.form-col-11{grid-column:span 11}.form-col-12{grid-column:span 12}
+.form-grid.form-gap-sm{gap:8px}.form-grid.form-gap-lg{gap:24px}
+.form-align-start{align-items:start}.form-align-center{align-items:center}.form-align-end{align-items:end}.form-align-stretch{align-items:stretch}
+.form-actions{grid-column:1 / -1;display:flex;gap:12px;align-items:center;margin-top:4px}
+.form-actions-left{justify-content:flex-start}.form-actions-center{justify-content:center}.form-actions-right{justify-content:flex-end}.form-actions-between{justify-content:space-between}
+.file-field{position:relative;display:grid;gap:8px}
+.file-input{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.file-dropzone{min-height:118px;border:1.5px dashed var(--border);border-radius:var(--radius-md);background:#fff;display:grid;place-items:center;text-align:center;padding:20px;cursor:pointer;transition:border-color .15s,background .15s,box-shadow .15s}
+.file-dropzone:hover,.file-input:focus-visible + .file-dropzone{border-color:var(--aqua);background:rgba(0,205,229,.04);box-shadow:0 0 0 3px rgba(0,205,229,.1)}
+.file-dropzone i{font-size:24px;color:var(--dark-aqua);margin-bottom:8px}
+.file-title{display:block;font-size:14px;font-weight:700;color:var(--navy)}
+.file-copy{display:block;font-size:12px;color:var(--text-lt);margin-top:2px}
 .check-group{display:flex;align-items:center;gap:9px;cursor:pointer}
 .check-input{width:18px;height:18px;border-radius:5px;border:2px solid var(--border);accent-color:var(--aqua);cursor:pointer}
 .radio-input{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border);appearance:none;background:#fff;cursor:pointer}
@@ -364,6 +378,10 @@ input.otp-box::-webkit-outer-spin-button,input.otp-box::-webkit-inner-spin-butto
 
 @media (max-width:900px){
   .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .form-grid > [class*="form-col-"]{grid-column:1 / -1}
+  .form-actions{flex-direction:column;align-items:stretch}
+  .form-actions > *{width:100%;justify-content:center}
   .pdei-shell{--sidebar-current-w:0}
   .pdei-shell.sidebar-collapsed{--sidebar-current-w:0}
   .pdei-sidebar{width:min(82vw,280px);height:100vh;transform:translateX(-100%);box-shadow:0 24px 80px rgba(0,0,0,.28)}

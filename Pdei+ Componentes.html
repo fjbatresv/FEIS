@@ -123,10 +123,35 @@ a{text-decoration:none;color:inherit}
   width:38px;height:38px;border-radius:10px;
   border:1.5px solid var(--border);
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--text-sec);
-  transition:border-color .15s,color .15s;
+  cursor:pointer;color:var(--text-sec);background:#fff;position:relative;
+  transition:border-color .15s,color .15s,box-shadow .15s;
 }
-.hdr-bell:hover{border-color:var(--aqua);color:var(--aqua);}
+.hdr-bell:hover,.hdr-bell.is-open{border-color:var(--aqua);color:var(--aqua);box-shadow:0 0 0 3px rgba(0,205,229,.12);}
+.hdr-bell.has-alerts::after{
+  content:"";position:absolute;top:7px;right:7px;width:8px;height:8px;
+  border-radius:50%;background:var(--danger);box-shadow:0 0 0 2px #fff;
+}
+.hdr-notifications{position:relative;}
+.alerts-panel{
+  position:absolute;top:calc(100% + 12px);right:0;width:360px;
+  max-height:480px;overflow:auto;padding:14px;border:1px solid var(--border);
+  border-radius:18px;background:#fff;box-shadow:0 18px 48px rgba(15,23,42,.14);
+  display:none;z-index:140;
+}
+.alerts-panel.open{display:grid;gap:12px;}
+.alerts-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.alerts-panel-title{font-size:16px;font-weight:800;color:var(--navy);}
+.alerts-panel-action{font-size:12px;font-weight:700;color:var(--dark-aqua);}
+.alerts-list{display:grid;gap:10px;}
+.alert-item{
+  width:100%;text-align:left;border:1px solid var(--border);border-radius:14px;
+  background:#fff;padding:14px;cursor:pointer;display:grid;gap:6px;
+  transition:border-color .15s,box-shadow .15s;
+}
+.alert-item:hover{border-color:rgba(0,205,229,.55);box-shadow:0 6px 18px rgba(15,23,42,.08);}
+.alert-item-title{font-size:13px;font-weight:800;color:var(--navy);}
+.alert-item-copy{font-size:12px;color:var(--text-sec);line-height:1.45;}
+.alert-item-meta{font-size:11px;color:var(--text-lt);}
 .hdr-avatar{
   width:36px;height:36px;border-radius:50%;
   background:var(--aqua);color:var(--navy);
@@ -305,6 +330,26 @@ a{text-decoration:none;color:inherit}
 .select-field:focus{border-color:var(--aqua);box-shadow:0 0 0 3px rgba(0,205,229,.12);}
 
 textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
+.form-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;align-items:start}
+.form-grid > .input-group,.form-grid > .field,.form-grid > .file-field{min-width:0}
+.form-col-1{grid-column:span 1}.form-col-2{grid-column:span 2}.form-col-3{grid-column:span 3}.form-col-4{grid-column:span 4}.form-col-5{grid-column:span 5}.form-col-6{grid-column:span 6}.form-col-7{grid-column:span 7}.form-col-8{grid-column:span 8}.form-col-9{grid-column:span 9}.form-col-10{grid-column:span 10}.form-col-11{grid-column:span 11}.form-col-12{grid-column:span 12}
+.form-grid.form-gap-sm{gap:8px}.form-grid.form-gap-lg{gap:24px}
+.form-align-start{align-items:start}.form-align-center{align-items:center}.form-align-end{align-items:end}.form-align-stretch{align-items:stretch}
+.form-actions{grid-column:1 / -1;display:flex;gap:12px;align-items:center;margin-top:4px}
+.form-actions-left{justify-content:flex-start}.form-actions-center{justify-content:center}.form-actions-right{justify-content:flex-end}.form-actions-between{justify-content:space-between}
+.file-field{position:relative;display:grid;gap:8px}
+.file-input{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.file-dropzone{min-height:118px;border:1.5px dashed var(--border);border-radius:var(--radius-md);background:#fff;display:grid;place-items:center;text-align:center;padding:20px;cursor:pointer;transition:border-color .15s,background .15s,box-shadow .15s}
+.file-dropzone:hover,.file-input:focus-visible + .file-dropzone{border-color:var(--aqua);background:rgba(0,205,229,.04);box-shadow:0 0 0 3px rgba(0,205,229,.1)}
+.file-dropzone svg{color:var(--dark-aqua);margin-bottom:8px}
+.file-title{display:block;font-size:14px;font-weight:700;color:var(--navy)}
+.file-copy{display:block;font-size:12px;color:var(--text-lt);margin-top:2px}
+@media (max-width:900px){
+  .form-grid{grid-template-columns:1fr}
+  .form-grid > [class*="form-col-"]{grid-column:1 / -1}
+  .form-actions{flex-direction:column;align-items:stretch}
+  .form-actions > *{width:100%;justify-content:center}
+}
 
 /* Checkbox & Radio */
 .check-group{display:flex;align-items:center;gap:9px;cursor:pointer;}
@@ -714,7 +759,34 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
 <div id="header">
   <span class="hdr-title" id="hdr-page-title">Pdei+ — Sistema de Componentes UI</span>
   <div class="hdr-right">
-    <div class="hdr-bell"><span class="" style="width:17px;height:17px;display:inline-flex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></span></div>
+    <div class="hdr-notifications">
+      <button class="hdr-bell has-alerts" type="button" id="hdr-notification-btn" aria-label="Ver notificaciones" aria-expanded="false" aria-controls="hdr-alerts-panel">
+        <span style="width:17px;height:17px;display:inline-flex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></span>
+      </button>
+      <div class="alerts-panel" id="hdr-alerts-panel" role="region" aria-label="Centro de notificaciones">
+        <div class="alerts-panel-head">
+          <div class="alerts-panel-title">Notificaciones</div>
+          <button class="alerts-panel-action" type="button">Marcar leídas</button>
+        </div>
+        <div class="alerts-list">
+          <button class="alert-item" type="button">
+            <span class="alert-item-title">DPI próximo a vencer</span>
+            <span class="alert-item-copy">Actualiza tu documento antes del 30 de junio para evitar restricciones.</span>
+            <span class="alert-item-meta">Hace 12 min</span>
+          </button>
+          <button class="alert-item" type="button">
+            <span class="alert-item-title">Inversión recibida</span>
+            <span class="alert-item-copy">Se registró la solicitud de Q 15,000.00 en Fondo Bursátil.</span>
+            <span class="alert-item-meta">Hoy · 09:45</span>
+          </button>
+          <button class="alert-item" type="button">
+            <span class="alert-item-title">Perfil actualizado</span>
+            <span class="alert-item-copy">Tus datos de contacto fueron guardados correctamente.</span>
+            <span class="alert-item-meta">Ayer</span>
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="hdr-avatar">AL</div>
     <div class="hdr-user-info">
       <div class="hdr-user-name">Alfredo López</div>
@@ -1047,9 +1119,84 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
         <label class="input-label">Campo deshabilitado</label>
         <input class="input-field" type="text" value="No editable" disabled>
       </div>
+	    </div>
+
+    <div class="comp-label" style="margin-top:28px">Layout de formulario — grilla 12 columnas</div>
+    <p style="font-size:13px;color:var(--text-sec);line-height:1.6;margin:0 0 16px">Usa <code>.form-grid</code> para dividir el ancho disponible en 12 columnas. Cada campo define su tamaño con <code>.form-col-*</code>. En pantallas pequeñas todos los campos pasan a ancho completo.</p>
+    <div class="form-grid form-align-end">
+      <div class="input-group form-col-4">
+        <label class="input-label">Primer nombre</label>
+        <input class="input-field" type="text" placeholder="Alfredo">
+      </div>
+      <div class="input-group form-col-4">
+        <label class="input-label">Segundo nombre</label>
+        <input class="input-field" type="text" placeholder="José">
+      </div>
+      <div class="input-group form-col-4">
+        <label class="input-label">Primer apellido</label>
+        <input class="input-field" type="text" placeholder="López">
+      </div>
+      <div class="input-group form-col-3">
+        <label class="input-label">Tipo documento</label>
+        <select class="select-field"><option>DPI</option><option>Pasaporte</option></select>
+      </div>
+      <div class="input-group form-col-5">
+        <label class="input-label">Número de documento</label>
+        <input class="input-field" type="text" placeholder="1234 56789 0101">
+      </div>
+      <div class="input-group form-col-4">
+        <label class="input-label">Fecha vencimiento</label>
+        <input class="input-field" type="date">
+      </div>
+      <div class="input-group form-col-6">
+        <label class="input-label">Dirección</label>
+        <input class="input-field" type="text" placeholder="Calle, avenida, número de casa">
+      </div>
+      <div class="input-group form-col-3">
+        <label class="input-label">Departamento</label>
+        <input class="input-field" type="text" placeholder="Guatemala">
+      </div>
+      <div class="input-group form-col-3">
+        <label class="input-label">Municipio</label>
+        <input class="input-field" type="text" placeholder="Guatemala">
+      </div>
+      <div class="input-group form-col-8">
+        <label class="input-label">Comentarios</label>
+        <textarea class="input-field" placeholder="Observaciones para validación documental"></textarea>
+      </div>
+      <div class="file-field form-col-4">
+        <label class="input-label" for="component-file-upload">Documento o imagen</label>
+        <input class="file-input" id="component-file-upload" type="file" accept=".pdf,.png,.jpg,.jpeg">
+        <label class="file-dropzone" for="component-file-upload">
+          <span>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span class="file-title">Subir DPI o comprobante</span>
+            <span class="file-copy">PDF, JPG o PNG · máximo 10 MB</span>
+          </span>
+        </label>
+      </div>
+      <div class="form-actions form-actions-between">
+        <button class="btn btn-outline">Cancelar</button>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-ghost">Guardar borrador</button>
+          <button class="btn btn-primary">Continuar</button>
+        </div>
+      </div>
     </div>
 
-    <div class="comp-label" style="margin-top:28px">Contraseña</div>
+    <div class="comp-label" style="margin-top:28px">Markup recomendado</div>
+    <pre style="background:#fff;border-radius:10px;padding:18px 20px;font-size:12px;line-height:1.65;overflow-x:auto;color:var(--text);border:1px solid var(--border)"><code>&lt;div class="form-grid form-align-end"&gt;
+  &lt;div class="input-group form-col-4"&gt;...&lt;/div&gt;
+  &lt;div class="input-group form-col-8"&gt;...&lt;/div&gt;
+  &lt;div class="file-field form-col-4"&gt;
+    &lt;label class="input-label" for="dpi-file"&gt;Documento&lt;/label&gt;
+    &lt;input class="file-input" id="dpi-file" type="file" accept=".pdf,.png,.jpg,.jpeg"&gt;
+    &lt;label class="file-dropzone" for="dpi-file"&gt;...&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="form-actions form-actions-between"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+	    <div class="comp-label" style="margin-top:28px">Contraseña</div>
     <div class="comp-row">
       <div class="input-group">
         <label class="input-label">Contraseña</label>
@@ -1752,6 +1899,31 @@ document.querySelectorAll("a[href^='#']").forEach(function(a){
 document.querySelectorAll(".toggle").forEach(function(t){
   t.addEventListener("click", function(){this.classList.toggle("on");});
 });
+
+// Header notifications demo
+var notificationButton = document.getElementById("hdr-notification-btn");
+var notificationPanel = document.getElementById("hdr-alerts-panel");
+function closeNotifications() {
+  if (!notificationButton || !notificationPanel) return;
+  notificationPanel.classList.remove("open");
+  notificationButton.classList.remove("is-open");
+  notificationButton.setAttribute("aria-expanded", "false");
+}
+if (notificationButton && notificationPanel) {
+  notificationButton.addEventListener("click", function(event) {
+    event.stopPropagation();
+    var isOpen = notificationPanel.classList.toggle("open");
+    notificationButton.classList.toggle("is-open", isOpen);
+    notificationButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  });
+  notificationPanel.addEventListener("click", function(event) {
+    event.stopPropagation();
+  });
+  document.addEventListener("click", closeNotifications);
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") closeNotifications();
+  });
+}
 </script>
 </body>
 </html>
