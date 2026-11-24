@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta name="robots" content="noindex"><style>.prototype-ribbon{position:fixed;z-index:99999;top:0;left:0;right:0;min-height:44px;display:flex;align-items:center;justify-content:center;background:#2b2b5e;color:#fff;font:600 14px/1.3 Arial,sans-serif;text-decoration:none;text-align:center;padding:8px 16px;box-shadow:0 2px 12px #14142b33}.prototype-ribbon:focus-visible{outline:3px solid #00cde5;outline-offset:-4px}body{padding-top:44px!important}</style>
+<head><meta name="robots" content="noindex"><style>.prototype-ribbon{position:fixed;z-index:99999;top:0;left:0;right:0;min-height:44px;display:flex;align-items:center;justify-content:center;background:#2b2b5e;color:#fff;font:600 14px/1.3 Arial,sans-serif;text-decoration:none;text-align:center;padding:8px 16px;box-shadow:0 2px 12px #14142b33}.prototype-ribbon:focus-visible{outline:3px solid #00cde5;outline-offset:-4px}body{padding-top:44px!important}#sidebar,#header{top:44px!important}#main{height:calc(100vh - var(--header-h) - 44px)!important;min-height:calc(100vh - var(--header-h) - 44px)!important}</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pdei+ · Componentes</title>
@@ -371,7 +371,7 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
 
 /* Toggle */
 .toggle-wrap{display:flex;align-items:center;gap:10px;}
-.toggle{
+.toggle{border:0;padding:0;
   position:relative;width:44px;height:24px;
   background:var(--border);border-radius:12px;cursor:pointer;
   transition:background .2s;
@@ -528,7 +528,7 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
   padding:6px 16px;border-radius:20px;
   border:1.5px solid var(--border);
   font-size:13px;color:var(--text-sec);
-  cursor:pointer;transition:all .15s;background:#fff;
+  cursor:pointer;transition:all .15s;background:#fff;font:inherit;text-align:center;
 }
 .chip:hover{border-color:var(--navy);color:var(--navy);}
 .chip.active{background:var(--navy);border-color:var(--navy);color:#fff;}
@@ -1098,26 +1098,26 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     <div class="comp-label">Estados de campo de texto</div>
     <div class="comp-row" style="flex-wrap:wrap;gap:20px">
       <div class="input-group">
-        <label class="input-label">Nombre completo</label>
-        <input class="input-field" type="text" placeholder="Ej: Alfredo López García">
+        <label class="input-label" for="component-field-1">Nombre completo</label>
+        <input class="input-field" type="text" placeholder="Ej: Alfredo López García" id="component-field-1">
         <span class="input-hint">Tal como aparece en su DPI</span>
       </div>
       <div class="input-group">
-        <label class="input-label">Correo electrónico</label>
-        <input class="input-field success" type="text" value="alfredo@correo.com">
+        <label class="input-label" for="component-field-2">Correo electrónico</label>
+        <input class="input-field success" type="text" value="alfredo@correo.com" id="component-field-2">
         <span class="input-success-msg">✓ Correo válido</span>
       </div>
       <div class="input-group">
-        <label class="input-label">Número de DPI</label>
-        <input class="input-field error" type="text" value="1234">
+        <label class="input-label" for="component-field-3">Número de DPI</label>
+        <input class="input-field error" type="text" value="1234" id="component-field-3">
         <span class="input-error-msg">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           El DPI debe tener 13 dígitos
         </span>
       </div>
       <div class="input-group">
-        <label class="input-label">Campo deshabilitado</label>
-        <input class="input-field" type="text" value="No editable" disabled>
+        <label class="input-label" for="component-field-4">Campo deshabilitado</label>
+        <input class="input-field" type="text" value="No editable" disabled id="component-field-4">
       </div>
 	    </div>
 
@@ -1125,44 +1125,44 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     <p style="font-size:13px;color:var(--text-sec);line-height:1.6;margin:0 0 16px">Usa <code>.form-grid</code> para dividir el ancho disponible en 12 columnas. Cada campo define su tamaño con <code>.form-col-*</code>. En pantallas pequeñas todos los campos pasan a ancho completo.</p>
     <div class="form-grid form-align-end">
       <div class="input-group form-col-4">
-        <label class="input-label">Primer nombre</label>
-        <input class="input-field" type="text" placeholder="Alfredo">
+        <label class="input-label" for="component-field-5">Primer nombre</label>
+        <input class="input-field" type="text" placeholder="Alfredo" id="component-field-5">
       </div>
       <div class="input-group form-col-4">
-        <label class="input-label">Segundo nombre</label>
-        <input class="input-field" type="text" placeholder="José">
+        <label class="input-label" for="component-field-6">Segundo nombre</label>
+        <input class="input-field" type="text" placeholder="José" id="component-field-6">
       </div>
       <div class="input-group form-col-4">
-        <label class="input-label">Primer apellido</label>
-        <input class="input-field" type="text" placeholder="López">
+        <label class="input-label" for="component-field-7">Primer apellido</label>
+        <input class="input-field" type="text" placeholder="López" id="component-field-7">
       </div>
       <div class="input-group form-col-3">
-        <label class="input-label">Tipo documento</label>
-        <select class="select-field"><option>DPI</option><option>Pasaporte</option></select>
+        <label class="input-label" for="component-field-8">Tipo documento</label>
+        <select class="select-field" id="component-field-8"><option>DPI</option><option>Pasaporte</option></select>
       </div>
       <div class="input-group form-col-5">
-        <label class="input-label">Número de documento</label>
-        <input class="input-field" type="text" placeholder="1234 56789 0101">
+        <label class="input-label" for="component-field-9">Número de documento</label>
+        <input class="input-field" type="text" placeholder="1234 56789 0101" id="component-field-9">
       </div>
       <div class="input-group form-col-4">
-        <label class="input-label">Fecha vencimiento</label>
-        <input class="input-field" type="date">
+        <label class="input-label" for="component-field-10">Fecha vencimiento</label>
+        <input class="input-field" type="date" id="component-field-10">
       </div>
       <div class="input-group form-col-6">
-        <label class="input-label">Dirección</label>
-        <input class="input-field" type="text" placeholder="Calle, avenida, número de casa">
+        <label class="input-label" for="component-field-11">Dirección</label>
+        <input class="input-field" type="text" placeholder="Calle, avenida, número de casa" id="component-field-11">
       </div>
       <div class="input-group form-col-3">
-        <label class="input-label">Departamento</label>
-        <input class="input-field" type="text" placeholder="Guatemala">
+        <label class="input-label" for="component-field-12">Departamento</label>
+        <input class="input-field" type="text" placeholder="Guatemala" id="component-field-12">
       </div>
       <div class="input-group form-col-3">
-        <label class="input-label">Municipio</label>
-        <input class="input-field" type="text" placeholder="Guatemala">
+        <label class="input-label" for="component-field-13">Municipio</label>
+        <input class="input-field" type="text" placeholder="Guatemala" id="component-field-13">
       </div>
       <div class="input-group form-col-8">
-        <label class="input-label">Comentarios</label>
-        <textarea class="input-field" placeholder="Observaciones para validación documental"></textarea>
+        <label class="input-label" for="component-field-14">Comentarios</label>
+        <textarea class="input-field" placeholder="Observaciones para validación documental" id="component-field-14"></textarea>
       </div>
       <div class="file-field form-col-4">
         <label class="input-label" for="component-file-upload">Documento o imagen</label>
@@ -1199,9 +1199,9 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
 	    <div class="comp-label" style="margin-top:28px">Contraseña</div>
     <div class="comp-row">
       <div class="input-group">
-        <label class="input-label">Contraseña</label>
+        <label class="input-label" for="component-field-15">Contraseña</label>
         <div class="input-wrap">
-          <input class="input-field" type="password" value="MiClave123">
+          <input class="input-field" type="password" value="MiClave123" id="component-field-15">
           <span class="input-icon-right">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           </span>
@@ -1212,17 +1212,17 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     <div class="comp-label" style="margin-top:28px">Con prefijo</div>
     <div class="comp-row">
       <div class="input-group">
-        <label class="input-label">Monto a invertir</label>
+        <label class="input-label" for="component-field-16">Monto a invertir</label>
         <div class="input-prefix">
           <span class="input-prefix-label">Q</span>
-          <input class="input-field" type="text" placeholder="0.00">
+          <input class="input-field" type="text" placeholder="0.00" id="component-field-16">
         </div>
       </div>
       <div class="input-group">
-        <label class="input-label">Teléfono</label>
+        <label class="input-label" for="component-field-17">Teléfono</label>
         <div class="input-prefix">
           <span class="input-prefix-label">+502</span>
-          <input class="input-field" type="text" placeholder="0000 0000">
+          <input class="input-field" type="text" placeholder="0000 0000" id="component-field-17">
         </div>
       </div>
     </div>
@@ -1230,16 +1230,16 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     <div class="comp-label" style="margin-top:28px">Select / Dropdown</div>
     <div class="comp-row">
       <div class="input-group">
-        <label class="input-label">Tipo de documento</label>
-        <select class="select-field">
+        <label class="input-label" for="component-field-18">Tipo de documento</label>
+        <select class="select-field" id="component-field-18">
           <option>Seleccionar...</option>
           <option>DPI</option>
           <option>Pasaporte</option>
         </select>
       </div>
       <div class="input-group">
-        <label class="input-label">Tipo de fondo</label>
-        <select class="select-field">
+        <label class="input-label" for="component-field-19">Tipo de fondo</label>
+        <select class="select-field" id="component-field-19">
           <option>Seleccionar fondo</option>
           <option selected>Pdei, Fondo Bursátil en Quetzales</option>
           <option>Pdei, Fondo Bursátil en Dólares</option>
@@ -1251,8 +1251,8 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     <div class="comp-label" style="margin-top:28px">Textarea</div>
     <div class="comp-row">
       <div class="input-group" style="min-width:340px">
-        <label class="input-label">Notas adicionales</label>
-        <textarea class="input-field" placeholder="Instrucciones especiales o comentarios sobre la inversión..."></textarea>
+        <label class="input-label" for="component-field-20">Notas adicionales</label>
+        <textarea class="input-field" placeholder="Instrucciones especiales o comentarios sobre la inversión..." id="component-field-20"></textarea>
       </div>
     </div>
 
@@ -1281,11 +1281,11 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     <div class="comp-label" style="margin-top:28px">Toggle</div>
     <div class="comp-col" style="gap:12px">
       <div class="toggle-wrap">
-        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        <button type="button" class="toggle on" role="switch" aria-checked="true" aria-label="Notificaciones activadas"></button>
         <span style="font-size:14px;color:var(--text)">Notificaciones activadas</span>
       </div>
       <div class="toggle-wrap">
-        <div class="toggle" onclick="this.classList.toggle('on')"></div>
+        <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="Autenticación de dos factores"></button>
         <span style="font-size:14px;color:var(--text)">Autenticación de dos factores</span>
       </div>
     </div>
@@ -1525,12 +1525,12 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
     </div>
     <div class="comp-label" style="margin-top:24px">Chips de filtro</div>
     <div class="chips-row">
-      <div class="chip">Todo</div>
-      <div class="chip active">1M</div>
-      <div class="chip">3M</div>
-      <div class="chip">6M</div>
-      <div class="chip">1A</div>
-      <div class="chip">5A</div>
+      <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">Todo</button>
+      <button type="button" class="chip active" aria-pressed="true" onclick="setChip(this)">1M</button>
+      <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">3M</button>
+      <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">6M</button>
+      <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">1A</button>
+      <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">5A</button>
     </div>
   </div>
 </section>
@@ -1572,7 +1572,7 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
       </div>
     </div>
     <div style="margin-top:16px">
-      <button class="btn btn-outline" onclick="document.getElementById('demo-modal').classList.add('show')">Ver modal interactivo</button>
+      <button class="btn btn-outline" type="button" data-open-modal>Ver modal interactivo</button>
     </div>
   </div>
 </section>
@@ -1588,10 +1588,10 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
         <div style="font-size:12px;color:var(--text-lt)">Cuenta Alfredo López · Pdei, Fondo Bursátil en Quetzales</div>
       </div>
       <div class="chips-row">
-        <div class="chip active">1M</div>
-        <div class="chip">3M</div>
-        <div class="chip">6M</div>
-        <div class="chip">1A</div>
+        <button type="button" class="chip active" aria-pressed="true" onclick="setChip(this)">1M</button>
+        <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">3M</button>
+        <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">6M</button>
+        <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">1A</button>
       </div>
     </div>
     <table class="mov-table">
@@ -1689,19 +1689,19 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
   <div class="comp-card">
     <div class="comp-label">Período</div>
     <div class="chips-row">
-      <div class="chip" onclick="setChip(this)">Todo</div>
-      <div class="chip active" onclick="setChip(this)">1M</div>
-      <div class="chip" onclick="setChip(this)">3M</div>
-      <div class="chip" onclick="setChip(this)">6M</div>
-      <div class="chip" onclick="setChip(this)">1A</div>
-      <div class="chip" onclick="setChip(this)">5A</div>
+      <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">Todo</button>
+      <button type="button" class="chip active" aria-pressed="true" onclick="setChip(this)">1M</button>
+      <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">3M</button>
+      <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">6M</button>
+      <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">1A</button>
+      <button type="button" class="chip" aria-pressed="false" onclick="setChip(this)">5A</button>
     </div>
     <div class="comp-label" style="margin-top:20px">Tipo de operación</div>
     <div class="chips-row">
-      <div class="chip active" onclick="this.classList.toggle('active')">Inversiones</div>
-      <div class="chip active" onclick="this.classList.toggle('active')">Desinversiones</div>
-      <div class="chip" onclick="this.classList.toggle('active')">Rendimientos</div>
-      <div class="chip" onclick="this.classList.toggle('active')">Pendientes</div>
+      <button type="button" class="chip active" aria-pressed="true" onclick="toggleChip(this)">Inversiones</button>
+      <button type="button" class="chip active" aria-pressed="true" onclick="toggleChip(this)">Desinversiones</button>
+      <button type="button" class="chip" aria-pressed="false" onclick="toggleChip(this)">Rendimientos</button>
+      <button type="button" class="chip" aria-pressed="false" onclick="toggleChip(this)">Pendientes</button>
     </div>
   </div>
 </section>
@@ -1865,16 +1865,16 @@ textarea.input-field{resize:vertical;min-height:90px;line-height:1.5;}
 </main>
 
 <!-- ════════ MODAL INTERACTIVO ════════ -->
-<div class="modal-overlay" id="demo-modal" onclick="if(event.target===this){}">
+<div class="modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title" tabindex="-1">
   <div class="modal-box">
     <div style="width:48px;height:48px;border-radius:50%;background:rgba(0,205,229,.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--aqua)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
     </div>
-    <div class="modal-title">Confirmar inversión</div>
+    <div class="modal-title" id="demo-modal-title">Confirmar inversión</div>
     <div class="modal-body">Estás a punto de invertir <strong>Q 15,000.00</strong> en el fondo <strong>Pdei, Fondo Bursátil en Quetzales</strong>. Una vez procesado, el depósito debe realizarse en un plazo máximo de 3 días hábiles.</div>
     <div class="modal-actions">
-      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('demo-modal').classList.remove('show')">Cancelar</button>
-      <button class="btn btn-primary btn-sm" onclick="document.getElementById('demo-modal').classList.remove('show')">Confirmar</button>
+      <button class="btn btn-ghost btn-sm" type="button" data-close-modal>Cancelar</button>
+      <button class="btn btn-primary btn-sm" type="button" data-close-modal>Confirmar</button>
     </div>
   </div>
 </div>
@@ -1885,8 +1885,13 @@ function setActive(el) {
   el.classList.add("active");
 }
 function setChip(el) {
-  el.closest(".chips-row").querySelectorAll(".chip").forEach(function(c){c.classList.remove("active")});
+  el.closest(".chips-row").querySelectorAll(".chip").forEach(function(c){c.classList.remove("active");c.setAttribute("aria-pressed","false")});
   el.classList.add("active");
+  el.setAttribute("aria-pressed","true");
+}
+function toggleChip(el) {
+  var active=el.classList.toggle("active");
+  el.setAttribute("aria-pressed",String(active));
 }
 // Smooth scroll offset for fixed header
 document.querySelectorAll("a[href^='#']").forEach(function(a){
@@ -1895,9 +1900,32 @@ document.querySelectorAll("a[href^='#']").forEach(function(a){
     if(target){e.preventDefault();target.scrollIntoView({behavior:"smooth"});}
   });
 });
+// Modal demo: keep keyboard focus inside and restore it to the opener.
+var demoModal = document.getElementById("demo-modal");
+var modalOpener;
+document.querySelector("[data-open-modal]")?.addEventListener("click", function() {
+  modalOpener = this;
+  demoModal.classList.add("show");
+  demoModal.querySelector("[data-close-modal]").focus();
+});
+demoModal?.querySelectorAll("[data-close-modal]").forEach(function(button) {
+  button.addEventListener("click", function() {
+    demoModal.classList.remove("show");
+    modalOpener?.focus();
+  });
+});
+demoModal?.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") { event.preventDefault(); demoModal.querySelector("[data-close-modal]").click(); }
+  if (event.key === "Tab") {
+    var controls = Array.from(demoModal.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+    var first = controls[0], last = controls[controls.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  }
+});
 // Toggle switches demo
 document.querySelectorAll(".toggle").forEach(function(t){
-  t.addEventListener("click", function(){this.classList.toggle("on");});
+  t.addEventListener("click", function(){var on=this.classList.toggle("on");this.setAttribute("aria-checked",String(on));});
 });
 
 // Header notifications demo

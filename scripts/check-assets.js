@@ -2,7 +2,12 @@ const fs = require("fs");
 const path = require("path");
 const root = path.resolve(__dirname, "..");
 function refs(file) {
-  return [...fs.readFileSync(path.join(root, file), "utf8").replace(/<pre[\s\S]*?<\/pre>|<code[\s\S]*?<\/code>/g, "").matchAll(/(?:href|src)=["']([^"']+)["']/g)].map((match) => match[1]).filter((ref) => !/^(#|https?:|mailto:|tel:|javascript:|data:|blob:)/.test(ref));
+  const html = fs.readFileSync(path.join(root, file), "utf8").replace(/<pre[\s\S]*?<\/pre>|<code[\s\S]*?<\/code>/g, "");
+  const urls = [...html.matchAll(/(?:href|src)=["']([^"']+)["']/g)].map((match) => match[1]);
+  for (const [, candidates] of html.matchAll(/srcset=["']([^"']+)["']/g)) {
+    urls.push(...candidates.split(",").map((candidate) => candidate.trim().split(/\s+/)[0]));
+  }
+  return urls.filter((ref) => !/^(#|https?:|mailto:|tel:|javascript:|data:|blob:)/.test(ref));
 }
 function check(file, base) {
   const missing = refs(file).filter((ref) => {

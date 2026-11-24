@@ -203,7 +203,7 @@ function renderTemplate(template, data) {
     const rows = key.split(".").reduce((value, part) => value?.[part], data);
     return (rows || []).map((row) => renderTemplate(block, { ...data, ...(typeof row === "string" ? { ".": row } : row) })).join("");
   }).replace(/{{([\w.]+)}}/g, (_, key) => {
-    const value = key.split(".").reduce((item, part) => item?.[part], data);
+    const value = key === "." ? data["."] : key.split(".").reduce((item, part) => item?.[part], data);
     if (value == null) return "";
     if (key === "jsonLd") return String(value);
     return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -219,7 +219,7 @@ function buildLanding() {
   }
   copyDir(path.join(landingSrc, "assets"), path.join(site, "assets/landing"));
   write(path.join(site, "version.txt"), `${require(path.join(root, "package.json")).version}\n`);
-  if (fs.existsSync(zipPath)) copyFile(zipPath, path.join(site, "downloads/pdei-ui-lib.zip"));
+  copyFile(zipPath, path.join(site, "downloads/pdei-ui-lib.zip"));
   write(path.join(site, "robots.txt"), "User-agent: *\nAllow: /\nSitemap: https://pdei.fjbatresv.com/sitemap.xml\n");
   write(path.join(site, "CNAME"), "pdei.fjbatresv.com\n");
   write(path.join(site, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${["", "es/", "docs/"].map((route) => `  <url><loc>https://pdei.fjbatresv.com/${route}</loc>${route !== "docs/" ? `\n    <xhtml:link rel="alternate" hreflang="en" href="https://pdei.fjbatresv.com/"/><xhtml:link rel="alternate" hreflang="es" href="https://pdei.fjbatresv.com/es/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://pdei.fjbatresv.com/"/>` : ""}</url>`).join("\n")}\n</urlset>\n`);
@@ -231,7 +231,7 @@ function buildDemos() {
     let html = read(path.join(root, source));
     if (id === "screens") html = html.replace(/DERCAS/gi, "institución financiera");
     html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`);
-    html = html.replace(/<head([^>]*)>/i, `<head$1><meta name="robots" content="noindex"><style>.prototype-ribbon{position:fixed;z-index:99999;top:0;left:0;right:0;min-height:44px;display:flex;align-items:center;justify-content:center;background:#2b2b5e;color:#fff;font:600 14px/1.3 Arial,sans-serif;text-decoration:none;text-align:center;padding:8px 16px;box-shadow:0 2px 12px #14142b33}.prototype-ribbon:focus-visible{outline:3px solid #00cde5;outline-offset:-4px}body{padding-top:44px!important}</style>`);
+    html = html.replace(/<head([^>]*)>/i, `<head$1><meta name="robots" content="noindex"><style>.prototype-ribbon{position:fixed;z-index:99999;top:0;left:0;right:0;min-height:44px;display:flex;align-items:center;justify-content:center;background:#2b2b5e;color:#fff;font:600 14px/1.3 Arial,sans-serif;text-decoration:none;text-align:center;padding:8px 16px;box-shadow:0 2px 12px #14142b33}.prototype-ribbon:focus-visible{outline:3px solid #00cde5;outline-offset:-4px}body{padding-top:44px!important}#sidebar,#header{top:44px!important}#main{height:calc(100vh - var(--header-h) - 44px)!important;min-height:calc(100vh - var(--header-h) - 44px)!important}</style>`);
     html = html.replace(/<body([^>]*)>/i, `<body$1><a class="prototype-ribbon" href="/">Prototipo con datos ficticios · ← Volver al caso de estudio</a>`);
     write(path.join(site, "demo", id, "index.html"), html);
     copyDir(path.join(root, "Logos"), path.join(site, "demo", id, "Logos"));
@@ -247,7 +247,17 @@ function buildZip() {
     throw new Error("No se encontro la utilidad 'zip'. Instalela para generar pdei-ui-lib.zip.");
   }
   if (zipCheck.error) throw zipCheck.error;
-  execFileSync("zip", ["-qr", zipPath, "lib"], { cwd: root, stdio: "inherit" });
+  // Stable entry timestamps keep the generated download unchanged across rebuilds.
+  const normalizeTimestamps = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const file = path.join(dir, entry.name);
+      if (entry.isDirectory()) normalizeTimestamps(file);
+      fs.utimesSync(file, new Date("2000-01-01T00:00:00Z"), new Date("2000-01-01T00:00:00Z"));
+    }
+  };
+  normalizeTimestamps(lib);
+  fs.utimesSync(lib, new Date("2000-01-01T00:00:00Z"), new Date("2000-01-01T00:00:00Z"));
+  execFileSync("zip", ["-Xqr", zipPath, "lib"], { cwd: root, stdio: "inherit", env: { ...process.env, TZ: "UTC" } });
 }
 
 function main() {
@@ -256,10 +266,8 @@ function main() {
     return;
   }
   buildLib();
+  buildZip();
   buildSite();
-  if (!args.has("--docs-only")) {
-    // Full build intentionally does not create the zip; use npm run zip when needed.
-  }
 }
 
 main();

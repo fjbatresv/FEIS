@@ -27,6 +27,8 @@ function check(file) {
   if (levels.some((level, index) => index && level > levels[index - 1] + 1)) throw new Error(`${relative}: heading level jump`);
   if (/<img\b(?![^>]*\balt=)(?![^>]*\baria-hidden)/i.test(html) || /<img\b(?![^>]*\bwidth=)(?![^>]*\baria-hidden)/i.test(html) || /<img\b(?![^>]*\bheight=)(?![^>]*\baria-hidden)/i.test(html)) throw new Error(`${relative}: image missing alt or dimensions`);
   if (landing) {
+    const stackItems = [...html.matchAll(/<span class="stack-item">([^<]+)<\/span>/g)];
+    if (stackItems.length !== 14 || stackItems.some(([, item]) => !item.trim())) throw new Error(`${relative}: expected 14 nonempty stack labels`);
     for (const marker of ['property="og:title"', 'property="og:description"', 'property="og:url"', 'property="og:image:alt"', 'property="og:locale"', 'name="twitter:card" content="summary_large_image"', 'name="twitter:title"', 'name="twitter:description"', 'name="twitter:image"', 'name="theme-color"', 'rel="icon"']) {
       if (!html.includes(marker)) throw new Error(`${relative}: missing ${marker}`);
     }

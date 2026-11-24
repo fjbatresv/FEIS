@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta name="robots" content="noindex"><style>.prototype-ribbon{position:fixed;z-index:99999;top:0;left:0;right:0;min-height:44px;display:flex;align-items:center;justify-content:center;background:#2b2b5e;color:#fff;font:600 14px/1.3 Arial,sans-serif;text-decoration:none;text-align:center;padding:8px 16px;box-shadow:0 2px 12px #14142b33}.prototype-ribbon:focus-visible{outline:3px solid #00cde5;outline-offset:-4px}body{padding-top:44px!important}</style>
+<head><meta name="robots" content="noindex"><style>.prototype-ribbon{position:fixed;z-index:99999;top:0;left:0;right:0;min-height:44px;display:flex;align-items:center;justify-content:center;background:#2b2b5e;color:#fff;font:600 14px/1.3 Arial,sans-serif;text-decoration:none;text-align:center;padding:8px 16px;box-shadow:0 2px 12px #14142b33}.prototype-ribbon:focus-visible{outline:3px solid #00cde5;outline-offset:-4px}body{padding-top:44px!important}#sidebar,#header{top:44px!important}#main{height:calc(100vh - var(--header-h) - 44px)!important;min-height:calc(100vh - var(--header-h) - 44px)!important}</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pdei+ · Web Mock</title>
@@ -14,6 +14,7 @@
 @font-face{font-family:"FuturaPT";src:url("Línea Gráfica/FONTS/Futura PT Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
 @font-face{font-family:"TTNormsPro";src:url("Línea Gráfica/FONTS/TT Norms Pro Trial Condensed Black Italic.ttf") format("truetype");font-weight:900;font-style:italic;font-display:swap}
 *{box-sizing:border-box;margin:0;padding:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 :root{
   --navy:#2B2B5E;
   --aqua:#00CDE5;
@@ -667,6 +668,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
   .product-grid{grid-template-columns:1fr}
   .fund-row{display:flex;align-items:flex-start;flex-wrap:wrap}
   .featured-funds .fund-row{display:grid;grid-template-columns:42px minmax(0,1fr) 168px 44px}
+  .featured-funds .fund-row.auth-hidden{display:none}
   .featured-funds .fund-actions{display:flex;width:44px}
   .more-menu{width:100%}
   .more-menu-toggle{width:100%}
@@ -690,14 +692,14 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
     <img class="brand-logo" src="Logos/Pdei+ Azul.png" alt="Portafolio de Inversiones">
   </div>
   <nav class="sb-nav" aria-label="Navegación principal">
-    <a class="sb-item" data-view="dashboard"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></span>Dashboard</a>
-    <a class="sb-item" data-view="portfolio"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></span>Mi Portafolio</a>
-    <a class="sb-item" data-view="movements"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg></span>Movimientos</a>
-    <a class="sb-item" data-view="profile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a6 6 0 0 0-12 0"></path><circle cx="12" cy="11" r="4"></circle><circle cx="12" cy="12" r="10"></circle></svg></span>Mi Perfil</a>
+    <a class="sb-item" href="#view-dashboard" data-view="dashboard"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></span>Dashboard</a>
+    <a class="sb-item" href="#view-portfolio" data-view="portfolio"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></span>Mi Portafolio</a>
+    <a class="sb-item" href="#view-movements" data-view="movements"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3 6h.01"></path><path d="M3 12h.01"></path><path d="M3 18h.01"></path></svg></span>Movimientos</a>
+    <a class="sb-item" href="#view-profile" data-view="profile"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a6 6 0 0 0-12 0"></path><circle cx="12" cy="11" r="4"></circle><circle cx="12" cy="12" r="10"></circle></svg></span>Mi Perfil</a>
   </nav>
 
   <div class="sb-bottom">
-    <a class="sb-item" id="logout-link"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg></span>Cerrar Sesión</a>
+    <a class="sb-item" href="#view-login" id="logout-link"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg></span>Cerrar Sesión</a>
   </div>
 </aside>
 
@@ -846,12 +848,12 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             </div>
           </div>
           <div class="otp-grid">
-            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
-            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
-            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
-            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
-            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
-            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp>
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp aria-label="Dígito 1 de 6">
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp aria-label="Dígito 2 de 6">
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp aria-label="Dígito 3 de 6">
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp aria-label="Dígito 4 de 6">
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp aria-label="Dígito 5 de 6">
+            <input class="otp-slot" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="1" data-otp aria-label="Dígito 6 de 6">
           </div>
           <div class="auth-status" id="twofa-status"></div>
           <div class="auth-actions">
@@ -1044,12 +1046,12 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <label class="label">Rango de ingresos mensuales</label>
                 <div class="income-range">
                   <div class="input-prefix-group">
-                    <select class="currency-select" id="register-income-start-currency"><option>Q</option><option>USD</option></select>
+                    <label class="sr-only" for="register-income-start-currency">Moneda del ingreso inicial</label><select class="currency-select" id="register-income-start-currency"><option>Q</option><option>USD</option></select>
                     <input class="input" id="register-income-start" type="number" step="0.01" min="0" value="15000" placeholder="Rango inicial">
                   </div>
                   <span class="range-separator">—</span>
                   <div class="input-prefix-group">
-                    <select class="currency-select" id="register-income-end-currency"><option>Q</option><option>USD</option></select>
+                    <label class="sr-only" for="register-income-end-currency">Moneda del ingreso final</label><select class="currency-select" id="register-income-end-currency"><option>Q</option><option>USD</option></select>
                     <input class="input" id="register-income-end" type="number" step="0.01" min="0" value="30000" placeholder="Rango final">
                   </div>
                 </div>
@@ -1092,7 +1094,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             </div>
             <div id="register-fund-fields">
               <div class="wizard-grid">
-                <div class="field"><label class="label" for="register-fund-product">Producto o fondo inicial</label><select class="select" id="register-fund-product"><option>Pdei, Fondo Bursátil en Quetzales</option><option>Pdei, Fondo Bursátil en Dólares</option><option>Pdei, Fondo Líquido en Quetzales</option><option>Pdei, Fondo Valores del Estado en Quetzales</option><option>Fondo de Inversión del Migrante y de Inclusión Financiera en Quetzales</option><option>Fondo de Inversión del Migrante y de Inclusión Financiera en Dólares</option></select></div>
+                <div class="field"><label class="label" for="register-fund-product">Producto o fondo inicial</label><select class="select" id="register-fund-product"><option value="GTQ">Pdei, Fondo Bursátil en Quetzales</option><option value="USD">Pdei, Fondo Bursátil en Dólares</option><option value="GTQ">Pdei, Fondo Líquido en Quetzales</option><option value="GTQ">Pdei, Fondo Valores del Estado en Quetzales</option><option value="GTQ">Fondo de Inversión del Migrante y de Inclusión Financiera en Quetzales</option><option value="USD">Fondo de Inversión del Migrante y de Inclusión Financiera en Dólares</option></select></div>
                 <div class="field">
                   <label class="label" for="register-fund-amount">Monto inicial proyectado* <span class="help-icon" tabindex="0" data-help="Ingresa el monto de referencia para iniciar el expediente.">i</span></label>
                   <div class="input-prefix">
@@ -1208,7 +1210,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         <div class="card">
           <div class="section-title">Fondos destacados</div>
           <div class="fund-list featured-funds">
-            <div class="fund-row" data-fund-state="active">
+            <div class="fund-row" data-fund-id="bursatil-gtq" data-account="001" data-fund-state="active">
               <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span></div>
               <div class="fund-main">
                 <div class="fund-name">Pdei, Fondo Bursátil en Quetzales</div>
@@ -1224,7 +1226,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <button class="icon-btn" type="button" data-view-target="fund-detail" data-action-kind="always" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button>
               </div>
             </div>
-            <div class="fund-row is-muted" data-fund-state="pending-funds">
+            <div class="fund-row is-muted" data-fund-id="bursatil-usd" data-account="002" data-fund-state="pending-funds">
               <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></span></div>
               <div class="fund-main">
                 <div class="fund-name">Pdei, Fondo Bursátil en Dólares</div>
@@ -1240,7 +1242,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <button class="icon-btn" type="button" data-view-target="fund-detail" data-action-kind="always" aria-label="Ver detalle de fondo"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button>
               </div>
             </div>
-            <div class="fund-row is-muted" data-fund-state="blocked">
+            <div class="fund-row is-muted" data-fund-id="estrategico-gtq" data-account="002" data-fund-state="blocked">
               <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2v20"></path><path d="M17 7H9.5a2.5 2.5 0 0 0 0 5h5a2.5 2.5 0 0 1 0 5H6"></path></svg></span></div>
               <div class="fund-main">
                 <div class="fund-name">Pdei, Fondo Valores del Estado en Quetzales</div>
@@ -1372,9 +1374,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m22 7-8.5 8.5-5-5L2 17"></path><path d="M16 7h6v6"></path></svg></span></div>
             <div class="fund-main">
               <div class="fund-name-row">
-                <div class="fund-name">Pdei, Fondo Bursátil en Quetzales</div>
-                <span class="status-badge status-active"><span class="status-dot"></span>Vigente</span>
-              </div>
+                <div class="fund-name">Pdei, Fondo Bursátil en Quetzales</div></div>
               <div class="fund-desc-lines">
                 <div class="fund-desc-line">Saldo disponible: <span class="money">Q 24,320.00</span></div>
                 <div class="fund-desc-line">Vigencia: Indefinida</div>
@@ -1382,16 +1382,14 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <div class="fund-desc-line">Monto capitalizado: <span class="money">Q 480.00</span> · Movimientos: 18</div>
               </div>
             </div>
-            <div class="fund-right"><div class="fund-amount money">Q 84,320.00</div><div class="fund-pct">Saldo actual</div></div>
+            <div class="fund-right"><div class="fund-amount money">Q 84,320.00</div><div class="fund-pct">Saldo actual</div><span class="status-badge status-active"><span class="status-dot"></span>Vigente</span></div>
             <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="bursatil-gtq" aria-label="Ver detalle de fondo" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
           <div class="fund-row portfolio-fund-row" data-account="001" data-fund-id="plazo-gtq" data-fund-state="active" data-fund-currency="GTQ">
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></span></div>
             <div class="fund-main">
               <div class="fund-name-row">
-                <div class="fund-name">Pdei, Fondo Valores del Estado en Quetzales</div>
-                <span class="status-badge status-active"><span class="status-dot"></span>Vigente</span>
-              </div>
+                <div class="fund-name">Pdei, Fondo Valores del Estado en Quetzales</div></div>
               <div class="fund-desc-lines">
                 <div class="fund-desc-line">Saldo disponible: <span class="money">Q 20,000.00</span></div>
                 <div class="fund-desc-line">Vigencia: 30/06/2026</div>
@@ -1399,7 +1397,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <div class="fund-desc-line">Monto capitalizado: <span class="money">Q 760.00</span> · Movimientos: 4</div>
               </div>
             </div>
-            <div class="fund-right"><div class="fund-amount money">Q 30,000.00</div><div class="fund-pct">Saldo actual</div></div>
+            <div class="fund-right"><div class="fund-amount money">Q 30,000.00</div><div class="fund-pct">Saldo actual</div><span class="status-badge status-active"><span class="status-dot"></span>Vigente</span></div>
             <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="plazo-gtq" aria-label="Ver detalle de fondo" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
         </div>
@@ -1425,9 +1423,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14.5a3.5 3.5 0 0 1 0 7H6"></path></svg></span></div>
             <div class="fund-main">
               <div class="fund-name-row">
-                <div class="fund-name">Pdei, Fondo Bursátil en Dólares</div>
-                <span class="status-badge status-active"><span class="status-dot"></span>Vigente</span>
-              </div>
+                <div class="fund-name">Pdei, Fondo Bursátil en Dólares</div></div>
               <div class="fund-desc-lines">
                 <div class="fund-desc-line">Saldo disponible: <span class="money">$ 1,100.00</span></div>
                 <div class="fund-desc-line">Vigencia: Indefinida</div>
@@ -1435,16 +1431,14 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <div class="fund-desc-line">Monto capitalizado: <span class="money">$ 56.00</span> · Movimientos: 9</div>
               </div>
             </div>
-            <div class="fund-right"><div class="fund-amount money">$ 1,600.00</div><div class="fund-pct">Saldo actual</div></div>
+            <div class="fund-right"><div class="fund-amount money">$ 1,600.00</div><div class="fund-pct">Saldo actual</div><span class="status-badge status-active"><span class="status-dot"></span>Vigente</span></div>
             <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="bursatil-usd" aria-label="Ver detalle de fondo" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
           <div class="fund-row portfolio-fund-row is-muted" data-account="002" data-fund-id="crecimiento-gtq" data-fund-state="pending-funds" data-fund-currency="GTQ">
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 16V8"></path><path d="M8 12h8"></path><path d="M4 4h16v16H4z"></path></svg></span></div>
             <div class="fund-main">
               <div class="fund-name-row">
-                <div class="fund-name">Pdei, Fondo Líquido en Quetzales</div>
-                <span class="status-badge status-pending"><span class="status-dot"></span>Pendiente de fondos</span>
-              </div>
+                <div class="fund-name">Pdei, Fondo Líquido en Quetzales</div></div>
               <div class="fund-desc-lines">
                 <div class="fund-desc-line">Saldo disponible: <span class="money">Q 0.00</span></div>
                 <div class="fund-desc-line">Vigencia: Se activa al validar depósito</div>
@@ -1452,16 +1446,14 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <div class="fund-desc-line">Monto capitalizado: <span class="money">Q 0.00</span> · Movimientos: 1</div>
               </div>
             </div>
-            <div class="fund-right"><div class="fund-amount money">Q 10,000.00</div><div class="fund-pct">Monto esperado</div></div>
+            <div class="fund-right"><div class="fund-amount money">Q 10,000.00</div><div class="fund-pct">Monto esperado</div><span class="status-badge status-pending"><span class="status-dot"></span>Pendiente de fondos</span></div>
             <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="crecimiento-gtq" aria-label="Ver detalle de fondo" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
           <div class="fund-row portfolio-fund-row is-muted" data-account="002" data-fund-id="estrategico-gtq" data-fund-state="blocked" data-fund-currency="GTQ">
             <div class="fund-icon"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z"></path><path d="M9 12l2 2 4-4"></path></svg></span></div>
             <div class="fund-main">
               <div class="fund-name-row">
-                <div class="fund-name">Fondo de Inversión del Migrante y de Inclusión Financiera en Quetzales</div>
-                <span class="status-badge status-review"><span class="status-dot"></span>En revisión</span>
-              </div>
+                <div class="fund-name">Fondo de Inversión del Migrante y de Inclusión Financiera en Quetzales</div></div>
               <div class="fund-desc-lines">
                 <div class="fund-desc-line">Saldo disponible: <span class="money">Q 0.00</span></div>
                 <div class="fund-desc-line">Vigencia: Congelado por cumplimiento</div>
@@ -1469,7 +1461,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
                 <div class="fund-desc-line">Monto capitalizado: <span class="money">Q 0.00</span> · Movimientos: 2</div>
               </div>
             </div>
-            <div class="fund-right"><div class="fund-amount money">Q 0.00</div><div class="fund-pct">Sin saldo operativo</div></div>
+            <div class="fund-right"><div class="fund-amount money">Q 0.00</div><div class="fund-pct">Sin saldo operativo</div><span class="status-badge status-review"><span class="status-dot"></span>En revisión</span></div>
             <div class="fund-actions"><button class="more-menu-toggle portfolio-detail-trigger" type="button" data-fund-open="estrategico-gtq" aria-label="Ver detalle de fondo" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div>
           </div>
         </div>
@@ -1841,6 +1833,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
             <option value="plazo-gtq">Pdei, Fondo Valores del Estado en Quetzales</option>
             <option value="bursatil-usd">Pdei, Fondo Bursátil en Dólares</option>
             <option value="crecimiento-gtq">Pdei, Fondo Líquido en Quetzales</option>
+            <option value="estrategico-gtq">Fondo de Inversión del Migrante y de Inclusión Financiera en Quetzales</option>
           </select>
         </div>
         <div class="field">
@@ -1914,7 +1907,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
         <div class="field"><label class="label" for="beneficiary-last-name">Primer apellido</label><input class="input" id="beneficiary-last-name"></div>
         <div class="field"><label class="label" for="beneficiary-second-last-name">Segundo Apellido</label><input class="input" id="beneficiary-second-last-name"></div>
         <div class="field"><label class="label" for="beneficiary-married-name">Apellido de Casada</label><input class="input" id="beneficiary-married-name" placeholder="Opcional"></div>
-        <div class="field"><label class="label" for="beneficiary-relationship">Relación</label><select class="select" id="beneficiary-relationship"><option>Hijo/a</option><option>Cónyuge</option><option>Padre/Madre</option><option>Hermano/a</option><option>Otro</option></select></div>
+        <div class="field"><label class="label" for="beneficiary-relationship">Relación</label><select class="select" id="beneficiary-relationship"><option>Hijo/a</option><option>Hija</option><option>Hijo</option><option>Cónyuge</option><option>Padre/Madre</option><option>Madre</option><option>Hermano/a</option><option>Otro</option></select></div>
       </div>
       <div class="btn-row" style="margin-top:18px"><button class="btn btn-outline" type="button" id="beneficiaries-cancel">Limpiar</button><button class="btn btn-primary" type="button" id="beneficiaries-save-item">Guardar beneficiario</button></div>
     </div>
@@ -2453,7 +2446,7 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></span>
             </button>
           </div>
-          <div class="list">
+          <div class="list" id="profile-accounts-list">
             <div class="person"><div class="person-avatar">BI</div><div><div class="person-name">Banco Industrial</div><div class="person-meta">Monetaria · GTQ · 041-200851-7</div><div style="margin-top:10px"><span class="status-badge status-active"><span class="status-dot"></span>Principal</span></div></div><div class="person-tail"><button class="more-menu-toggle" type="button" id="profile-account-detail-1" aria-label="Ver detalle de cuenta" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div></div>
             <div class="person"><div class="person-avatar">GT</div><div><div class="person-name">G&amp;T Continental</div><div class="person-meta">Ahorro · USD · 008-110245-3</div></div><div class="person-tail"><button class="more-menu-toggle" type="button" id="profile-account-detail-2" aria-label="Ver detalle de cuenta" aria-haspopup="true" aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span></button></div></div>
           </div>
@@ -2471,12 +2464,12 @@ body.auth-mode #main{margin:0;height:auto;padding:0;min-height:100vh}
               <label class="label">Rango ingresos <span class="help-icon" tabindex="0" data-help="Registra monto inicial, monto final y moneda para reflejar el rango declarado.">i</span></label>
               <div class="income-range">
                 <div class="input-prefix-group">
-                  <select class="currency-select" id="profile-income-start-currency"><option>Q</option><option>USD</option></select>
+                  <label class="sr-only" for="profile-income-start-currency">Moneda del ingreso inicial</label><select class="currency-select" id="profile-income-start-currency"><option>Q</option><option>USD</option></select>
                   <input class="input" id="profile-income-start-input" type="number" step="0.01" min="0" value="15000">
                 </div>
                 <span class="range-separator">—</span>
                 <div class="input-prefix-group">
-                  <select class="currency-select" id="profile-income-end-currency"><option>Q</option><option>USD</option></select>
+                  <label class="sr-only" for="profile-income-end-currency">Moneda del ingreso final</label><select class="currency-select" id="profile-income-end-currency"><option>Q</option><option>USD</option></select>
                   <input class="input" id="profile-income-end-input" type="number" step="0.01" min="0" value="30000">
                 </div>
               </div>
@@ -2552,6 +2545,7 @@ const authState = {
     signatoryName:"",
     signatoryDocument:"",
     receiptFileName:"",
+    receiptContext:"",
     receiptDate:"2026-05-02"
   },
   newInvestmentStep:0,
@@ -2566,7 +2560,9 @@ const authState = {
     reviewAccepted:false
   },
   beneficiaryEditIndex:-1,
+  beneficiaryEditFund:"",
   signatoryEditIndex:-1,
+  signatoryEditFund:"",
   selectedAccount:"bi-gtq",
   accountEditMode:false,
   newAccountStep:0,
@@ -2863,6 +2859,23 @@ const profileAccounts = {
     fundIds:["bursatil-usd","crecimiento-gtq","estrategico-gtq"]
   }
 };
+function renderProfileAccounts() {
+  const list = byId("profile-accounts-list");
+  if (!list) return;
+  list.replaceChildren();
+  Object.values(profileAccounts).forEach(account => {
+    const row = document.createElement("div"); row.className = "person";
+    const avatar = document.createElement("div"); avatar.className = "person-avatar"; avatar.textContent = account.bank.slice(0, 2).toUpperCase();
+    const details = document.createElement("div");
+    const name = document.createElement("div"); name.className = "person-name"; name.textContent = account.bank;
+    const meta = document.createElement("div"); meta.className = "person-meta"; meta.textContent = account.type + " · " + account.currency + " · " + account.masked;
+    details.append(name, meta);
+    if (account.primary) { const badge = document.createElement("span"); badge.className = "status-badge status-active"; badge.textContent = "Principal"; details.append(badge); }
+    const tail = document.createElement("div"); tail.className = "person-tail";
+    const button = document.createElement("button"); button.type = "button"; button.className = "more-menu-toggle"; button.dataset.profileAccountOpen = account.id; button.setAttribute("aria-label", "Ver detalle de cuenta " + account.alias); button.textContent = "›";
+    tail.append(button); row.append(avatar, details, tail); list.append(row);
+  });
+}
 const newFundAccounts = {
   "001": {
     label:"Cuenta 001",
@@ -3049,10 +3062,7 @@ function getHeaderAlerts() {
         title:`${fund.title} pendiente de fondos`,
         copy:"Debe cargarse y validarse el comprobante para activar el producto.",
         link:"Confirmar depósito",
-        action:() => {
-          authState.selectedFund = fundId;
-          showView("confirm-deposit");
-        }
+        action:() => openConfirmDepositForFund(fundId)
       });
     }
     if (fund.state === "En revisión") {
@@ -3344,7 +3354,7 @@ function getCreateFundValue() {
 }
 
 function getRegisterFundCurrency() {
-  return byId("register-fund-product")?.value.includes("USD") ? "$" : "Q";
+  return byId("register-fund-product")?.value === "USD" ? "$" : "Q";
 }
 
 function formatDecimalAmount(value) {
@@ -3359,7 +3369,7 @@ function updateRegisterSummary() {
   const docNumber = byId("register-doc-number")?.value.trim() || "-";
   const bank = byId("register-bank-name")?.value || "-";
   const accountType = byId("register-account-type")?.value || "-";
-  const fundProduct = byId("register-fund-product")?.value || "No definido";
+  const fundProduct = byId("register-fund-product")?.selectedOptions[0]?.textContent || "No definido";
   const fundAmount = formatDecimalAmount(byId("register-fund-amount")?.value.trim());
   const fundCurrency = getRegisterFundCurrency();
   const createFund = getCreateFundValue() === "yes";
@@ -3453,6 +3463,7 @@ function renderFundDetail() {
 
 function resetSignatoryForm() {
   authState.signatoryEditIndex = -1;
+  authState.signatoryEditFund = "";
   byId("signatory-doc-type").value = "DPI";
   byId("signatory-doc-number").value = "";
   byId("signatory-role").value = "Firmante autorizado";
@@ -3472,6 +3483,7 @@ function loadSignatoryIntoForm(index) {
   const signatory = getSignatoriesForSelectedFund()[index];
   if (!signatory) return;
   authState.signatoryEditIndex = index;
+  authState.signatoryEditFund = authState.selectedFund;
   byId("signatory-doc-type").value = signatory.documentType;
   byId("signatory-doc-number").value = signatory.documentNumber;
   byId("signatory-role").value = signatory.role;
@@ -3522,6 +3534,7 @@ function validateSignatoryForm() {
 
 function resetBeneficiaryForm() {
   authState.beneficiaryEditIndex = -1;
+  authState.beneficiaryEditFund = "";
   byId("beneficiary-doc-type").value = "DPI";
   byId("beneficiary-doc-number").value = "";
   byId("beneficiary-share").value = "";
@@ -3539,6 +3552,7 @@ function loadBeneficiaryIntoForm(index) {
   const beneficiary = getBeneficiariesForSelectedFund()[index];
   if (!beneficiary) return;
   authState.beneficiaryEditIndex = index;
+  authState.beneficiaryEditFund = authState.selectedFund;
   byId("beneficiary-doc-type").value = beneficiary.documentType;
   byId("beneficiary-doc-number").value = beneficiary.documentNumber;
   byId("beneficiary-share").value = Number(beneficiary.share).toFixed(2);
@@ -3876,7 +3890,31 @@ function validateRegisterStep(step) {
   return "";
 }
 
+function openConfirmDepositForFund(fundId) {
+  const fund = fundDetailData[fundId] || fundDetailData["crecimiento-gtq"];
+  const account = fund.summary.find(([label]) => label === "Cuenta")?.[1] || "002";
+  const productId = newFundProducts[fundId] ? fundId : "crecimiento-gtq";
+  const context = `${account}|${productId}`;
+  if (authState.newFund.receiptContext && authState.newFund.receiptContext !== context) {
+    authState.newFund.receiptFileName = "";
+    authState.newFund.receiptContext = "";
+    if (byId("confirm-deposit-file")) byId("confirm-deposit-file").value = "";
+  }
+  authState.selectedFund = fundId;
+  authState.newFund.account = account;
+  authState.newFund.product = productId;
+  authState.newFund.amount = String(parseMoney(fund.balance || "0"));
+  authState.newFund.alias = authState.newFund.alias || "Sin alias";
+  showView("confirm-deposit");
+}
+
 function renderConfirmDeposit() {
+  const context = `${authState.newFund.account}|${authState.newFund.product}`;
+  if (authState.newFund.receiptContext && authState.newFund.receiptContext !== context) {
+    authState.newFund.receiptFileName = "";
+    byId("confirm-deposit-file").value = "";
+    authState.newFund.receiptContext = "";
+  }
   const product = getNewFundProduct();
   const account = getNewFundAccount();
   const amount = Number(authState.newFund.amount || 0);
@@ -4017,6 +4055,7 @@ function validateNewFundStep(step) {
       if (beneficiaryPairs.some(([name, pct]) => (!!name && pct === "") || (!name && pct !== ""))) {
         return "Cada beneficiario visible debe tener nombre y porcentaje completos.";
       }
+      if (beneficiaryPairs.some(([name, pct]) => !!name && (!Number.isFinite(Number(pct)) || Number(pct) < 0 || Number(pct) > 100))) return "Cada porcentaje de beneficiario debe estar entre 0 y 100.";
       if (Math.abs(getNewFundBeneficiariesTotal() - 100) > 0.001) return "La distribución de beneficiarios debe sumar exactamente 100% para continuar.";
     }
     if (authState.newFund.signatoriesMode === "yes" && (!authState.newFund.signatoryName.trim() || !authState.newFund.signatoryDocument.trim())) {
@@ -4239,13 +4278,16 @@ function showView(name) {
   if (name === "signatories") renderSignatories();
   if (name === "account-detail") renderAccountDetail();
   if (name === "new-account") renderNewAccountStep();
-  if (name === "profile") renderProfileState();
+  if (name === "profile") { renderProfileState(); renderProfileAccounts(); }
   renderAlertsPanel();
   setQueryState();
 }
 
 items.forEach(item => {
-  item.addEventListener("click", () => showView(item.dataset.view));
+  item.addEventListener("click", event => {
+    event.preventDefault();
+    showView(item.dataset.view);
+  });
 });
 
 byId("alerts-toggle")?.addEventListener("click", event => {
@@ -4281,7 +4323,7 @@ document.addEventListener("click", () => {
 
 document.querySelectorAll("[data-view-target]").forEach(button => {
   button.addEventListener("click", () => {
-    const sourceRow = button.closest(".portfolio-fund-row");
+    const sourceRow = button.closest(".portfolio-fund-row, .featured-funds .fund-row");
     if (sourceRow?.dataset.fundId) authState.selectedFund = sourceRow.dataset.fundId;
     if (button.getAttribute("data-view-target") === "new-fund" && sourceRow?.dataset.account) {
       authState.newFund.account = sourceRow.dataset.account;
@@ -4579,13 +4621,7 @@ byId("fund-detail-movements-shortcut")?.addEventListener("click", () => {
 
 byId("fund-detail-confirm-deposit")?.addEventListener("click", () => {
   if (byId("fund-detail-confirm-deposit").disabled) return;
-  const fund = fundDetailData[authState.selectedFund] || fundDetailData["crecimiento-gtq"];
-  const account = fund.summary.find(([label]) => label === "Cuenta")?.[1] || "002";
-  authState.newFund.account = account;
-  authState.newFund.product = newFundProducts[authState.selectedFund] ? authState.selectedFund : "crecimiento-gtq";
-  authState.newFund.amount = String(parseMoney(fund.balance || "0"));
-  authState.newFund.alias = authState.newFund.alias || "Sin alias";
-  showView("confirm-deposit");
+  openConfirmDepositForFund(authState.selectedFund);
 });
 
 byId("new-investment-back")?.addEventListener("click", () => {
@@ -4830,6 +4866,7 @@ byId("new-fund-go-deposit")?.addEventListener("click", () => {
 byId("confirm-deposit-file")?.addEventListener("change", event => {
   const file = event.target.files?.[0];
   authState.newFund.receiptFileName = file ? file.name : "";
+  authState.newFund.receiptContext = file ? `${authState.newFund.account}|${authState.newFund.product}` : "";
   byId("confirm-deposit-file-name").value = authState.newFund.receiptFileName || "Sin archivo cargado";
   renderConfirmDeposit();
 });
@@ -4948,14 +4985,10 @@ byId("profile-financial-save")?.addEventListener("click", () => {
   setStatus("profile-status", "success", "Perfil financiero actualizado correctamente para continuar operando.");
 });
 
-byId("profile-account-detail-1")?.addEventListener("click", () => {
-  authState.selectedAccount = "bi-gtq";
-  authState.accountEditMode = false;
-  showView("account-detail");
-});
-
-byId("profile-account-detail-2")?.addEventListener("click", () => {
-  authState.selectedAccount = "gt-usd";
+byId("profile-accounts-list")?.addEventListener("click", event => {
+  const button = event.target.closest("[data-profile-account-open]");
+  if (!button) return;
+  authState.selectedAccount = button.dataset.profileAccountOpen;
   authState.accountEditMode = false;
   showView("account-detail");
 });
@@ -5123,6 +5156,7 @@ byId("new-account-next")?.addEventListener("click", () => {
         });
       }
       authState.selectedAccount = nextId;
+      renderProfileAccounts();
       byId("new-account-result-id").textContent = `CTA-${new Date().getFullYear()}-${String(Date.now()).slice(-3)}`;
       setStatus("new-account-status", "success", "Nueva cuenta creada en estado Por Confirmar dentro del mock.");
     } else {
@@ -5174,7 +5208,9 @@ byId("beneficiaries-save-item")?.addEventListener("click", () => {
     pep: false,
     cpe: false
   };
-  const beneficiaries = getBeneficiariesForSelectedFund();
+  const editFund = authState.beneficiaryEditFund || authState.selectedFund;
+  const beneficiaries = beneficiariesByFund[editFund] || (beneficiariesByFund[editFund] = []);
+  authState.selectedFund = editFund;
   if (authState.beneficiaryEditIndex >= 0) beneficiaries[authState.beneficiaryEditIndex] = record;
   else beneficiaries.push(record);
   resetBeneficiaryForm();
@@ -5252,7 +5288,9 @@ byId("signatories-save-item")?.addEventListener("click", () => {
     cpe: false,
     status: byId("signatory-status").value
   };
-  const signatories = getSignatoriesForSelectedFund();
+  const editFund = authState.signatoryEditFund || authState.selectedFund;
+  const signatories = signatoriesByFund[editFund] || (signatoriesByFund[editFund] = []);
+  authState.selectedFund = editFund;
   if (authState.signatoryEditIndex >= 0) signatories[authState.signatoryEditIndex] = record;
   else signatories.push(record);
   resetSignatoryForm();
