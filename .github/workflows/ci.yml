@@ -43,4 +43,6 @@ jobs:
         run: npm test
 
       - name: Verify generated files are committed
-        run: git diff --exit-code -- lib site
+        run: |
+          git diff --exit-code -- lib site ':(exclude)site/downloads/pdei-ui-lib.zip'
+          cmp pdei-ui-lib.zip site/downloads/pdei-ui-lib.zip
