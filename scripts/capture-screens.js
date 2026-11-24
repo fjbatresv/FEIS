@@ -10,6 +10,7 @@ const base = process.env.CAPTURE_URL || "http://127.0.0.1:4179/demo/web-mock/";
 (async () => {
   fs.mkdirSync(shots, { recursive: true });
   const browser = await chromium.launch({ headless: true });
+  try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 });
   await page.goto(base);
   for (const [name, open] of [
@@ -30,5 +31,7 @@ const base = process.env.CAPTURE_URL || "http://127.0.0.1:4179/demo/web-mock/";
   for (const [lang, headline, subhead] of [["en", "From brand to code", "An investment portal built as a shippable UI system"], ["es", "De la marca al código", "Un portal de inversión convertido en sistema UI"]]) {
     await sharp(Buffer.from(og(lang, headline, subhead))).png().toFile(path.join(assets, `og-${lang}.png`));
   }
-  await browser.close();
+  } finally {
+    await browser.close();
+  }
 })().catch((error) => { console.error(error); process.exitCode = 1; });
