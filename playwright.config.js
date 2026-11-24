@@ -4,13 +4,14 @@ module.exports = defineConfig({
   testDir: "./tests",
   timeout: 30000,
   fullyParallel: true,
+  workers: 2,
   reporter: [["list"]],
   use: {
     baseURL: "http://127.0.0.1:4179",
     trace: "retain-on-failure"
   },
   webServer: {
-    command: "python3 -m http.server 4179 --directory site",
+    command: "python3 -c \"from functools import partial; from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer; ThreadingHTTPServer(('127.0.0.1', 4179), partial(SimpleHTTPRequestHandler, directory='site')).serve_forever()\"",
     url: "http://127.0.0.1:4179",
     reuseExistingServer: !process.env.CI,
     timeout: 10000

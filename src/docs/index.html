@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pdei+ UI Library</title>
+  <meta name="description" content="Documentación de componentes, estilos e iconos de la librería UI Pdei+.">
+  <link rel="canonical" href="https://pdei.fjbatresv.com/docs/">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="Pdei+ UI Library"><meta property="og:title" content="Pdei+ UI Library"><meta property="og:description" content="Componentes, estilos e iconos para construir interfaces Pdei+."><meta property="og:url" content="https://pdei.fjbatresv.com/docs/"><meta property="og:image" content="https://pdei.fjbatresv.com/assets/landing/og-en.png"><meta property="og:image:alt" content="Pdei+ UI library case study preview"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://pdei.fjbatresv.com/assets/landing/og-en.png">
+  <title>Pdei+ UI Library · Docs</title>
   <link rel="stylesheet" href="../../lib/pdei.min.css">
   <link rel="stylesheet" href="../../lib/icons/pdei-icons.min.css">
   <link rel="stylesheet" href="docs.css">
+  <style>.case-study-link{display:block;padding:12px 18px;color:var(--navy);font-weight:700}</style>
 </head>
 <body>
   <aside class="docs-sidebar">
+    <a class="case-study-link" href="/">← Case study</a>
     <div class="docs-brand">
       <span class="pdei-logo logo-navy logo-lg" role="img" aria-label="Pdei+"></span>
       <span>UI Library</span>
@@ -116,13 +121,13 @@ El frontend productivo consume archivos estáticos desde /lib.</code></pre>
         </div>
         <div class="example-code">
           <pre class="active" data-example-panel="html"><code>&lt;div class="input-group"&gt;
-  &lt;label class="input-label"&gt;
+  &lt;label class="input-label" for="investment-amount"&gt;
     Monto de inversión
     &lt;span class="help-icon" tabindex="0" data-help="Ingresa el monto mínimo requerido por el producto."&gt;i&lt;/span&gt;
   &lt;/label&gt;
   &lt;div class="input-prefix"&gt;
     &lt;span class="input-prefix-label"&gt;Q&lt;/span&gt;
-    &lt;input class="input-field" placeholder="0.00"&gt;
+    &lt;input id="investment-amount" class="input-field" placeholder="0.00" aria-label="Monto de inversión"&gt;
   &lt;/div&gt;
   &lt;span class="input-hint"&gt;Monto mínimo Q 1,000.00&lt;/span&gt;
 &lt;/div&gt;</code></pre>
@@ -164,12 +169,13 @@ El frontend productivo consume archivos estáticos desde /lib.</code></pre>
           <button type="button" data-example-tab="notes">Uso</button>
         </div>
         <div class="example-code">
-          <pre class="active" data-example-panel="html"><code>&lt;input class="input-field" placeholder="Texto simple"&gt;
-&lt;input class="input-field success" value="Validado"&gt;
-&lt;input class="input-field error" value="Dato inválido"&gt;
-&lt;input class="input-field" value="No editable" disabled&gt;
+          <pre class="active" data-example-panel="html"><code>&lt;input class="input-field" placeholder="Texto simple" aria-label="Texto simple"&gt;
+&lt;input class="input-field success" value="Validado" aria-label="Campo validado"&gt;
+&lt;input class="input-field error" value="Dato inválido" aria-label="Campo inválido"&gt;
+&lt;input class="input-field" value="No editable" disabled aria-label="Campo no editable"&gt;
 
 &lt;div class="input-wrap"&gt;
+  &lt;label class="input-label" for="password-demo"&gt;Contraseña&lt;/label&gt;
   &lt;input id="password-demo" class="input-field" type="password" value="MiClave123"&gt;
   &lt;button class="input-icon-right" type="button" data-pdei-password-toggle="#password-demo" aria-label="Mostrar contraseña"&gt;
     &lt;i class="pdei-icon pdei-icon-eye"&gt;&lt;/i&gt;
@@ -206,12 +212,12 @@ data-pdei-password-toggle: alterna type password/text</code></pre>
         <div class="example-code">
           <pre class="active" data-example-panel="html"><code>&lt;div class="form-grid form-align-end"&gt;
   &lt;div class="input-group form-col-4"&gt;
-    &lt;label class="input-label"&gt;Primer nombre&lt;/label&gt;
-    &lt;input class="input-field" placeholder="Alfredo"&gt;
+    &lt;label class="input-label" for="first-name"&gt;Primer nombre&lt;/label&gt;
+    &lt;input id="first-name" class="input-field" placeholder="Alfredo"&gt;
   &lt;/div&gt;
   &lt;div class="input-group form-col-8"&gt;
-    &lt;label class="input-label"&gt;Dirección&lt;/label&gt;
-    &lt;input class="input-field" placeholder="Calle, avenida, número"&gt;
+    &lt;label class="input-label" for="address"&gt;Dirección&lt;/label&gt;
+    &lt;input id="address" class="input-field" placeholder="Calle, avenida, número"&gt;
   &lt;/div&gt;
   &lt;div class="file-field form-col-4"&gt;
     &lt;label class="input-label" for="dpi-file"&gt;Documento&lt;/label&gt;
@@ -275,7 +281,7 @@ En móvil, todos los form-col-* pasan a ancho completo.</code></pre>
           <pre class="active" data-example-panel="html"><code>&lt;label class="check-group"&gt;&lt;input type="checkbox" class="check-input" checked&gt;&lt;span class="check-label"&gt;Acepto términos&lt;/span&gt;&lt;/label&gt;
 &lt;label class="check-group"&gt;&lt;input type="radio" class="radio-input" name="tipo" checked&gt;&lt;span class="check-label"&gt;Cuenta individual&lt;/span&gt;&lt;/label&gt;
 &lt;span class="toggle on" data-pdei-toggle&gt;&lt;/span&gt;
-&lt;select class="select-field"&gt;&lt;option&gt;Fondo Bursátil GTQ&lt;/option&gt;&lt;/select&gt;</code></pre>
+&lt;select class="select-field" aria-label="Fondo"&gt;&lt;option&gt;Fondo Bursátil GTQ&lt;/option&gt;&lt;/select&gt;</code></pre>
         </div>
         <div class="example-preview compact">
           <label class="check-group"><input type="checkbox" class="check-input" checked><span class="check-label">Acepto términos</span></label>
@@ -876,7 +882,7 @@ kpi-badge down: variación negativa o advertencia.</code></pre>
           <pre class="active" data-example-panel="html"><code>&lt;div class="fund-list"&gt;
   &lt;div class="fund-row"&gt;
     &lt;div class="fund-icon"&gt;&lt;i class="pdei-icon pdei-icon-wallet"&gt;&lt;/i&gt;&lt;/div&gt;
-    &lt;div class="fund-main"&gt;&lt;div class="fund-name"&gt;Fondo Crecimiento&lt;/div&gt;&lt;div class="fund-desc"&gt;Pendiente de depósito&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="fund-main"&gt;&lt;div class="fund-name"&gt;Fondo Crecimiento&lt;/div&gt;&lt;div class="fund-desc"&gt;Aporte inicial&lt;/div&gt;&lt;/div&gt;
     &lt;div class="fund-right"&gt;&lt;div class="fund-amount"&gt;Q 15,000.00&lt;/div&gt;&lt;span class="status-badge status-pending"&gt;&lt;span class="status-dot"&gt;&lt;/span&gt;Pendiente&lt;/span&gt;&lt;/div&gt;
     &lt;div class="fund-actions"&gt;&lt;button class="icon-btn" aria-label="Ver"&gt;&lt;i class="pdei-icon pdei-icon-chevron-right"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;
   &lt;/div&gt;
@@ -899,7 +905,7 @@ minmax(0,1fr) información
                 </div>
                 <div class="fund-row">
                   <div class="fund-icon"><i class="pdei-icon pdei-icon-wallet"></i></div>
-                  <div class="fund-main"><div class="fund-name">Fondo Crecimiento</div><div class="fund-desc">Pendiente de depósito</div></div>
+                  <div class="fund-main"><div class="fund-name">Fondo Crecimiento</div><div class="fund-desc">Aporte inicial</div></div>
                   <div class="fund-right"><div class="fund-amount">Q 15,000.00</div><span class="status-badge status-pending"><span class="status-dot"></span>Pendiente</span></div>
                   <div class="fund-actions"><button type="button" class="icon-btn" aria-label="Ver"><i class="pdei-icon pdei-icon-chevron-right"></i></button></div>
                 </div>
