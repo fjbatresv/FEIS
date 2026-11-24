@@ -2,7 +2,7 @@ const { expect, test } = require("@playwright/test");
 const AxeBuilder = require("@axe-core/playwright").default;
 
 test("docs page has no serious or critical axe violations", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/docs/");
   await page.waitForLoadState("networkidle");
 
   const results = await new AxeBuilder({ page })

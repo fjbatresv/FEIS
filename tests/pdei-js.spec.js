@@ -1,7 +1,7 @@
 const { expect, test } = require("@playwright/test");
 
 async function loadPdei(page, body) {
-  await page.goto("/");
+  await page.goto("/docs/");
   await page.setContent(`<!doctype html>
     <html>
       <head>

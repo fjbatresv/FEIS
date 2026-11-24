@@ -6,9 +6,10 @@ test.beforeEach(async ({ page }) => {
     if (message.type() === "error") consoleErrors.push(message.text());
   });
   page.on("pageerror", (error) => consoleErrors.push(error.message));
+  page.on("requestfailed", (request) => consoleErrors.push(`${request.url()}: ${request.failure()?.errorText}`));
   page.consoleErrors = consoleErrors;
 
-  await page.goto("/");
+  await page.goto("/docs/");
   await page.waitForLoadState("networkidle");
 });
 
@@ -17,7 +18,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test("loads distributed assets and core docs sections", async ({ page }) => {
-  await expect(page).toHaveTitle("Pdei+ UI Library");
+  await expect(page).toHaveTitle("Pdei+ UI Library · Docs");
 
   const responseChecks = await page.evaluate(async () => {
     const paths = [
