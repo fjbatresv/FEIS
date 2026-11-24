@@ -31,6 +31,28 @@ test("legacy documentation hashes redirect into /docs/", async ({ page }) => {
   await expect(page).toHaveURL(/\/docs\/#inputs$/);
 });
 
+test("color theme toggle works in both languages and remembers the selection", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => localStorage.removeItem("pdei-theme"));
+  await page.reload();
+  const toggle = page.locator(".theme-toggle");
+  await expect(toggle).toHaveAccessibleName("Switch to dark theme");
+  const lightBackground = await page.locator("body").evaluate((body) => getComputedStyle(body).backgroundColor);
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(page.getByRole("button", { name: "Switch to light theme" })).toBeVisible();
+  await page.waitForTimeout(400);
+  expect(await page.locator("body").evaluate((body) => getComputedStyle(body).backgroundColor)).not.toBe(lightBackground);
+  const darkAxe = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+  expect(darkAxe.violations).toEqual([]);
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await page.getByRole("button", { name: "Switch to light theme" }).click();
+  await page.goto("/es/");
+  await expect(page.getByRole("button", { name: "Cambiar al tema oscuro" })).toHaveAttribute("aria-pressed", "false");
+});
+
 test("reduced motion disables smooth scrolling", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");

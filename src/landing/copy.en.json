@@ -15,7 +15,9 @@
   "jsonLd": "{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"WebSite\",\"name\":\"Pdei+ case study\",\"url\":\"https://pdei.fjbatresv.com/\"},{\"@type\":\"WebPage\",\"name\":\"Pdei+ fintech case study\",\"inLanguage\":\"en\",\"url\":\"https://pdei.fjbatresv.com/\"},{\"@type\":\"Person\",\"name\":\"Javier Batres\",\"url\":\"https://fjbatresv.com\"},{\"@type\":\"SoftwareSourceCode\",\"name\":\"Pdei+ UI Library\",\"codeRepository\":\"https://github.com/fjbatresv/FEIS\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Case study\",\"item\":\"https://pdei.fjbatresv.com/\"}]}]}",
   "a11y": {
     "skip": "Skip to content",
-    "menu": "Open navigation"
+    "menu": "Open navigation",
+    "themeDark": "Switch to dark theme",
+    "themeLight": "Switch to light theme"
   },
   "nav": {
     "case": "CASE STUDY",

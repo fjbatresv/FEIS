@@ -6,3 +6,15 @@
 .menu svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}.shot-image{display:block;width:100%;height:auto;aspect-ratio:8/5;object-fit:cover;border:1px solid var(--line)}
 
 .motion-ready main>section,.motion-ready .redline{opacity:0;transform:translateY(12px);transition:opacity .32s ease,transform .32s ease}.motion-ready .in-view{opacity:1;transform:none}.motion-ready .timeline article:nth-child(3n+2),.motion-ready .decision-grid article:nth-child(4n+2){transition-delay:40ms}.motion-ready .timeline article:nth-child(3n),.motion-ready .decision-grid article:nth-child(4n+3){transition-delay:80ms}.motion-ready .hero-art.in-view .redline i{animation:redline-in .32s ease both}@keyframes redline-in{from{transform:scaleY(0);transform-origin:top}to{transform:scaleY(1);transform-origin:top}}@media(prefers-reduced-motion:reduce){.motion-ready main>section,.motion-ready .redline{opacity:1;transform:none;transition:none}.motion-ready .hero-art.in-view .redline i{animation:none}}
+
+.theme-toggle{display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid var(--line);border-radius:5px;background:var(--paper);color:var(--ink);cursor:pointer}.theme-toggle svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.sun-icon{display:none}
+html[data-theme="dark"]{color-scheme:dark;--paper:#151525;--ink:#f2f2fb;--muted:#bfc0d4;--line:#41415c;--aqua-ink:#42deeb}
+html[data-theme="dark"] body,html[data-theme="dark"] .decision-grid article,html[data-theme="dark"] .deliver-grid a{background:var(--paper);color:var(--ink)}
+html[data-theme="dark"] .topbar,html[data-theme="dark"] .topbar nav,html[data-theme="dark"] .process,html[data-theme="dark"] .showcase,html[data-theme="dark"] .deliverables{background:#1d1d34}
+html[data-theme="dark"] .decisions{background:#202039}
+html[data-theme="dark"] .decision-grid{background:var(--line);border-color:var(--line)}
+html[data-theme="dark"] .hero h1,html[data-theme="dark"] .intro h2,html[data-theme="dark"] .section-head h2,html[data-theme="dark"] .services h2,html[data-theme="dark"] .stats b,html[data-theme="dark"] .timeline h3,html[data-theme="dark"] .decision-grid h3,html[data-theme="dark"] .deliver-grid b,html[data-theme="dark"] .services article b,html[data-theme="dark"] .wordmark,html[data-theme="dark"] .text-link{color:var(--ink)}
+html[data-theme="dark"] .lead,html[data-theme="dark"] .intro>p:not(.eyebrow),html[data-theme="dark"] .stack span,html[data-theme="dark"] nav a,html[data-theme="dark"] .language{color:#c7c7d8}
+html[data-theme="dark"] .skip{background:#1d1d34;color:var(--ink)}
+html[data-theme="dark"] .theme-toggle{background:#26263e;color:var(--ink)}
+html[data-theme="dark"] .moon-icon{display:none}html[data-theme="dark"] .sun-icon{display:block}
