@@ -1,0 +1,284 @@
+{
+  "lang": "en",
+  "canonical": "/",
+  "language": {
+    "href": "/es/",
+    "lang": "es",
+    "label": "ES"
+  },
+  "seo": {
+    "title": "Pdei+ · Fintech product design case study",
+    "description": "From financial brand guidelines to a tested vanilla UI library: explore the design and engineering of a Guatemalan investment portal.",
+    "ogAlt": "Pdei+ fintech case study, from brand system to investment dashboard",
+    "locale": "en_US"
+  },
+  "jsonLd": "{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"WebSite\",\"name\":\"Pdei+ case study\",\"url\":\"https://pdei.fjbatresv.com/\"},{\"@type\":\"WebPage\",\"name\":\"Pdei+ fintech case study\",\"inLanguage\":\"en\",\"url\":\"https://pdei.fjbatresv.com/\"},{\"@type\":\"Person\",\"name\":\"Javier Batres\",\"url\":\"https://fjbatresv.com\"},{\"@type\":\"SoftwareSourceCode\",\"name\":\"Pdei+ UI Library\",\"codeRepository\":\"https://github.com/fjbatresv/FEIS\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Case study\",\"item\":\"https://pdei.fjbatresv.com/\"}]}]}",
+  "a11y": {
+    "skip": "Skip to content",
+    "menu": "Open navigation"
+  },
+  "nav": {
+    "case": "CASE STUDY",
+    "label": "Main navigation",
+    "process": "Process",
+    "decisions": "Decisions",
+    "quality": "Quality",
+    "demos": "Demos",
+    "cta": "Work with me"
+  },
+  "sections": {
+    "process": "PROCESS",
+    "decisions": "DECISIONS",
+    "quality": "ENGINEERING QUALITY",
+    "demos": "EXPLORE THE WORK"
+  },
+  "hero": {
+    "eyebrow": "CASE STUDY · FINTECH · GUATEMALA · 2026",
+    "title": "Pdei+: an investment portal, from brand guidelines to a shippable UI library",
+    "lead": "A coherent digital experience for investing in funds, shaped from the visual system through an interactive prototype and a reusable front-end library.",
+    "primary": "Explore the live prototype",
+    "secondary": "Work with me",
+    "note": "Independent case study · Product design & front-end",
+    "alt": "Annotated investment dashboard mockup with portfolio chart and design tokens"
+  },
+  "stats": {
+    "label": "Project facts",
+    "flows": "10",
+    "flowsLabel": "documented product flows",
+    "icons": "1,981",
+    "iconsLabel": "Lucide icons in the library",
+    "viewports": "Responsive viewports",
+    "quality": "Accessibility gate"
+  },
+  "challenge": {
+    "eyebrow": "THE CHALLENGE",
+    "title": "Make a complex financial journey feel clear and dependable.",
+    "body": "The portal supports fund investment, identity onboarding, two-factor authentication, beneficiaries and signatories, deposits, and redemptions. The work translates detailed product rules into a consistent interface and reusable components.",
+    "local1": "Six-part legal names",
+    "local2": "Guatemalan financial context"
+  },
+  "process": {
+    "title": "From visual language to working interface",
+    "lead": "Each stage resolved a different layer, with decisions carried forward into the implementation.",
+    "steps": [
+      {
+        "date": "MAY 2026",
+        "title": "Visual identity",
+        "text": "Aligned the portal with Pdei+ brand colors, typography and logo assets.",
+        "tag": "BRAND SYSTEM"
+      },
+      {
+        "date": "MAY 2026",
+        "title": "Component UI kit",
+        "text": "Built reusable form, feedback, status and layout patterns.",
+        "tag": "COMPONENTES"
+      },
+      {
+        "date": "MAY 2026",
+        "title": "Product screens",
+        "text": "Mapped authentication, registration and account journeys.",
+        "tag": "PANTALLAS"
+      },
+      {
+        "date": "MAY 2026",
+        "title": "Interactive web mock",
+        "text": "Connected key flows and states in a navigable static prototype.",
+        "tag": "WEB MOCK"
+      },
+      {
+        "date": "JUNE 2026",
+        "title": "Design system & handoff",
+        "text": "Documented visual authority, implementation notes and interaction behavior.",
+        "tag": "HANDOFF"
+      },
+      {
+        "date": "JUNE 2026",
+        "title": "Vanilla UI library",
+        "text": "Packaged CSS, JavaScript and Lucide icons with automated checks and releases.",
+        "tag": "V1.1.0 · SEMVER"
+      }
+    ]
+  },
+  "showcase": {
+    "eyebrow": "SCREEN STUDIES",
+    "title": "One system across the customer journey",
+    "items": [
+      {
+        "kind": "auth",
+        "visual": "Secure access",
+        "label": "Login & 2FA",
+        "caption": "Authentication and verification",
+        "file": "login",
+        "alt": "Login view with the Pdei+ email and password form"
+      },
+      {
+        "kind": "wizard",
+        "visual": "Your details",
+        "label": "Account setup",
+        "caption": "Guided registration",
+        "file": "registration",
+        "alt": "Multi-step account registration form with profile details"
+      },
+      {
+        "kind": "dashboard",
+        "visual": "Portfolio overview",
+        "label": "Dashboard",
+        "caption": "Balances and next steps",
+        "file": "dashboard",
+        "alt": "Pdei+ investment dashboard showing account balances and recent activity"
+      },
+      {
+        "kind": "portfolio",
+        "visual": "Fund details",
+        "label": "Portfolio",
+        "caption": "Holdings and fund status",
+        "file": "portfolio",
+        "alt": "Portfolio view listing investment funds and their statuses"
+      }
+    ]
+  },
+  "decisions": {
+    "title": "Choices that make the interface easier to build and use",
+    "items": [
+      {
+        "index": "01",
+        "title": "Vanilla CSS & JavaScript",
+        "text": "Fits a PHP and Livewire backend without coupling the library to a framework."
+      },
+      {
+        "index": "02",
+        "title": "Tokens as the source of truth",
+        "text": "Shared variables keep colors, spacing and states consistent across screens."
+      },
+      {
+        "index": "03",
+        "title": "Clear design authority",
+        "text": "Componentes governs visual patterns; Web Mock captures interaction behavior."
+      },
+      {
+        "index": "04",
+        "title": "Name the financial action accurately",
+        "text": "“Net divestment for the period” describes withdrawals without labeling them as a loss."
+      },
+      {
+        "index": "05",
+        "title": "One fund state per row",
+        "text": "A single status badge reduces competing signals in portfolio lists."
+      },
+      {
+        "index": "06",
+        "title": "Six name fields",
+        "text": "Captures the legal names used across Latin American identity documents."
+      },
+      {
+        "index": "07",
+        "title": "Self-hosted Lucide icon font",
+        "text": "Keeps the icon set local and available through a predictable class API."
+      },
+      {
+        "index": "08",
+        "title": "AI-assisted, human-reviewed",
+        "text": "Claude Code and Codex support implementation; review and CI remain the quality gate."
+      }
+    ]
+  },
+  "quality": {
+    "title": "Quality is part of the product.",
+    "body": "Automated checks protect the generated bundle and the customer-facing prototype, from source contracts to keyboard access and responsive layouts.",
+    "link": "Read the UI library documentation"
+  },
+  "stack": {
+    "eyebrow": "TOOLS & TECHNOLOGY",
+    "items": [
+      "HTML5",
+      "CSS custom properties",
+      "Vanilla JS",
+      "Lucide",
+      "Node build",
+      "Jest",
+      "Playwright",
+      "axe-core",
+      "html-validate",
+      "semantic-release",
+      "GitHub Actions",
+      "GitHub Pages",
+      "Claude Code",
+      "Codex"
+    ]
+  },
+  "deliverables": {
+    "title": "Explore the project",
+    "items": [
+      {
+        "kind": "INTERACTIVE PROTOTYPE",
+        "title": "Web Mock",
+        "text": "Navigate product flows",
+        "href": "/demo/web-mock/"
+      },
+      {
+        "kind": "DESIGN REFERENCE",
+        "title": "Component UI Kit",
+        "text": "See reusable patterns",
+        "href": "/demo/ui-kit/"
+      },
+      {
+        "kind": "SCREEN LIBRARY",
+        "title": "Product Screens",
+        "text": "Browse screen concepts",
+        "href": "/demo/screens/"
+      },
+      {
+        "kind": "DOCUMENTATION",
+        "title": "Pdei+ UI Library",
+        "text": "Read components and usage",
+        "href": "/docs/"
+      },
+      {
+        "kind": "PACKAGE",
+        "title": "Download bundle",
+        "text": "Get the versioned library",
+        "href": "/downloads/pdei-ui-lib.zip"
+      },
+      {
+        "kind": "SOURCE",
+        "title": "GitHub repository",
+        "text": "Inspect the implementation",
+        "href": "https://github.com/fjbatresv/FEIS"
+      }
+    ]
+  },
+  "services": {
+    "eyebrow": "WAYS TO WORK TOGETHER",
+    "title": "From product definition to polished front end",
+    "items": [
+      {
+        "title": "Product design to front end",
+        "text": "Turn a product concept into a responsive, working interface."
+      },
+      {
+        "title": "Design systems & UI libraries",
+        "text": "Create practical tokens and components teams can ship."
+      },
+      {
+        "title": "Handoff & interface QA",
+        "text": "Close the gap between design intent and implementation."
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "LET’S BUILD SOMETHING USEFUL",
+    "title": "Have a product that needs a clear interface?",
+    "body": "I work with teams to turn complex requirements into thoughtful, production-ready experiences.",
+    "cta": "Visit fjbatresv.com"
+  },
+  "footer": {
+    "note": "Pdei+ is a trademark of its owner; demos use fictional data."
+  },
+  "_sources": {
+    "flows": "FLOWS.md headings (10); UI states described in repository.",
+    "icons": "Object key count in lib/icons/codepoints.json: 1,981.",
+    "viewports": "playwright.config.js projects: mobile 375, tablet 768, desktop 1440.",
+    "dates": "git log dates (May 1–June 18, 2026); stages reflect repository artifacts.",
+    "amounts": "The Q 125,480.00 dashboard metric and Q 114,320.00 portfolio balance are copied from Pdei+ Web Mock.html."
+  }
+}

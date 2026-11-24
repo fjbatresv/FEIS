@@ -44,3 +44,7 @@ Los iconos vienen de Lucide en formato icon font local:
 
 Convencion: `pdei-icon pdei-icon-{nombre-lucide-en-kebab-case}`.
 El listado completo queda en `lib/icons/codepoints.json`.
+
+## Sitio publicado
+
+La documentación se publica en `/docs/`, con demos en `/demo/` y el bundle estático en `/lib/`.

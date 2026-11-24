@@ -1,32 +1,15 @@
 const fs = require("fs");
 const path = require("path");
-
 const root = path.resolve(__dirname, "..");
-
-function read(file) {
-  return fs.readFileSync(path.join(root, file), "utf8");
+function refs(file) {
+  return [...fs.readFileSync(path.join(root, file), "utf8").replace(/<pre[\s\S]*?<\/pre>|<code[\s\S]*?<\/code>/g, "").matchAll(/(?:href|src)=["']([^"']+)["']/g)].map((match) => match[1]).filter((ref) => !/^(#|https?:|mailto:|tel:|javascript:|data:|blob:)/.test(ref));
 }
-
-function extractRefs(html) {
-  const withoutCode = html
-    .replace(/<pre[\s\S]*?<\/pre>/g, "")
-    .replace(/<code[\s\S]*?<\/code>/g, "");
-
-  return [...withoutCode.matchAll(/(?:href|src)="([^"]+)"/g)]
-    .map((match) => match[1])
-    .filter((ref) => !ref.startsWith("#") && !ref.startsWith("http") && !ref.startsWith("mailto:"));
+function check(file, base) {
+  const missing = refs(file).filter((ref) => {
+    const local = ref.startsWith("/") ? path.join(root, "site", ref.slice(1)) : path.resolve(root, path.dirname(file), ref);
+    return !fs.existsSync(local);
+  });
+  if (missing.length) throw new Error(`${file} has missing references:\n${missing.map((ref) => `- ${ref}`).join("\n")}`);
+  console.log(`${file}: ${refs(file).length} asset references ok`);
 }
-
-function check(baseDir, file) {
-  const refs = extractRefs(read(file));
-  const missing = refs.filter((ref) => !fs.existsSync(path.join(root, baseDir, ref)));
-
-  if (missing.length) {
-    throw new Error(`${file} has missing references:\n${missing.map((ref) => `- ${ref}`).join("\n")}`);
-  }
-
-  console.log(`${file}: ${refs.length} asset references ok`);
-}
-
-check("src/docs", "src/docs/index.html");
-check("site", "site/index.html");
+["src/docs/index.html", "site/index.html", "site/es/index.html", "site/404.html", "site/docs/index.html", "site/demo/web-mock/index.html", "site/demo/ui-kit/index.html", "site/demo/screens/index.html"].forEach((file) => check(file));

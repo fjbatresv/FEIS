@@ -1,0 +1,284 @@
+{
+  "lang": "es",
+  "canonical": "/es/",
+  "language": {
+    "href": "/",
+    "lang": "en",
+    "label": "EN"
+  },
+  "seo": {
+    "title": "Pdei+ · Caso de diseño de producto fintech",
+    "description": "De lineamientos financieros a una librería UI vanilla probada: conoce el diseño y la ingeniería de un portal de inversión guatemalteco.",
+    "ogAlt": "Caso fintech Pdei+, del sistema de marca al dashboard de inversiones",
+    "locale": "es_GT"
+  },
+  "jsonLd": "{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"WebSite\",\"name\":\"Caso de estudio Pdei+\",\"url\":\"https://pdei.fjbatresv.com/es/\"},{\"@type\":\"WebPage\",\"name\":\"Caso fintech Pdei+\",\"inLanguage\":\"es\",\"url\":\"https://pdei.fjbatresv.com/es/\"},{\"@type\":\"Person\",\"name\":\"Javier Batres\",\"url\":\"https://fjbatresv.com\"},{\"@type\":\"SoftwareSourceCode\",\"name\":\"Librería UI Pdei+\",\"codeRepository\":\"https://github.com/fjbatresv/FEIS\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Caso de estudio\",\"item\":\"https://pdei.fjbatresv.com/es/\"}]}]}",
+  "a11y": {
+    "skip": "Saltar al contenido",
+    "menu": "Abrir navegación"
+  },
+  "nav": {
+    "case": "CASO DE ESTUDIO",
+    "label": "Navegación principal",
+    "process": "Proceso",
+    "decisions": "Decisiones",
+    "quality": "Calidad",
+    "demos": "Demos",
+    "cta": "Trabajemos"
+  },
+  "sections": {
+    "process": "PROCESO",
+    "decisions": "DECISIONES",
+    "quality": "CALIDAD DE INGENIERÍA",
+    "demos": "EXPLORA EL TRABAJO"
+  },
+  "hero": {
+    "eyebrow": "CASO DE ESTUDIO · FINTECH · GUATEMALA · 2026",
+    "title": "Pdei+: un portal de inversión, de los lineamientos de marca a una librería UI lista para construir",
+    "lead": "Una experiencia digital coherente para invertir en fondos: del sistema visual a un prototipo interactivo y una librería front-end reutilizable.",
+    "primary": "Explorar el prototipo",
+    "secondary": "Trabajemos juntos",
+    "note": "Caso independiente · Diseño de producto y front-end",
+    "alt": "Dashboard de inversión anotado con gráfica de portafolio y tokens de diseño"
+  },
+  "stats": {
+    "label": "Datos del proyecto",
+    "flows": "10",
+    "flowsLabel": "flujos de producto documentados",
+    "icons": "1,981",
+    "iconsLabel": "iconos Lucide en la librería",
+    "viewports": "tamaños adaptables",
+    "quality": "accesibilidad"
+  },
+  "challenge": {
+    "eyebrow": "EL RETO",
+    "title": "Hacer clara y confiable una experiencia financiera compleja.",
+    "body": "El portal cubre inversión en fondos, registro de identidad, autenticación de dos factores, beneficiarios y firmantes, depósitos y recompras. El trabajo convierte reglas de producto detalladas en una interfaz consistente y componentes reutilizables.",
+    "local1": "Nombres legales de seis campos",
+    "local2": "Contexto financiero guatemalteco"
+  },
+  "process": {
+    "title": "Del lenguaje visual a una interfaz funcional",
+    "lead": "Cada etapa resolvió una capa distinta y trasladó sus decisiones a la implementación.",
+    "steps": [
+      {
+        "date": "MAYO 2026",
+        "title": "Identidad visual",
+        "text": "Alineación del portal con colores, tipografía y recursos de marca Pdei+.",
+        "tag": "SISTEMA DE MARCA"
+      },
+      {
+        "date": "MAYO 2026",
+        "title": "UI Kit de componentes",
+        "text": "Patrones reutilizables para formularios, feedback, estados y layouts.",
+        "tag": "COMPONENTES"
+      },
+      {
+        "date": "MAYO 2026",
+        "title": "Pantallas del producto",
+        "text": "Definición de recorridos de acceso, registro y manejo de cuentas.",
+        "tag": "PANTALLAS"
+      },
+      {
+        "date": "MAYO 2026",
+        "title": "Web Mock interactivo",
+        "text": "Flujos y estados clave conectados en un prototipo estático navegable.",
+        "tag": "WEB MOCK"
+      },
+      {
+        "date": "JUNIO 2026",
+        "title": "Design system y handoff",
+        "text": "Documentación de autoridad visual, implementación e interacción.",
+        "tag": "HANDOFF"
+      },
+      {
+        "date": "JUNIO 2026",
+        "title": "Librería UI vanilla",
+        "text": "CSS, JavaScript e iconos Lucide empaquetados con validaciones y releases.",
+        "tag": "V1.1.0 · SEMVER"
+      }
+    ]
+  },
+  "showcase": {
+    "eyebrow": "PANTALLAS",
+    "title": "Un sistema para todo el recorrido del cliente",
+    "items": [
+      {
+        "kind": "auth",
+        "visual": "Acceso seguro",
+        "label": "Login y 2FA",
+        "caption": "Autenticación y verificación",
+        "file": "login",
+        "alt": "Pantalla de acceso Pdei+ con formulario de correo y contraseña"
+      },
+      {
+        "kind": "wizard",
+        "visual": "Tus datos",
+        "label": "Apertura de cuenta",
+        "caption": "Registro guiado",
+        "file": "registration",
+        "alt": "Formulario de varios pasos para registrar una cuenta y perfil"
+      },
+      {
+        "kind": "dashboard",
+        "visual": "Portfolio overview",
+        "label": "Dashboard",
+        "caption": "Saldos y próximos pasos",
+        "file": "dashboard",
+        "alt": "Dashboard Pdei+ con saldos y actividad reciente"
+      },
+      {
+        "kind": "portfolio",
+        "visual": "Detalle del fondo",
+        "label": "Portafolio",
+        "caption": "Tenencias y estados",
+        "file": "portfolio",
+        "alt": "Vista de portafolio con fondos de inversión y sus estados"
+      }
+    ]
+  },
+  "decisions": {
+    "title": "Decisiones para facilitar el uso y la implementación",
+    "items": [
+      {
+        "index": "01",
+        "title": "CSS y JavaScript vanilla",
+        "text": "Se integra con un backend PHP y Livewire sin atar la librería a un framework."
+      },
+      {
+        "index": "02",
+        "title": "Tokens como única fuente de verdad",
+        "text": "Las variables compartidas mantienen colores, espaciado y estados consistentes."
+      },
+      {
+        "index": "03",
+        "title": "Autoridad de diseño clara",
+        "text": "Componentes rige los patrones visuales; Web Mock documenta el comportamiento."
+      },
+      {
+        "index": "04",
+        "title": "Nombrar bien la acción financiera",
+        "text": "“Desinversión neta del periodo” describe retiros sin llamarlos pérdidas."
+      },
+      {
+        "index": "05",
+        "title": "Un solo estado por fondo",
+        "text": "Un status-badge reduce señales que compiten en las listas del portafolio."
+      },
+      {
+        "index": "06",
+        "title": "Nombres en seis campos",
+        "text": "Registra los nombres legales usados en documentos de identidad de Latinoamérica."
+      },
+      {
+        "index": "07",
+        "title": "Lucide autoalojado como icon font",
+        "text": "Mantiene los iconos locales y disponibles con una API de clases predecible."
+      },
+      {
+        "index": "08",
+        "title": "IA asistida y revisada por personas",
+        "text": "Claude Code y Codex apoyan la implementación; revisión y CI son el filtro de calidad."
+      }
+    ]
+  },
+  "quality": {
+    "title": "La calidad también es parte del producto.",
+    "body": "Las validaciones automatizadas protegen el bundle y el prototipo, desde contratos de código hasta acceso por teclado y layouts adaptables.",
+    "link": "Leer la documentación de la librería"
+  },
+  "stack": {
+    "eyebrow": "TECNOLOGÍAS Y HERRAMIENTAS",
+    "items": [
+      "HTML5",
+      "CSS custom properties",
+      "Vanilla JS",
+      "Lucide",
+      "Node build",
+      "Jest",
+      "Playwright",
+      "axe-core",
+      "html-validate",
+      "semantic-release",
+      "GitHub Actions",
+      "GitHub Pages",
+      "Claude Code",
+      "Codex"
+    ]
+  },
+  "deliverables": {
+    "title": "Explora el proyecto",
+    "items": [
+      {
+        "kind": "PROTOTIPO INTERACTIVO",
+        "title": "Web Mock",
+        "text": "Navega los flujos de producto",
+        "href": "/demo/web-mock/"
+      },
+      {
+        "kind": "REFERENCIA DE DISEÑO",
+        "title": "UI Kit de componentes",
+        "text": "Explora patrones reutilizables",
+        "href": "/demo/ui-kit/"
+      },
+      {
+        "kind": "BIBLIOTECA DE PANTALLAS",
+        "title": "Pantallas del producto",
+        "text": "Mira conceptos de interfaz",
+        "href": "/demo/screens/"
+      },
+      {
+        "kind": "DOCUMENTACIÓN",
+        "title": "Librería UI Pdei+",
+        "text": "Componentes e instrucciones",
+        "href": "/docs/"
+      },
+      {
+        "kind": "PAQUETE",
+        "title": "Descargar bundle",
+        "text": "Obtén la librería versionada",
+        "href": "/downloads/pdei-ui-lib.zip"
+      },
+      {
+        "kind": "CÓDIGO FUENTE",
+        "title": "Repositorio GitHub",
+        "text": "Revisa la implementación",
+        "href": "https://github.com/fjbatresv/FEIS"
+      }
+    ]
+  },
+  "services": {
+    "eyebrow": "CÓMO PUEDO AYUDARTE",
+    "title": "De la definición de producto a un front-end pulido",
+    "items": [
+      {
+        "title": "Diseño de producto a front-end",
+        "text": "Convertir una idea de producto en una interfaz funcional y adaptable."
+      },
+      {
+        "title": "Design systems y librerías UI",
+        "text": "Crear tokens y componentes prácticos para llevar a producción."
+      },
+      {
+        "title": "Handoff y QA de interfaces",
+        "text": "Cerrar la brecha entre la intención de diseño y la implementación."
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "CONSTRUYAMOS ALGO ÚTIL",
+    "title": "¿Tienes un producto que necesita una interfaz clara?",
+    "body": "Colaboro con equipos para transformar requerimientos complejos en experiencias cuidadas y listas para producción.",
+    "cta": "Visitar fjbatresv.com"
+  },
+  "footer": {
+    "note": "Pdei+ es marca de su titular; los demos usan datos ficticios."
+  },
+  "_sources": {
+    "flows": "FLOWS.md headings (10); UI states described in repository.",
+    "icons": "Object key count in lib/icons/codepoints.json: 1,981.",
+    "viewports": "playwright.config.js projects: mobile 375, tablet 768, desktop 1440.",
+    "dates": "git log dates (May 1–June 18, 2026); stages reflect repository artifacts.",
+    "amounts": "The Q 125,480.00 dashboard metric and Q 114,320.00 portfolio balance are copied from Pdei+ Web Mock.html."
+  }
+}

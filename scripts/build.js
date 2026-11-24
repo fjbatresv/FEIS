@@ -180,6 +180,10 @@ Los iconos vienen de Lucide en formato icon font local:
 
 Convencion: \`pdei-icon pdei-icon-{nombre-lucide-en-kebab-case}\`.
 El listado completo queda en \`lib/icons/codepoints.json\`.
+
+## Sitio publicado
+
+La documentación se publica en \`/docs/\`, con demos en \`/demo/\` y el bundle estático en \`/lib/\`.
 `);
 }
 
@@ -187,9 +191,52 @@ function buildSite() {
   remove(site);
   ensureDir(site);
   copyDir(lib, path.join(site, "lib"));
-  copyDir(path.join(src, "docs"), site);
-  const siteIndex = path.join(site, "index.html");
-  write(siteIndex, read(siteIndex).replace(/\.\.\/\.\.\/lib\//g, "lib/"));
+  copyDir(path.join(src, "docs"), path.join(site, "docs"));
+  const docsIndex = path.join(site, "docs", "index.html");
+  write(docsIndex, read(docsIndex).replace(/\.\.\/\.\.\/lib\//g, "../lib/"));
+  buildLanding();
+  buildDemos();
+}
+
+function renderTemplate(template, data) {
+  return template.replace(/{{#([\w.]+)}}([\s\S]*?){{\/\1}}/g, (_, key, block) => {
+    const rows = key.split(".").reduce((value, part) => value?.[part], data);
+    return (rows || []).map((row) => renderTemplate(block, { ...data, ...(typeof row === "string" ? { ".": row } : row) })).join("");
+  }).replace(/{{([\w.]+)}}/g, (_, key) => {
+    const value = key.split(".").reduce((item, part) => item?.[part], data);
+    if (value == null) return "";
+    if (key === "jsonLd") return String(value);
+    return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  });
+}
+
+function buildLanding() {
+  const landingSrc = path.join(src, "landing");
+  const template = read(path.join(landingSrc, "template.html"));
+  for (const lang of ["en", "es"]) {
+    const data = JSON.parse(read(path.join(landingSrc, `copy.${lang}.json`)));
+    write(path.join(site, lang === "en" ? "index.html" : "es/index.html"), renderTemplate(template, data));
+  }
+  copyDir(path.join(landingSrc, "assets"), path.join(site, "assets/landing"));
+  write(path.join(site, "version.txt"), `${require(path.join(root, "package.json")).version}\n`);
+  if (fs.existsSync(zipPath)) copyFile(zipPath, path.join(site, "downloads/pdei-ui-lib.zip"));
+  write(path.join(site, "robots.txt"), "User-agent: *\nAllow: /\nSitemap: https://pdei.fjbatresv.com/sitemap.xml\n");
+  write(path.join(site, "CNAME"), "pdei.fjbatresv.com\n");
+  write(path.join(site, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${["", "es/", "docs/"].map((route) => `  <url><loc>https://pdei.fjbatresv.com/${route}</loc>${route !== "docs/" ? `\n    <xhtml:link rel="alternate" hreflang="en" href="https://pdei.fjbatresv.com/"/><xhtml:link rel="alternate" hreflang="es" href="https://pdei.fjbatresv.com/es/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://pdei.fjbatresv.com/"/>` : ""}</url>`).join("\n")}\n</urlset>\n`);
+  write(path.join(site, "404.html"), `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>No encontrado · Pdei+</title><link rel="stylesheet" href="/assets/landing/landing.css"></head><body class="not-found"><main><p>404</p><h1>Página no encontrada</h1><a href="/">English</a> · <a href="/es/">Español</a></main></body></html>`);
+}
+
+function buildDemos() {
+  for (const [id, source, title] of [["web-mock", "Pdei+ Web Mock.html", "Pdei+ · Web Mock"], ["ui-kit", "Pdei+ Componentes.html", "Pdei+ · Componentes"], ["screens", "Pdei+ Pantallas.html", "Pdei+ · Pantallas"]]) {
+    let html = read(path.join(root, source));
+    if (id === "screens") html = html.replace(/DERCAS/gi, "institución financiera");
+    html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`);
+    html = html.replace(/<head([^>]*)>/i, `<head$1><meta name="robots" content="noindex"><style>.prototype-ribbon{position:fixed;z-index:99999;top:0;left:0;right:0;min-height:44px;display:flex;align-items:center;justify-content:center;background:#2b2b5e;color:#fff;font:600 14px/1.3 Arial,sans-serif;text-decoration:none;text-align:center;padding:8px 16px;box-shadow:0 2px 12px #14142b33}.prototype-ribbon:focus-visible{outline:3px solid #00cde5;outline-offset:-4px}body{padding-top:44px!important}</style>`);
+    html = html.replace(/<body([^>]*)>/i, `<body$1><a class="prototype-ribbon" href="/">Prototipo con datos ficticios · ← Volver al caso de estudio</a>`);
+    write(path.join(site, "demo", id, "index.html"), html);
+    copyDir(path.join(root, "Logos"), path.join(site, "demo", id, "Logos"));
+    copyDir(path.join(root, findGraphicDir(), "FONTS"), path.join(site, "demo", id, "Línea Gráfica", "FONTS"));
+  }
 }
 
 function buildZip() {
