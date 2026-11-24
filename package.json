@@ -9,7 +9,7 @@
     "docs": "node scripts/build.js --docs-only",
     "zip": "node scripts/build.js --zip-only",
     "lint": "npm run test:html && npm run test:assets && npm run test:icons && npm run test:seo",
-    "test": "npm run test:unit && npm run test:html && npm run test:assets && npm run test:icons && npm run test:bundle && npm run test:js && npm run test:responsive && npm run test:a11y && npm run test:seo && playwright test tests/landing.spec.js",
+    "test": "npm run test:unit && npm run test:html && npm run test:assets && npm run test:icons && npm run test:bundle && npm run test:js && npm run test:responsive && npm run test:a11y && npm run test:seo && playwright test tests/landing.spec.js && playwright test tests/review-fixes.spec.js",
     "test:unit": "jest tests/pdei-source.test.js --runInBand",
     "test:html": "html-validate src/docs/index.html site/index.html site/es/index.html site/404.html site/docs/index.html",
     "test:assets": "node scripts/check-assets.js",
